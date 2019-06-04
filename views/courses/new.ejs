@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+    <div class="row">
+        <h1 style="text-align: center">Dodaj nowy kurs</h1>
+        <div class="form">
+            <form action="/courses" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="Nazwa kursu">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="Logo kursu">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="description" placeholder="Opis">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-default">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<% include ../partials/footer %>
