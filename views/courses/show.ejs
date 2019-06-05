@@ -1,0 +1,243 @@
+<% include ../partials/header %>
+
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Kursy</p>
+            <div class="list-group">
+                <li class="list-group-item active">Kurs 1</li>
+                <li class="list-group-item">Kurs 2</li>
+                <li class="list-group-item">Kurs 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= course.image %>">
+                <div class="caption">
+                    <h4><a><%= course.name %></a></h4>
+                    <p><%= course.description %></p>
+                    <p>
+                        <em>Dodane przez: <a href="/users/<%= course.author.id %>"><%= course.author.username %></a>, <%= moment(course.createdAt).fromNow() %></em>
+                    </p>
+                    <% if(currentUser && course.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                    <a class="btn btn-xs btn-warning" href="/courses/<%= course._id %>/edit">Edytuj</a>
+                    <form class="delete-form" action="/courses/<%= course._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Skasuj</button>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="thumbnail">
+                <div class="caption-full well">
+                    <% if (course.rating === 0) { %>
+                    <h5>
+                        <em>Brak opinii.</em>
+                    </h5>
+                    <% } else { %>
+                    <div class="text-right">
+                        <a class="btn btn-primary pull-right <% if (currentUser && course.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" role="button" data-toggle="collapse" href="#collapseReview"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Dodaj opinię</a>
+                    </div>
+                    <h4><strong>Opinie 
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star <% if (course.rating > 1.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (course.rating > 2.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (course.rating > 3.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (course.rating > 4.5) { %> checked <% } %>"></span> 
+                    </strong></h4> 
+                    <p>
+                        Liczba opinii: <%= course.reviews.length %>. Średnia ocena kursu: <strong><%= course.rating.toFixed(2) %></strong>
+                    </p>
+                    <div class="collapse" id="collapseReview">
+                        <div class="well" style="border-left: 5px solid #00C851;">
+                            <% if(!currentUser) { %>
+                            <h5>Musisz być zalogowany, aby dodać opinię. <a href="/login">Kliknij tutaj.</a></h5>
+                            <% } %>
+                            <% if(currentUser) { %>
+                            <h4>Dodaj opinię <span class="glyphicon glyphicon-star" aria-hidden="true"></span></h4>
+                            <form id="add-review-form" action="/courses/<%= course._id %>/reviews/" method="POST">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                                </div>
+                                <div class="form-group">
+                                    <fieldset class="starability-basic form-group" id="rating">
+                                    <div>
+                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" checked />
+                                        <label for="first-rate5" title="5 stars - Amazing">
+                                        <%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                        <label for="first-rate4" title="4 stars - Very good">
+                                            <%- '<span class="fa fa-star checked"></span>'.repeat(4) %>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                        <label for="first-rate3" title="3 stars - Average">
+                                            <%- '<span class="fa fa-star checked"></span>'.repeat(3) %>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                        <label for="first-rate2" title="2 stars - Not good">
+                                            <%- '<span class="fa fa-star checked"></span>'.repeat(2) %>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                        <label for="first-rate1" title="1 star - Terrible">
+                                            <%- '<span class="fa fa-star checked"></span>'.repeat(1) %>
+                                        </label>
+                                    </div>
+                                    </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii..." form="add-review-form" rows="5" cols="70"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-sm">Dodaj <span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
+                                </div>
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <% course.reviews.slice(0, 5).forEach(function(review){ %>
+                    <div class="row">
+                        <div class="col-md-12 com-rev-section">
+                            <strong><%= review.author.username %></strong> <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
+                            <span class="pull-right"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
+                            <p>
+                                <%= review.text %>
+                            </p>
+                            <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                            <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEditReview<%= review._id %>" aria-expanded="false" aria-controls="collapse<%= review._id %>">Edytuj</a>
+                            <form class="delete-form" action="/courses/<%=course._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="Skasuj">
+                            </form>
+                            <div class="collapse" id="collapseEditReview<%= review._id %>">
+                                <div class="well" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
+                                    <h4>Edytuj swoją opinię <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
+                                    <form id="edit-review-form<%= review._id %>" action="/courses/<%=course._id %>/reviews/<%=review._id %>?_method=PUT" method="POST">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <fieldset class="starability-basic form-group" id="rating">
+                                        <div>
+                                            <input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %> checked <% } %> />
+                                            <label for="first-rate5" title="5 stars - Amazing">
+                                                <%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="first-rate4" name="review[rating]" value="4" <% if (review.rating === 4) { %> checked <% } %> />
+                                            <label for="first-rate4" title="4 stars - Very good">
+                                                <%- '<span class="fa fa-star checked"></span>'.repeat(4) %>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="first-rate3" name="review[rating]" value="3" <% if (review.rating === 3) { %> checked <% } %> />
+                                            <label for="first-rate3" title="3 stars - Average">
+                                                <%- '<span class="fa fa-star checked"></span>'.repeat(3) %>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="first-rate2" name="review[rating]" value="2" <% if (review.rating === 2) { %> checked <% } %> />
+                                            <label for="first-rate2" title="2 stars - Not good">
+                                                <%- '<span class="fa fa-star checked"></span>'.repeat(2) %>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="first-rate1" name="review[rating]" value="1" <% if (review.rating === 1) { %> checked <% } %> />
+                                            <label for="first-rate1" title="1 star - Terrible">
+                                                <%- '<span class="fa fa-star checked"></span>'.repeat(1) %>
+                                            </label>
+                                        </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="review[text]" placeholder="Twoja opinia..." form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-sm">Edytuj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% }); %>
+                    <div style="margin-bottom: 10px; text-align: center;">
+                        <h4><a href="/courses/<%= course._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> Zobacz pozostałe opinie</a></h4>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Dodaj nowy komentarz</a>
+                </div>
+                <h4><strong>Komentarze <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span></strong></h4>
+                <div class="collapse" id="collapseComment">
+                    <div class="well" style="border-left: 5px solid #00C851;">
+                        <% if(!currentUser) { %>
+                            <h5>Musisz być zalogowany, aby dodać komentarz. <a href="/login">Kliknij tutaj.</a></h5>
+                        <% } %>
+                        <% if(currentUser) { %>
+                            <h4>Napisz komentarz <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
+                            <form id="add-comment-form" action="/courses/<%= course._id %>/comments" method="POST">
+                            <div class="form-group">
+                                <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="comment[text]" placeholder="Wpisz treść komentarza..." form="add-comment-form" rows="5" cols="70"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success btn-sm">Dodaj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                            </div>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+                <hr>
+                <% course.comments.forEach(function(comment) { %>
+                    <div class="row">
+                        <div class="col-md-12 com-rev-section">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                                <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">Edit</a>
+                                <form id="delete-form" action="/courses/<%= course._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button class="btn btn-xs btn-danger">Usuń</button>
+                                </form>
+                            <div class="collapse" id="collapseEdit<%= comment._id %>">
+                                <div class="well" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
+                                    <h4>Edytuj swój komentarz <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
+                                    <form id="edit-comment-form<%= comment._id %>" action="/courses/<%= course._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="comment[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>" rows="5" cols="70"><%= comment.text %></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-sm">Edytuj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>    
+    </div>
+
+<% include ../partials/footer %>

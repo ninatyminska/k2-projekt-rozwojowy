@@ -1,0 +1,108 @@
+var express        = require("express"),
+    app            = express(),
+    bodyParser     = require("body-parser"),
+    mongoose       = require("mongoose"),
+    passport       = require("passport"),
+    LocalStrategy  = require("passport-local"),
+    methodOverride = require("method-override"),
+    flash          = require("connect-flash"),
+    User           = require("./models/user");
+    
+var indexRoutes    = require("./routes/index"),
+    courseRoutes   = require("./routes/courses"),
+    commentRoutes  = require("./routes/comments"),
+    reviewRoutes   = require("./routes/reviews");
+    
+mongoose.connect("mongodb+srv://Nina:!DB10th14@cluster0-yab5c.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
+app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+app.use(flash());
+
+app.use(require("express-session")({
+    secret: "Secret",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.locals.moment = require('moment');
+app.locals.moment.updateLocale('pl', {
+    relativeTime : {
+        future: "za %s",
+        past: "%s",
+        s: "kilka sekund temu",
+        ss: function (number){
+            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+                return number + ' sekundy temu';
+            } else {
+                return number + ' sekund temu';
+            }
+        },
+        m:  "minutę",
+        mm: function (number){
+            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+                return number + ' minuty temu';
+            } else {
+                return number + ' minut temu';
+            }
+        },
+        h:  "godzinę temu",
+        hh: function (number){
+            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+                return number + ' godziny temu';
+            } else {
+                return number + ' godzin temu';
+            }
+        },
+        d:  "wczoraj",
+        dd: "%d dni temu",
+        M:  "miesiąc temu",
+        MM: function (number){
+            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+                return number + ' miesiące temu';
+            } else {
+                return number + ' miesięcy temu';
+            }
+        },
+        y:  "rok temu",
+        yy: function (number){
+            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+                return number + ' lata temu';
+            } else {
+                return number + ' lat temu';
+            }
+        },
+    }
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(async function(req, res, next){
+  res.locals.currentUser = req.user;
+  if(req.user) {
+    try {
+      let user = await User.findById(req.user._id).populate('notifications', null, { isRead: false }).exec();
+      res.locals.notifications = user.notifications.reverse();
+    } catch(err) {
+      console.log(err.message);
+    }
+  }
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  next();
+});
+
+app.use("/", indexRoutes);
+app.use("/courses", courseRoutes);
+app.use("/courses/:id/comments", commentRoutes);
+app.use("/courses/:id/reviews", reviewRoutes);
+
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("Server has started.");
+});

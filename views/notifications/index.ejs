@@ -1,0 +1,15 @@
+<% include ../partials/header %> 
+
+<h1>Powiadomienia</h1>
+
+<ul>
+	<% allNotifications.forEach(function(notification) { %>
+	<li>
+		<a href="/courses/<%= notification.courseId %>">
+			Nowy wpis od <%= notification.username %>
+		</a>
+	</li>
+	<% }); %>
+</ul>
+
+<% include ../partials/footer %> 
