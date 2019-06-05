@@ -2,7 +2,8 @@
   "name": "k2-projekt-rozwojowy",
   "version": "1.0.0",
   "engines": {
-    "node": "^10.16.0"
+    "node": "12.3.1",
+    "npm": "6.9.0"
   },
   "description": "",
   "main": "app.js",
