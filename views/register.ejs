@@ -1,34 +1,57 @@
 <% include ./partials/header %>
 
-    <div class="row">
-        <h1 style="text-align: center">Zarejestruj się</h1>
-        <div class="form">
-            <form action="/register" method="POST">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="Nazwa użytkownika">
+            <div class="ui five column centered middle aligned center aligned grid">
+                <div class="middle aligned center aligned column">
+                    <h2 class="ui teal image header">
+                    <div class="content">
+                        Zarejestruj się
+                    </div>
+                    </h2>
+                    <form class="ui large form" action="/register" method="POST">
+                        <div id="login-form" class="ui stacked segment">
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input type="text" name="username" placeholder="Nazwa użytkownika">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="password" placeholder="Hasło">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user circle icon"></i>
+                                    <input type="text" name="firstName" placeholder="Imię">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user circle icon"></i>
+                                    <input type="text" name="lastName" placeholder="Nazwisko">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="image icon"></i>
+                                    <input type="text" name="avatar" placeholder="Avatar">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="address card icon"></i>
+                                    <input type="text" name="about" placeholder="O mnie">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button class="fluid ui large inverted primary button">Zarejestruj</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="Hasło">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="firstName" placeholder="Imię">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="lastName" placeholder="Nazwisko">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="email" name="email" placeholder="E-mail">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="avatar" placeholder="Avatar">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="adminCode" placeholder="Kod admina">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-lg btn-default">Zarejestruj się</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 

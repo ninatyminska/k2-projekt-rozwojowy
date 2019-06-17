@@ -1,20 +1,27 @@
-body {
-  background-color: #000;
+#main-header {
+  margin-top: 25px;
 }
 
-#landing-header {
+.landing-header {
   z-index: 1;
   position: relative;
-  text-align: center;
-  padding-top: 40vh;
 }
 
-#landing-header h1 {
-  color: #fff;
+.masthead h1.ui.header {
+  margin-top: 0px;
+  padding-top: 3em;
+}
+
+.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
+  margin-left: 5px;
+}
+
+.ui.vertical.stripe.segment {
+  background-color: #1b1c1d;
+  padding: 4em;
 }
 
 .slideshow { 
-  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
@@ -27,9 +34,8 @@ body {
 
 .slideshow li { 
   width: 100%;
-  height: 100%;
+  height: 81%;
   position: absolute;
-  top: 0;
   left: 0;
   background-size: cover;
   background-position: 50% 50%;
@@ -65,14 +71,14 @@ body {
     animation-timing-function: ease-in;
   }
   10% {
-    opacity: 1;
+    opacity: 0.7;
     animation-timing-function: ease-out;
   }
   20% {
-    opacity: 1
+    opacity: 0.7;
   }
   30% {
-    opacity: 0
+    opacity: 0;
   }
 }
 

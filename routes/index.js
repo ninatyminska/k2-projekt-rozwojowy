@@ -6,8 +6,14 @@ var express        = require("express"),
     { isLoggedIn } = require("../middleware"),
     Notification   = require("../models/notification");
     
-router.get("/", function(req, res){
-    res.render("index");
+router.get("/", function(req, res) {
+    Course.find({}, function(err, allCourses) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("courses/courses", {courses : allCourses});
+        }
+    });
 });
 
 router.get("/register", function(req, res) {
@@ -20,8 +26,8 @@ router.post("/register", function(req, res) {
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.email,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            about: req.body.about
         });
     if(req.body.adminCode === 'secretcode') {
         newUser.isAdmin = true;
@@ -44,7 +50,7 @@ router.get("/login", function(req, res) {
 
 router.post("/login", passport.authenticate("local",
         {
-            successRedirect: "/",
+            successReturnToOrRedirect: "/",
             failureRedirect: "/login",
             failureFlash: 'Nieprawidłowa nazwa użytkownika lub hasło.',
             successFlash: 'Zalogowano.'
@@ -54,7 +60,7 @@ router.post("/login", passport.authenticate("local",
 router.get("/logout", function(req, res) {
     req.logout();
     req.flash("success", "Wylogowałeś się.");
-    res.redirect("/");
+    res.redirect("back");
 });
 
 router.get("/users/:id", async function(req, res) {
@@ -100,7 +106,7 @@ router.get("/notifications/:id", isLoggedIn, async function(req, res) {
         let notification = await Notification.findById(req.params.id);
         notification.isRead = true;
         notification.save();
-        res.redirect(`/courses/${notification.courseId}`);
+        res.redirect(`/c/${notification.courseId}`);
     } catch(err) {
         req.flash("error", err.message);
         res.redirect("back");

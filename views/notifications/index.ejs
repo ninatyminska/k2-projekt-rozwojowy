@@ -1,15 +1,36 @@
 <% include ../partials/header %> 
 
-<h1>Powiadomienia</h1>
+    <div class="ui three column centered grid">
+        <div class="column">
+            <div id="not-list" class="ui very relaxed divided inverted list">
+                <% allNotifications.forEach(function(notification) { %>
+                <div class="item">
+                    <img class="ui avatar image" src="<%= notification.avatar %>">
+                    <div class="content">
+                        <a class="header"><%= notification.username %></a>
+                        <div class="description">Nowy wpis: <a href="/c/<%= notification.courseId %>"><%= notification.courseName %></a></div>
+                    </div>
+                </div>
+                <% }); %> 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
-<ul>
-	<% allNotifications.forEach(function(notification) { %>
-	<li>
-		<a href="/courses/<%= notification.courseId %>">
-			Nowy wpis od <%= notification.username %>
-		</a>
-	</li>
-	<% }); %>
-</ul>
+
+
+
+<!--<h1>Powiadomienia</h1>-->
+
+<!--<ul>-->
+<!--	<% allNotifications.forEach(function(notification) { %>-->
+<!--	<li>-->
+<!--		<a href="/<%= notification.courseId %>">-->
+<!--			Nowy wpis od <%= notification.username %>-->
+<!--		</a>-->
+<!--	</li>-->
+<!--	<% }); %>-->
+<!--</ul>-->
 
 <% include ../partials/footer %> 

@@ -87,7 +87,7 @@ middlewareObj.checkReviewExistence = function (req, res, next) {
                 });
                 if (foundUserReview) {
                     req.flash("error", "Twoja opinia została już dodana.");
-                    return res.redirect("/courses/" + foundCourse._id);
+                    return res.redirect("/" + foundCourse._id);
                 }
                 next();
             }

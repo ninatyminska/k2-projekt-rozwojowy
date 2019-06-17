@@ -13,7 +13,7 @@ var indexRoutes    = require("./routes/index"),
     commentRoutes  = require("./routes/comments"),
     reviewRoutes   = require("./routes/reviews");
     
-mongoose.connect("mongodb+srv://Nina:!DB10th14@cluster0-yab5c.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -23,8 +23,8 @@ app.use(flash());
 
 app.use(require("express-session")({
     secret: "Secret",
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 
 app.locals.moment = require('moment');
@@ -98,10 +98,9 @@ app.use(async function(req, res, next){
   next();
 });
 
-app.use("/", indexRoutes);
-app.use("/courses", courseRoutes);
-app.use("/courses/:id/comments", commentRoutes);
-app.use("/courses/:id/reviews", reviewRoutes);
+app.use("/", indexRoutes, courseRoutes);
+app.use("/c/:id/comments", commentRoutes);
+app.use("/c/:id/reviews", reviewRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started.");
