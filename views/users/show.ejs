@@ -1,21 +1,64 @@
 <% include ../partials/header %>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="thumbnail">
-            <h1 class="user-caption"><%= user.firstName + " " + user.lastName %></h1>
-            <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>
-            <img src="<%= user.avatar %>" alt="Zdjęcie użytkownika.">
+        <div class="ui two column centered grid">
+            <div class="four column centered row">
+                <div class="column">
+                    <div id="user-card" class="ui centered card">
+                        <div class="image">
+                            <img src="<%= user.avatar %>">
+                        </div>
+                        <div class="content">
+                            <% if (user && user.isAdmin) { %>
+                            <span class="right floated">
+                                <i class="user secret icon"></i> admin
+                            </span>
+                            <% } %>
+                            <span>
+                                <h3><%= user.firstName + " " + user.lastName %></h3>
+                            </span>
+                            <div class="description">
+                                <%= user.about %>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <a class="ui inverted olive button" href="/follow/<%= user.id %>">Obserwuj</a>
+                        </div>
+                    </div>
+                </div>   
+                <div class="column">
+                    <p>Zobacz wpisy użytkownika:</p>
+                    <div class="ui segments">
+                        <% courses.forEach(function(course) { %>
+                        <div class="ui segment">
+                            <a class="header" href="/courses/<%= course.id %>"><%= course.name %></a>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul>
-            <% courses.forEach(function(course) { %>
-                <li><a href="/courses/<%= course.id %>"><%= course.name %></a></li>
-            <% }); %>
-        </ul>
-    </div>
-    <div class="col-md-8">
-        Find a way to fit in tiny box fish i must find my red catnip fishy fish scratch the box howl uncontrollably for no reason eat an easter feather as if it were a bird then burp victoriously, but tender or throwup on your pillow. Chase red laser dot play time eat a rug and furry furry hairs everywhere oh no human coming lie on counter don't get off counter, spread kitty litter all over house yet meow so stretch yowling nonstop the whole night. A nice warm laptop for me to sit on climb a tree, wait for a fireman jump to fireman then scratch his face playing with balls of wool damn that dog . Scamper get suspicious of own shadow then go play with toilette paper but i want to go outside let me go outside nevermind inside is better. Prance along on top of the garden fence, annoy the neighbor's dog and make it bark scamper or i’m so hungry i’m so hungry but ew not for that twitch tail in permanent irritation, so my left donut is missing, as is my right the cat was chasing the mouse meow loudly just to annoy owners. 
     </div>
 </div>
+
+
+
+
+<!--<div class="row">-->
+<!--    <div class="col-md-4">-->
+<!--        <div class="thumbnail">-->
+<!--            <h1 class="user-caption"><%= user.firstName + " " + user.lastName %></h1>-->
+<!--            <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>-->
+<!--            <img src="<%= user.avatar %>" alt="Zdjęcie użytkownika.">-->
+<!--        </div>-->
+<!--        <ul>-->
+<!--            <% courses.forEach(function(course) { %>-->
+<!--                <li><a href="/courses/<%= course.id %>"><%= course.name %></a></li>-->
+<!--            <% }); %>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="col-md-8">-->
+<!--        Find a way to fit in tiny box fish i must find my red catnip fishy fish scratch the box howl uncontrollably for no reason eat an easter feather as if it were a bird then burp victoriously, but tender or throwup on your pillow. Chase red laser dot play time eat a rug and furry furry hairs everywhere oh no human coming lie on counter don't get off counter, spread kitty litter all over house yet meow so stretch yowling nonstop the whole night. A nice warm laptop for me to sit on climb a tree, wait for a fireman jump to fireman then scratch his face playing with balls of wool damn that dog . Scamper get suspicious of own shadow then go play with toilette paper but i want to go outside let me go outside nevermind inside is better. Prance along on top of the garden fence, annoy the neighbor's dog and make it bark scamper or i’m so hungry i’m so hungry but ew not for that twitch tail in permanent irritation, so my left donut is missing, as is my right the cat was chasing the mouse meow loudly just to annoy owners. -->
+<!--    </div>-->
+<!--</div>-->
 
 <% include ../partials/footer %>

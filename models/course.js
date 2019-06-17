@@ -4,6 +4,7 @@ var courseSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
+    category: String,
     createdAt: { type: Date, default: Date.now },
     author: {
         id: {

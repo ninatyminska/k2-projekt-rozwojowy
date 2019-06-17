@@ -1,35 +1,58 @@
 <% include ../partials/header %>
-    <header class="jumbotron" style="color: #222222;">
-            <div class="container">
-            <h1>Kursy</h1>
-            <p>Kursy polecane przez CE</p>
-            <p>
-                <a class="btn btn-primary btn-lg" href="/courses/new">Dodaj nowy kurs</a>
-            </p>
-        </div>
-    </header>
-    
-    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
-        <% courses.forEach(function(course){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                    <img src="<%= course.image %>">
-                </div>
-                <div class="caption">
-                    <h4><%= course.name %></h4>
-                    <% if (course.rating === 0) { %>
-                    <em>Brak opinii.</em>
-                    <% } else { %>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star <% if (course.rating > 1.5) { %> checked <% } %>"></span>
-                    <span class="fa fa-star <% if (course.rating > 2.5) { %> checked <% } %>"></span>
-                    <span class="fa fa-star <% if (course.rating > 3.5) { %> checked <% } %>"></span>
-                    <span class="fa fa-star <% if (course.rating > 4.5) { %> checked <% } %>"></span>
-                    <% } %> 
-                </div>
-                <p><a href="/courses/<%= course._id %>" class="btn btn-primary">Szczegóły</a></p>
+
+            <div id="main-header">
+                            <ul class="slideshow">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <div class="ui text container">
+                                <h1 class="ui inverted header landing-header">
+                                    Projekt rozwojowy
+                                </h1>
+                                <h2 class="landing-header">
+                                    Baza wiedzy CE
+                                </h2>
+                                <a class="ui huge primary button landing-header" href="/new">
+                                    Dodaj coś od siebie! <i class="plus square icon"></i>
+                                </a>
+                            </div>
+                        </div>
             </div>
-        <% }); %>    
+            <div class="ui vertical stripe segment">
+                        <div class="ui middle aligned stackable grid container">
+                                <% courses.forEach(function(course){ %>
+                                <div class="four wide column">
+                                    <div id="hp-card" class="ui card">
+                                        <div class="image">
+                                            <a class="ui red ribbon label"><%= course.category %></a>
+                                            <img src="<%= course.image %>">
+                                        </div>
+                                        <div class="content">
+                                            <h4><a class="header" href="/c/<%= course._id %>"><%= course.name %></a></h4>
+                                        </div>
+                                        <div class="extra">
+                                            <% if (course.rating === 0) { %>
+                                            <h4>Brak ocen.</h4>
+                                            <% } else { %>
+                                            <h4>
+                                                Ocena: 
+                                                <% if (course.rating < 1.5) { %><i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>
+                                                <% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>
+                                                <% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>
+                                                <% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>
+                                                <% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>
+                                            </h4>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <% }); %>
+                        </div>
+                    </div>
+        </div>
     </div>
 
 <% include ../partials/footer %>

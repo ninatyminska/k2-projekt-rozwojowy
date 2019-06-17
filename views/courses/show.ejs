@@ -1,243 +1,286 @@
 <% include ../partials/header %>
 
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">Kursy</p>
-            <div class="list-group">
-                <li class="list-group-item active">Kurs 1</li>
-                <li class="list-group-item">Kurs 2</li>
-                <li class="list-group-item">Kurs 3</li>
+            <div class="ui grid">
+                <div class="three wide column">
+                </div>
+                <div class="two wide column">
+                    <p>Zobacz także:</p>
+                    <div class="ui segments">
+                        <% courses.forEach(function(course){ %>
+                        <div class="ui segment">
+                            <a class="header" href="/c/<%= course._id %>"><%= course.name %></a>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="six wide column">
+                    <img class="ui fluid rounded image" src="<%= course.image %>">
+                    <div class="six wide column">
+                        <div id="course-description" class="ui segment">
+                            <h1><%= course.name %></h1>
+                            <p class="course-description"><%= course.description %></p>
+                            <em>Dodane przez: <a href="/users/<%= course.author.id %>"><%= course.author.username %></a>, <%= moment(course.createdAt).fromNow() %></em>
+                            <% if(currentUser && course.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                            <div class="ui accordion">
+                                <div class="title">
+                                    <button class="ui inverted tiny yellow button">Edytuj</button>
+                                </div>
+                                <div id="review-edit" class="content">
+                                    <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" method="POST">
+                                        <div class="ten wide field">
+                                            <input type="text" name="course[name]" value="<%= course.name %>">
+                                        </div>
+                                        <div class="ten wide field">
+                                            <input type="text" name="course[image]" value="<%= course.image %>">
+                                        </div>
+                                        <div class="ten wide field">
+                                            <input type="text" name="course[description]" value="<%= course.description %>">
+                                        </div>
+                                        <div class="ten wide field">
+                                            <button class="ui inverted tiny yellow button">Edytuj</button>
+                                        </div>
+                                    </form>
+                                    <form class="delete-form" action="/c/<%= course._id %>?_method=DELETE" method="POST">
+                                        <button class="ui inverted red tiny button">Skasuj</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <div id="course-description" class="ui segment">
+                            <% if (course.rating === 0) { %>
+                            <h4>
+                                <em>Brak ocen.</em>
+                            </h4>
+                            <% } else { %>
+                            <h4>
+                                Ocena:  
+                                <% if (course.rating < 1.5) { %> <i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>
+                                <% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>
+                                <% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>
+                                <% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>
+                                <% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>
+                            </h4> 
+                            <p>
+                                Średnia ocena kursu: <strong><%= course.rating.toFixed(2) %></strong>
+                            </p>
+                            <div class="ui accordion">
+                                <div class="title">
+                                    <button class="ui inverted blue button"><i class="eye icon"></i> Zobacz opinie</button>
+                                </div>
+                                <div id="review-show" class="content">
+                                    <div class="ui comments">
+                                        <% course.reviews.forEach(function(review){ %>
+                                        <div class="comment">
+                                            <a class="avatar">
+                                                <img src="<%= review.author.avatar %>">
+                                            </a>
+                                        <div class="content">
+                                            <a class="author" href="/users/<%= review.author.id %>"><%= review.author.username %></a>
+                                            <div class="metadata">
+                                                <span class="date"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
+                                                <div class="rating">
+                                                    <%- '<i class="star icon checked"></i>'.repeat(review.rating) %><%- '<i class="star icon"></i>'.repeat(5 - review.rating) %>
+                                                </div>
+                                            </div>
+                                            <div class="text">
+                                                <%= review.text %>
+                                            </div>
+                                        </div>
+                                        <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                        <div class="accordion">
+                                            <div class="title">
+                                                <button class="ui inverted tiny yellow button">Edytuj</button>
+                                            </div>
+                                            <div id="review-edit" class="content">
+                                                <form id="edit-review-form<%= review._id %>" class="ui large form" action="/c/<%=course._id %>/reviews/<%=review._id %>?_method=PUT" method="POST">
+                                                <div class="ten wide field">
+                                                    <input type="text" disabled value="<%= currentUser.username %>">
+                                                </div>
+                                                <div class="ten wide field">
+                                                    <fieldset id="rating">
+                                                    <div>
+                                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %> checked <% } %> />
+                                                            <%- '<i class="star icon"></i>'.repeat(5) %>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" <% if (review.rating === 4) { %> checked <% } %> />
+                                                            <%- '<i class="star icon"></i>'.repeat(4) %>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" <% if (review.rating === 3) { %> checked <% } %> />
+                                                           <%- '<i class="star icon"></i>'.repeat(3) %>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" <% if (review.rating === 2) { %> checked <% } %> />
+                                                             <%- '<i class="star icon"></i>'.repeat(2) %>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" <% if (review.rating === 1) { %> checked <% } %> />
+                                                            <%- '<i class="star icon"></i>'.repeat(1) %>
+                                                    </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="ten wide field">
+                                                    <textarea name="review[text]" placeholder="Twoja opinia..." form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
+                                                </div>
+                                                <div class="ten wide field">
+                                                    <button class="ui inverted tiny yellow button">Edytuj</button>
+                                                </div>
+                                                </form>
+                                                <form class="delete-form" action="/c/<%=course._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                                    <button class="ui inverted red tiny button">Skasuj</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                        </div>
+                                        <% }); %>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                                
+                            <% if (currentUser && course.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %>
+                            <em>Dodałeś już opinię. Możesz ją edytować.</em>
+                            <% } else {%>
+                            <div class="ui accordion">
+                                <div class="title">
+                                    <button class="ui inverted green button"><i class="star outline icon"></i> Dodaj opinię </button>
+                                </div>
+                                <div id="review-add" class="content">
+                                    <% if(!currentUser) { %>
+                                    <h5>Musisz być zalogowany, aby dodać opinię. <a href="/login">Kliknij tutaj.</a></h5>
+                                    <% } %>
+                                    <% if(currentUser) { %>
+                                    <form id="add-review-form" class="ui large form" action="/c/<%= course._id %>/reviews" method="POST">
+                                        <div class="ten wide field">
+                                            <label>Użytkownik</label>
+                                            <input type="text" disabled value="<%= currentUser.username %>">
+                                        </div>
+                                        <div class="ten wide field">
+                                            <label>Ocena</label>
+                                            <fieldset id="rating">
+                                            <div>
+                                                <input type="radio" id="first-rate5" name="review[rating]" value="5" checked />
+                                                    <%- '<i class="star icon"></i>'.repeat(5) %>
+                                             </div>
+                                             <div>
+                                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                                    <%- '<i class="star icon"></i>'.repeat(4) %> 
+                                             </div>
+                                             <div>
+                                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                                    <%- '<i class="star icon"></i>'.repeat(3) %> 
+                                             </div>
+                                              <div>
+                                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                                    <%- '<i class="star icon"></i>'.repeat(2) %>  
+                                              </div>
+                                            <div>
+                                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                                    <%- '<i class="star icon"></i>'.repeat(1) %>
+                                            </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="ten wide field">
+                                            <label>Opinia</label>
+                                            <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"></textarea>
+                                        </div>
+                                        <div class="ten wide field">
+                                            <button class="tiny ui inverted green button">Dodaj</button>
+                                        </div>
+                                    </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <div id="course-description" class="ui segment">
+                            <h4>Komentarze</h4>
+                            <% if (course.comments && course.comments.length) { %>
+                            <div class="ui accordion">
+                                <div class="title">
+                                    <button class="ui inverted blue button"><i class="eye icon"></i> Zobacz komentarze</button>
+                                </div>
+                                <div id="review-show" class="content">
+                                    <div class="ui comments">
+                                        <% course.comments.forEach(function(comment){ %>
+                                        <div class="comment">
+                                            <a class="avatar">
+                                                <img src="<%= comment.author.avatar %>">
+                                            </a>
+                                            <div class="content">
+                                                <a class="author" href="/users/<%= comment.author.id %>"><%= comment.author.username %></a>
+                                                <div class="metadata">
+                                                    <span class="date"><%= moment(comment.createdAt).fromNow() %></span>
+                                                </div>
+                                                <div class="text">
+                                                    <%= comment.text %>
+                                                </div>
+                                            </div>
+                                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                            <div class="accordion">
+                                                <div class="title">
+                                                    <button class="ui inverted tiny yellow button">Edytuj</button>
+                                                </div>
+                                                <div id="review-edit" class="content">
+                                                    <form id="edit-comment-form<%= comment._id %>" class="ui large form" action="/c/<%=course._id %>/comments/<%=comment._id %>?_method=PUT" method="POST">
+                                                    <div class="ten wide field">
+                                                        <input type="text" disabled value="<%= currentUser.username %>">
+                                                    </div>
+                                                    <div class="ten wide field">
+                                                        <textarea name="review[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>"><%= comment.text %></textarea>
+                                                    </div>
+                                                    <div class="ten wide field">
+                                                        <button class="ui inverted tiny yellow button">Edytuj</button>
+                                                    </div>
+                                                    </form>
+                                                    <form class="delete-form" action="/c/<%=course._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
+                                                        <button class="ui inverted red tiny button">Skasuj</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                                        <% }); %>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                            <div class="ui accordion">
+                                <div class="title">
+                                    <button class="ui inverted green button"><i class="comments outline icon"></i> Dodaj komentarz</button>
+                                </div>
+                                <div id="review-add" class="content">
+                                    <% if(!currentUser) { %>
+                                    <h5>Musisz być zalogowany, aby dodać komentarz. <a href="/login">Kliknij tutaj.</a></h5>
+                                    <% } %>
+                                    <% if(currentUser) { %>
+                                    <form id="add-comment-form" class="ui large form" action="/c/<%= course._id %>/comments" method="POST">
+                                        <div class="ten wide field">
+                                            <input type="text" disabled value="<%= currentUser.username %>">
+                                        </div>
+                                        <div class="ten wide field">
+                                            <textarea name="comment[text]" placeholder="Wpisz treść komentarza." form="add-comment-form"></textarea>
+                                        </div>
+                                        <div class="ten wide field">
+                                            <button class="tiny ui inverted green button">Dodaj komentarz</button>
+                                        </div>
+                                    </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="five wide column">
+                </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <img class="img-responsive" src="<%= course.image %>">
-                <div class="caption">
-                    <h4><a><%= course.name %></a></h4>
-                    <p><%= course.description %></p>
-                    <p>
-                        <em>Dodane przez: <a href="/users/<%= course.author.id %>"><%= course.author.username %></a>, <%= moment(course.createdAt).fromNow() %></em>
-                    </p>
-                    <% if(currentUser && course.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
-                    <a class="btn btn-xs btn-warning" href="/courses/<%= course._id %>/edit">Edytuj</a>
-                    <form class="delete-form" action="/courses/<%= course._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-xs btn-danger">Skasuj</button>
-                    </form>
-                    <% } %>
-                </div>
-            </div>
-            <div class="thumbnail">
-                <div class="caption-full well">
-                    <% if (course.rating === 0) { %>
-                    <h5>
-                        <em>Brak opinii.</em>
-                    </h5>
-                    <% } else { %>
-                    <div class="text-right">
-                        <a class="btn btn-primary pull-right <% if (currentUser && course.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" role="button" data-toggle="collapse" href="#collapseReview"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Dodaj opinię</a>
-                    </div>
-                    <h4><strong>Opinie 
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star <% if (course.rating > 1.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (course.rating > 2.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (course.rating > 3.5) { %> checked <% } %>"></span>
-                        <span class="fa fa-star <% if (course.rating > 4.5) { %> checked <% } %>"></span> 
-                    </strong></h4> 
-                    <p>
-                        Liczba opinii: <%= course.reviews.length %>. Średnia ocena kursu: <strong><%= course.rating.toFixed(2) %></strong>
-                    </p>
-                    <div class="collapse" id="collapseReview">
-                        <div class="well" style="border-left: 5px solid #00C851;">
-                            <% if(!currentUser) { %>
-                            <h5>Musisz być zalogowany, aby dodać opinię. <a href="/login">Kliknij tutaj.</a></h5>
-                            <% } %>
-                            <% if(currentUser) { %>
-                            <h4>Dodaj opinię <span class="glyphicon glyphicon-star" aria-hidden="true"></span></h4>
-                            <form id="add-review-form" action="/courses/<%= course._id %>/reviews/" method="POST">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
-                                </div>
-                                <div class="form-group">
-                                    <fieldset class="starability-basic form-group" id="rating">
-                                    <div>
-                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" checked />
-                                        <label for="first-rate5" title="5 stars - Amazing">
-                                        <%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                        <label for="first-rate4" title="4 stars - Very good">
-                                            <%- '<span class="fa fa-star checked"></span>'.repeat(4) %>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                        <label for="first-rate3" title="3 stars - Average">
-                                            <%- '<span class="fa fa-star checked"></span>'.repeat(3) %>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                        <label for="first-rate2" title="2 stars - Not good">
-                                            <%- '<span class="fa fa-star checked"></span>'.repeat(2) %>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                        <label for="first-rate1" title="1 star - Terrible">
-                                            <%- '<span class="fa fa-star checked"></span>'.repeat(1) %>
-                                        </label>
-                                    </div>
-                                    </fieldset>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii..." form="add-review-form" rows="5" cols="70"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-success btn-sm">Dodaj <span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
-                                </div>
-                            </form>
-                            <% } %>
-                        </div>
-                    </div>
-                    <hr>
-                    <% course.reviews.slice(0, 5).forEach(function(review){ %>
-                    <div class="row">
-                        <div class="col-md-12 com-rev-section">
-                            <strong><%= review.author.username %></strong> <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
-                            <span class="pull-right"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
-                            <p>
-                                <%= review.text %>
-                            </p>
-                            <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-                            <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEditReview<%= review._id %>" aria-expanded="false" aria-controls="collapse<%= review._id %>">Edytuj</a>
-                            <form class="delete-form" action="/courses/<%=course._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
-                                <input type="submit" class="btn btn-xs btn-danger" value="Skasuj">
-                            </form>
-                            <div class="collapse" id="collapseEditReview<%= review._id %>">
-                                <div class="well" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
-                                    <h4>Edytuj swoją opinię <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
-                                    <form id="edit-review-form<%= review._id %>" action="/courses/<%=course._id %>/reviews/<%=review._id %>?_method=PUT" method="POST">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
-                                    </div>
-                                    <div class="form-group">
-                                        <fieldset class="starability-basic form-group" id="rating">
-                                        <div>
-                                            <input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %> checked <% } %> />
-                                            <label for="first-rate5" title="5 stars - Amazing">
-                                                <%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" id="first-rate4" name="review[rating]" value="4" <% if (review.rating === 4) { %> checked <% } %> />
-                                            <label for="first-rate4" title="4 stars - Very good">
-                                                <%- '<span class="fa fa-star checked"></span>'.repeat(4) %>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" id="first-rate3" name="review[rating]" value="3" <% if (review.rating === 3) { %> checked <% } %> />
-                                            <label for="first-rate3" title="3 stars - Average">
-                                                <%- '<span class="fa fa-star checked"></span>'.repeat(3) %>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" id="first-rate2" name="review[rating]" value="2" <% if (review.rating === 2) { %> checked <% } %> />
-                                            <label for="first-rate2" title="2 stars - Not good">
-                                                <%- '<span class="fa fa-star checked"></span>'.repeat(2) %>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" id="first-rate1" name="review[rating]" value="1" <% if (review.rating === 1) { %> checked <% } %> />
-                                            <label for="first-rate1" title="1 star - Terrible">
-                                                <%- '<span class="fa fa-star checked"></span>'.repeat(1) %>
-                                            </label>
-                                        </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="review[text]" placeholder="Twoja opinia..." form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-warning btn-sm">Edytuj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                    <% }); %>
-                    <div style="margin-bottom: 10px; text-align: center;">
-                        <h4><a href="/courses/<%= course._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> Zobacz pozostałe opinie</a></h4>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-            <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Dodaj nowy komentarz</a>
-                </div>
-                <h4><strong>Komentarze <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span></strong></h4>
-                <div class="collapse" id="collapseComment">
-                    <div class="well" style="border-left: 5px solid #00C851;">
-                        <% if(!currentUser) { %>
-                            <h5>Musisz być zalogowany, aby dodać komentarz. <a href="/login">Kliknij tutaj.</a></h5>
-                        <% } %>
-                        <% if(currentUser) { %>
-                            <h4>Napisz komentarz <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
-                            <form id="add-comment-form" action="/courses/<%= course._id %>/comments" method="POST">
-                            <div class="form-group">
-                                <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="comment[text]" placeholder="Wpisz treść komentarza..." form="add-comment-form" rows="5" cols="70"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-success btn-sm">Dodaj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
-                            </div>
-                            </form>
-                        <% } %>
-                    </div>
-                </div>
-                <hr>
-                <% course.comments.forEach(function(comment) { %>
-                    <div class="row">
-                        <div class="col-md-12 com-rev-section">
-                            <strong><%= comment.author.username %></strong>
-                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
-                            <p>
-                                <%= comment.text %>
-                            </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
-                                <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">Edit</a>
-                                <form id="delete-form" action="/courses/<%= course._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
-                                <button class="btn btn-xs btn-danger">Usuń</button>
-                                </form>
-                            <div class="collapse" id="collapseEdit<%= comment._id %>">
-                                <div class="well" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
-                                    <h4>Edytuj swój komentarz <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
-                                    <form id="edit-comment-form<%= comment._id %>" action="/courses/<%= course._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="comment[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>" rows="5" cols="70"><%= comment.text %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-warning btn-sm">Edytuj <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                <% }) %>
-            </div>
-        </div>    
     </div>
-
+    
 <% include ../partials/footer %>
+
+  
