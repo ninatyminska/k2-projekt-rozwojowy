@@ -5,7 +5,11 @@ var courseSchema = new mongoose.Schema({
     image: String,
     description: String,
     category: String,
-    createdAt: { type: Date, default: Date.now },
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    },
+    date: Date,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

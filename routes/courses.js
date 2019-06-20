@@ -22,11 +22,12 @@ router.post("/", middleware.isLoggedIn, async function(req, res){
     var image = req.body.image;
     var desc = req.body.description;
     var cat = req.body.category;
+    var date = req.body.date;
     var author = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCourse = {name: name, image: image, description: desc, author: author, category: cat};
+    var newCourse = {name: name, image: image, description: desc, author: author, category: cat, date: date};
 
     try {
       let course = await Course.create(newCourse);
