@@ -92,7 +92,11 @@ body.pushable>.pusher {
 }
 
 #hp-card {
-    min-height: 310px;
+    min-height: 275px;
+}
+
+#hp-card>.image>img {
+    max-height: 150px;
 }
 
 #hp-card .extra {
@@ -191,13 +195,17 @@ body.pushable>.pusher {
     padding-bottom: 5em;
 }
 
-.footer.segment {
-    background-color: white!important;
-    padding: 0.5rem!important;
+.ui.inverted.vertical.footer.segment {
+    border-top: 1px solid white;
 }
 
-.footer.segment .ui.container {
-    margin: 0 20px!important;
+#footer-grid {
+    margin-left: 5rem!important;
+    margin-right: 5rem!important;
+}
+
+#footer-grid>.grid {
+    margin: 1rem;
 }
 
 .secondary.pointing.menu .toc.item {
@@ -206,6 +214,10 @@ body.pushable>.pusher {
 
 .ui .grid {
     margin: 5rem 0;
+}
+
+#form-grid {
+    margin: 10rem 0;
 }
 
 .ui.card .image>.ui.ribbon.label, .ui.image>.ui.ribbon.label {
@@ -222,8 +234,33 @@ body.pushable>.pusher {
     padding: 10px;
 }
 
+#not-menu {
+    display: flex;
+}
+
 #not-menu>img {
     max-width: fit-content;
+}
+
+.ui.yellow.circular.label {
+    margin-left: 5px;
+    
+}
+
+.ui.menu .item>i.dropdown.icon {
+    margin-left: 5px;
+}
+
+.ui.dropdown {
+    margin: auto;
+}
+
+.menu.transition.animating.slide.down {
+    margin-top: 15px;
+}
+
+.menu.transition.visible {
+    margin-top: 15px;
 }
 
 .ui.inverted.menu .item, .ui.inverted.menu .item>a:not(.ui) {
@@ -339,4 +376,11 @@ body.pushable>.pusher {
 .ui.visible.left.sidebar ~ .fixed, .ui.visible.left.sidebar ~ .pusher {   
     -webkit-transform: translate3d(260px, 0, 0);           
     transform: translate3d(260px, 0, 0); 
+}
+
+@media only screen and (max-width: 767px) {
+    .ui.stackable.grid {
+        margin-top: 5rem!important;
+        margin-bottom: 2rem!important;
+    }
 }

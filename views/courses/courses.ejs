@@ -34,17 +34,20 @@
                                             <h4><a class="header" href="/c/<%= course._id %>"><%= course.name %></a></h4>
                                         </div>
                                         <div class="extra">
+                                            <% if (course.category == "Konferencja" || course.category == "Meetup") { %>
+                                                <span class="right floated"><%= moment(course.date).calendar(); %></span>
+                                            <% } %>    
                                             <% if (course.rating === 0) { %>
-                                            <h4>Brak ocen.</h4>
+                                            <span>Brak ocen.</span>
                                             <% } else { %>
-                                            <h4>
+                                            <span>
                                                 Ocena: 
                                                 <% if (course.rating < 1.5) { %><i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>
                                                 <% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>
                                                 <% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>
                                                 <% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>
                                                 <% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>
-                                            </h4>
+                                            </span>
                                             <% } %>
                                         </div>
                                     </div>
