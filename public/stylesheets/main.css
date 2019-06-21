@@ -85,6 +85,7 @@ body.pushable>.pusher {
   }
 }
 
+
 #login-form {
     background-color: #1b1c1d;
     color: white;
@@ -96,12 +97,21 @@ body.pushable>.pusher {
 }
 
 #hp-card>.image>img {
+    min-height: 150px;
     max-height: 150px;
 }
 
 #hp-card .extra {
     background-color: #1b1c1d;
     color: white;
+}
+
+#hp-card>.content {
+    text-align: center;
+}
+
+#hp-card>.extra>.comments.icon {
+    margin-left: 5px;
 }
 
 #user-card>.content {
@@ -286,18 +296,25 @@ body.pushable>.pusher {
     color: yellow;
 }
 
+#course-edit {
+    margin-top: 20px;
+    margin-left: 30px;
+    padding-left: 30px;
+    text-align: left;
+    border-left: 5px solid #fbbd08;
+}
+
 #review-show {
     margin-top: 20px;
     padding-left: 30px;
     text-align: left;
-    border-left: 5px solid #3AC0FF;
 }
 
 #review-edit {
     margin-top: 20px;
     padding-left: 30px;
     text-align: left;
-    border-left: 5px solid #1B1D1E;
+    border-left: 5px solid #fbbd08;
 }
 
 #review-edit>.accordion {
@@ -322,6 +339,7 @@ body.pushable>.pusher {
 
 #review-add {
     padding-left: 30px;
+    margin-left: 30px;
     text-align: left;
     border-left: 5px solid #00C851;
 }
@@ -335,7 +353,8 @@ body.pushable>.pusher {
 }
 
 .course-description {
-    margin-bottom: 40px;
+    margin: 40px 20px;
+    text-align: left;
 }
 
 @media only screen and (max-width: 700px) {
@@ -350,8 +369,14 @@ body.pushable>.pusher {
      
     .secondary.pointing.menu .toc.item {
         display: block;
+        margin: auto 0;
     }
-      
+    .menu.transition.visible {
+        margin-top: 0;
+    }      
+    .menu.transition.animating.slide.down {
+        margin-top: 0;
+    }
     .masthead.segment {
         min-height: 350px;
     }

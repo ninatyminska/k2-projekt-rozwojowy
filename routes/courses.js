@@ -20,12 +20,13 @@ router.get("/", function(req, res) {
 router.post("/", middleware.isLoggedIn, async function(req, res){
     var name = req.body.name;
     var image = req.body.image;
-    var desc = req.body.description;
+    var desc = req.sanitize(req.body.description);
     var cat = req.body.category;
     var date = req.body.date;
     var author = {
         id: req.user._id,
-        username: req.user.username
+        username: req.user.username,
+        avatar: req.user.avatar
     };
     var newCourse = {name: name, image: image, description: desc, author: author, category: cat, date: date};
 

@@ -1,12 +1,13 @@
-var express        = require("express"),
-    app            = express(),
-    bodyParser     = require("body-parser"),
-    mongoose       = require("mongoose"),
-    passport       = require("passport"),
-    LocalStrategy  = require("passport-local"),
-    methodOverride = require("method-override"),
-    flash          = require("connect-flash"),
-    User           = require("./models/user");
+var express          = require("express"),
+    app              = express(),
+    bodyParser       = require("body-parser"),
+    mongoose         = require("mongoose"),
+    passport         = require("passport"),
+    expressSanitizer = require('express-sanitizer'),
+    LocalStrategy    = require("passport-local"),
+    methodOverride   = require("method-override"),
+    flash            = require("connect-flash"),
+    User             = require("./models/user");
     
 var indexRoutes    = require("./routes/index"),
     courseRoutes   = require("./routes/courses"),
@@ -17,6 +18,7 @@ mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2
 mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(expressSanitizer());
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());

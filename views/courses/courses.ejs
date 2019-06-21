@@ -16,7 +16,7 @@
                                     Baza wiedzy CE
                                 </h2>
                                 <a class="ui huge primary button landing-header" href="/new">
-                                    Dodaj coś od siebie! <i class="plus square icon"></i>
+                                    Dodaj coś od siebie! <i class="plus icon"></i>
                                 </a>
                             </div>
                         </div>
@@ -31,24 +31,34 @@
                                             <img src="<%= course.image %>">
                                         </div>
                                         <div class="content">
-                                            <h4><a class="header" href="/c/<%= course._id %>"><%= course.name %></a></h4>
+                                            <h4><a class="header" href="/c/<%= course._id %>"><%= course.name.substring(0, 30) %><% if(course.name.length>30) { %>...<% } %></a></h4>
+                                            <div class="description">
+                                                <a class="ui orange basic tiny button" href="/c/<%= course._id %>">Dowiedz się więcej <i class="chevron right icon"></i></a>
+                                            </div>
                                         </div>
                                         <div class="extra">
-                                            <% if (course.category == "Konferencja" || course.category == "Meetup") { %>
-                                                <span class="right floated"><%= moment(course.date).calendar(); %></span>
-                                            <% } %>    
+                                            <% if (course.category == "Konferencja") { %>
+                                                <span class="right floated"><i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %></span>
+                                            <% } %>
+                                            <% if(course.category == "Meetup") { %>
+                                                <span class="right floated"><i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %></span>
+                                            <% } %>
+                                            <% if(course.category == "Warsztat") { %>
+                                                <span class="right floated"><i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %></span>
+                                            <% } %>
                                             <% if (course.rating === 0) { %>
-                                            <span>Brak ocen.</span>
+                                            <span><i class="star icon"></i>0</span>
                                             <% } else { %>
                                             <span>
-                                                Ocena: 
-                                                <% if (course.rating < 1.5) { %><i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>
-                                                <% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>
-                                                <% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>
-                                                <% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>
-                                                <% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>
+                                                <i class="star icon checked"></i><%= course.rating.toFixed(2) %>
+                                                <!--<% if (course.rating < 1.5) { %><i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>-->
+                                                <!--<% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>-->
+                                                <!--<% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>-->
+                                                <!--<% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>-->
+                                                <!--<% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>-->
                                             </span>
                                             <% } %>
+                                            <i class="comments icon"></i><%= course.comments.length %>
                                         </div>
                                     </div>
                                 </div> 
