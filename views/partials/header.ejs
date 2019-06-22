@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/public/favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/public/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/public/favicons/favicon-16x16.png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>K2 - Projekt rozwojowy</title>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
@@ -53,7 +56,7 @@
                                         <div id="not-menu" class="item">
                                             <img class="ui avatar image" src="<%= notification.avatar %>"> 
                                             <span>
-                                                Użytkownik <a href="/users/<%= notification.userId %>"><%= notification.username %></a> dodał nowy wpis: <a href="/notifications/<%= notification.id %>"><%= notification.courseName %></a>
+                                                <a href="/users/<%= notification.userId %>"><%= notification.username %></a> - <a href="/notifications/<%= notification.id %>"><%= notification.courseName %></a>
                                             </span> 
                                         </div>
                                         <% }); %>  

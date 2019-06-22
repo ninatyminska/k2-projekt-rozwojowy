@@ -42,7 +42,7 @@ app.locals.moment.updateLocale('pl', {
                 return number + ' sekund temu';
             }
         },
-        m:  "minutę",
+        m:  "minutę temu",
         mm: function (number){
             if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
                 return number + ' minuty temu';
