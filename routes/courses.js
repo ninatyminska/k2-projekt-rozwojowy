@@ -21,6 +21,7 @@ router.post("/", middleware.isLoggedIn, async function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.sanitize(req.body.description);
+    var web = req.body.website;
     var cat = req.body.category;
     var date = req.body.date;
     var author = {
@@ -28,7 +29,7 @@ router.post("/", middleware.isLoggedIn, async function(req, res){
         username: req.user.username,
         avatar: req.user.avatar
     };
-    var newCourse = {name: name, image: image, description: desc, author: author, category: cat, date: date};
+    var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, date: date};
 
     try {
       let course = await Course.create(newCourse);

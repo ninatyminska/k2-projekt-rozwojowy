@@ -210,8 +210,8 @@ body.pushable>.pusher {
 }
 
 #footer-grid {
-    margin-left: 5rem!important;
-    margin-right: 5rem!important;
+    margin-left: 10rem!important;
+    margin-right: 10rem!important;
 }
 
 #footer-grid>.grid {
@@ -277,15 +277,32 @@ body.pushable>.pusher {
     color: #4183c4;
 }
 
+#more-courses {
+    min-width: 200px;
+}
+
 #course-description {
     background-color: #1b1c1d;
     color: white;
+    text-align: center;
     border-color: white;
     margin-top: 1rem;
 }
 
 #course-description .ui.form .field>label {
     color: white;
+}
+
+#course-description>h4 {
+    margin: 0.5em;
+}
+
+#course-description>.ui.teal.image.label {
+    margin: 0.5em;
+}
+
+#course-description .course-website {
+    color: white!important;
 }
 
 .ui.inverted.green.button>.icon.star {
@@ -302,6 +319,29 @@ body.pushable>.pusher {
     padding-left: 30px;
     text-align: left;
     border-left: 5px solid #fbbd08;
+}
+
+#course-edit>form>.input {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#course-edit>form>.input>.calendar {
+    width: 100%;
+}
+
+#course-edit>form>.input>.calendar>.input {
+    width: 100%;
+}
+
+#course-edit>form>.input>fieldset {
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+#course-edit>form>.input:last-child {
+    margin-bottom: 0;
 }
 
 #review-show {
@@ -357,6 +397,12 @@ body.pushable>.pusher {
     text-align: left;
 }
 
+.course-description-label {
+    top: 3em;
+    left: -1.1em!important;
+    z-index: 1;
+}
+
 @media only screen and (max-width: 700px) {
     .ui.fixed.menu {
         display: none !important;
@@ -405,7 +451,12 @@ body.pushable>.pusher {
 
 @media only screen and (max-width: 767px) {
     .ui.stackable.grid {
-        margin-top: 5rem!important;
-        margin-bottom: 2rem!important;
+        margin-top: 1rem!important;
+        margin-bottom: 1rem!important;
+    }
+    
+    #footer-grid {
+        margin-left: 5rem!important;
+        margin-right: 5rem!important;
     }
 }

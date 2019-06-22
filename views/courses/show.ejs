@@ -1,9 +1,9 @@
 <% include ../partials/header %>
 
-            <div class="ui mobile reversed stackable grid">
-                <div class="three wide column">
-                </div>
-                <div class="two wide column">
+            <div class="ui mobile reversed stackable centered grid">
+                <!--<div class="three wide column">-->
+                <!--</div>-->
+                <div id="more-courses" class="two wide column">
                     <p>Zobacz także:</p>
                     <div class="ui segments">
                         <% courses.forEach(function(course){ %>
@@ -14,19 +14,21 @@
                     </div>
                 </div>
                 <div class="six wide column">
+                    <a class="ui red ribbon label course-description-label"><%= course.category %></a>
                     <img class="ui fluid rounded image" src="<%= course.image %>">
                     <div class="six wide column">
                         <div id="course-description" class="ui segment">
                             <h1><%= course.name %></h1>
                             <% if (course.category == "Konferencja") { %>
-                            <h3><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h3>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
                             <% if (course.category == "Meetup") { %>
-                            <h3><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h3>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
                             <% if (course.category == "Warsztat") { %>
-                            <h3><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h3>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
+                            <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i><%= course.website %></a></h4>
                             <a class="ui teal image label" href="/users/<%= course.author.id %>">
                                 <img src="<%= course.author.avatar %>">
                                 <%= course.author.username %>
@@ -42,16 +44,58 @@
                                 </div>
                                 <div id="course-edit" class="content">
                                     <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" method="POST">
-                                        <div class="fourteen wide field">
+                                        <div class="ui fourteen wide left icon input">
+                                            <i class="edit icon"></i>
                                             <input type="text" name="course[name]" value="<%= course.name %>">
                                         </div>
-                                        <div class="fourteen wide field">
+                                        <div class="ui fourteen wide left icon input">
+                                            <i class="image icon"></i>
                                             <input type="text" name="course[image]" value="<%= course.image %>">
                                         </div>
-                                        <div class="fourteen wide field">
+                                        <div class="ui fourteen wide left icon input">
+                                            <i class="globe icon"></i>
+                                            <input type="text" name="course[website]" value="<%= course.website %>">
+                                        </div>
+                                        <div class="ui fourteen wide left icon input">
                                             <textarea name="course[description]"><%- course.description %></textarea>
                                         </div>
-                                        <div class="fourteen wide field">
+                                        <div class="ui fourteen wide left icon input">
+                                            <fieldset id="category">
+                                                <div>
+                                                <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Konferencja" <% if(course.category === "Konferencja") { %> checked <% } %> />
+                                                <i class="users icon"></i> Konferencja
+                                                </div>
+                                                <div>
+                                                    <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Meetup" <% if(course.category === "Meetup") { %> checked <% } %> />
+                                                    <i class="meetup icon"></i> Meetup
+                                                </div>
+                                                <div>
+                                                    <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Warsztat" <% if(course.category === "Warsztat") { %> checked <% } %> />
+                                                    <i class="cogs icon"></i> Warsztat
+                                                </div>
+                                                <div>
+                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Książka" <% if(course.category === "Książka") { %> checked <% } %> />
+                                                    <i class="book icon"></i> Książka
+                                                </div>
+                                                <div>
+                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Strona internetowa" <% if(course.category === "Strona internetowa") { %> checked <% } %> />
+                                                    <i class="globe icon"></i> Strona internetowa
+                                                </div>
+                                                <div>
+                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Program" <% if(course.category === "Program") { %> checked <% } %> />
+                                                    <i class="desktop icon"></i> Program
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div id="date" class="ui fourteen wide left icon input">
+                                            <div class="ui calendar">
+                                                <div class="ui input left icon">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" name="date" value="<%= moment(course.date).format("YYYY-MM-DD") %> <%= moment(course.date).format("hh:mm") %>" />
+                                                </div>
+                                            </div>
+                                        </div>    
+                                        <div class="ui fourteen wide left icon input">
                                             <button class="ui inverted tiny yellow button">Edytuj</button>
                                         </div>
                                     </form>
@@ -290,8 +334,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="five wide column">
-                </div>
+                <!--<div class="five wide column">-->
+                <!--</div>-->
             </div>
         </div>
     </div>
