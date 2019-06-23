@@ -15,6 +15,7 @@ var indexRoutes    = require("./routes/index"),
     reviewRoutes   = require("./routes/reviews");
     
 var mdb = process.env.MDB_PSSW;
+
 mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({extended: true}));
