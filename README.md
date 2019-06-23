@@ -28,5 +28,5 @@
 <ul>
 <strike><li>[mobile] notifications dropdown size</li></strike>
 <strike><li>[mobile] grids margin-top</li></strike>
-<li>findOneAndRemove() deprecated</li>
+<strike><li>collection.remove is deprecated</li></strike>
 </ul> 
