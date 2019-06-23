@@ -17,6 +17,10 @@
   margin-bottom: 0;
 }
 
+#category-menu-mobile {
+  display: none;
+}
+
 #category-menu-tab {
   width: auto;
   border: 0;
@@ -530,9 +534,34 @@ body.pushable>.pusher {
         margin-top: 1rem!important;
         margin-bottom: 1rem!important;
     }
+
+    #category-menu-tab {
+      display: none;
+    }
+
+    #category-menu-mobile {
+      display: block;
+      background-color: #1b1c1d;
+      border: 1px solid white;
+      color: white;
+      margin-bottom: 0!important;
+    }
+
+    #category-menu-mobile.active {
+      background-color: #1b1c1d;
+    }
+
+    #category-menu-mobile>i {
+      border-right: 1px solid white;
+    }
     
     #category-menu-tab>.item {
       width: fit-content!important;
+    }
+
+    .ui.bottom.attached.tab.segment.category-menu {
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     #hp-card>.image>img {
