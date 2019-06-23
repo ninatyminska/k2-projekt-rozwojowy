@@ -20,8 +20,8 @@
 <h2>MAJOR TO-DOS</h2>
 <ul>
 <li>search</li>
-<li>filtering by category (tabs)</li>
-<li>sorting by date</li>
+<strike><li>filtering by category (tabs)</li></strike>
+<strike><li>sorting by date</li></strike>
 <li>tags</li>
 </ul>
 <h2>BUGS TO-FIX</h2>
