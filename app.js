@@ -7,14 +7,14 @@ var express          = require("express"),
     LocalStrategy    = require("passport-local"),
     methodOverride   = require("method-override"),
     flash            = require("connect-flash"),
-    User             = require("./models/user"),
-    mdb              = process.env.MDB_PSSW;
+    User             = require("./models/user");
     
 var indexRoutes    = require("./routes/index"),
     courseRoutes   = require("./routes/courses"),
     commentRoutes  = require("./routes/comments"),
     reviewRoutes   = require("./routes/reviews");
     
+var mdb = process.env.MDB_PSSW;
 mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({extended: true}));
