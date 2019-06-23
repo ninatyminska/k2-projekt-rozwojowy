@@ -4,16 +4,6 @@ var express     = require("express"),
     Comment     = require("../models/comment"),
     middleware  = require("../middleware");
 
-// router.get("/new", middleware.isLoggedIn, function(req, res) {
-//     Course.findById(req.params.id, function(err, course){
-//         if(err) {
-//             console.log(err);
-//         } else {
-//             res.render("comments/new", {course: course});
-//         }
-//     });
-// });
-
 router.post("/", middleware.isLoggedIn, function(req, res) {
     Course.findById(req.params.id, function(err, course) {
         if(err) {
@@ -38,42 +28,38 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     });
 });
 
-// router.get("/:comment_id/edit", middleware.checkCommentOwner, function(req, res) {
-//     Course.findById(req.params.id, function(err, foundCourse) {
-//         if(err || !foundCourse) {
-//             req.flash("error", "Kurs nie został znaleziony.");
-//             res.redirect("back");
-//         }
-//         Comment.findById(req.params.comment_id, function(err, foundComment) {
-//             if(err || !foundComment){
-//                 req.flash("error", "Komentarz nie został znaleziony.");
-//                 res.redirect("back");
-//             } else {
-//                 res.render("comments/edit", {course_id: req.params.id, comment: foundComment});
-//             }
-//         });
-//     });    
-// });
-
 router.put("/:comment_id", middleware.checkCommentOwner, function(req, res) {
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment) {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, {new: true}, function(err, updatedComment) {
         if(err) {
+            req.flash("error", "Wystąpił błąd.");
             res.redirect("back");
-        } else {
+        } 
+        Course.findById(req.params.id).populate("comments").exec(function (err, course) {
+            if (err) {
+                req.flash("error", "Wystąpił błąd.");
+                return res.redirect("back");
+            }
+            req.flash("success", "Komentarz zaktualizowany.");
             res.redirect("/c/" + req.params.id);
-        }
+        });
     });
 });
 
 router.delete("/:comment_id", middleware.checkCommentOwner, function(req, res) {
     Comment.findByIdAndDelete(req.params.comment_id, function(err) {
         if(err) {
+            req.flash("error", "Wystąpił błąd.");
             res.redirect("back");
-        } else {
+        } 
+        Course.findByIdAndUpdate(req.params.id, {$pull: {comments: req.params.comment_id}}, {new: true}).exec(function (err) {
+            if (err) {
+                req.flash("error", "Wystąpił błąd.");
+                return res.redirect("back");
+            }
             req.flash("success", "Komentarz usunięty.");
             res.redirect("/c/" + req.params.id);
-        }
-    });    
+        });
+    });
 });
 
 module.exports = router;

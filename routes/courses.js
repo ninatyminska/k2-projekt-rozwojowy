@@ -8,8 +8,9 @@ var express      = require("express"),
     Review       = require("../models/review");
     
 router.get("/", function(req, res) {
-    Course.find({}, function(err, allCourses) {
+    Course.find({}).sort({date: 1}).exec(function(err, allCourses) {
         if(err) {
+            req.flash("error", "Wystąpił błąd.");
             console.log(err);
         } else {
             res.render("courses/courses", {courses : allCourses});
@@ -46,10 +47,10 @@ router.post("/", middleware.isLoggedIn, async function(req, res){
         follower.notifications.push(notification);
         follower.save();
       }
-
+      req.flash("success", "Kurs dodany.");
       res.redirect(`/c/${course.id}`);
     } catch(err) {
-      req.flash('error', err.message);
+      req.flash("error", "Wystąpił błąd.");
       res.redirect('back');
     }
 });
@@ -64,10 +65,12 @@ router.get("/c/:id", function(req, res) {
         options: {sort: {createdAt: -1}}
     }).exec(function (err, foundCourse) {
         if (err) {
+            req.flash("error", "Wystąpił błąd.");
             console.log(err);
         } else {
             Course.find({}, function(err, allCourses) {
                 if(err) {
+                    req.flash("error", "Wystąpił błąd.");
                     console.log(err);
                 } else {
                      res.render("courses/show", {course: foundCourse, courses: allCourses});
@@ -93,6 +96,7 @@ router.put("/c/:id", middleware.checkCourseOwner, function(req, res) {
         if(err) {
             res.redirect("back");
         } else {
+            req.flash("success", "Kurs zaktualizowany.");
             res.redirect("/c/" + req.params.id);
         }
     });
@@ -103,18 +107,18 @@ router.delete("/c/:id", middleware.checkCourseOwner, function (req, res) {
         if (err) {
             res.redirect("/");
         } else {
-            Comment.remove({"_id": {$in: course.comments}}, function (err) {
+            Comment.deleteOne({"_id": {$in: course.comments}}, function (err) {
                 if (err) {
-                    console.log(err);
+                    req.flash("error", "Wystąpił błąd.");
                     return res.redirect("/");
                 }
-                Review.remove({"_id": {$in: course.reviews}}, function (err) {
+                Review.deleteOne({"_id": {$in: course.reviews}}, function (err) {
                     if (err) {
-                        console.log(err);
+                        req.flash("error", "Wystąpił błąd.");
                         return res.redirect("/");
                     }
                     course.remove();
-                    req.flash("success", "Kurs został usunięty!");
+                    req.flash("success", "Kurs został usunięty.");
                     res.redirect("/");
                 });
             });

@@ -39,4 +39,19 @@ $(document).ready(function() {
                 $('#date').hide();
             }
         });
+
+        $(function() {
+            var pathnameArr = location.pathname.split('/');
+            switch (pathnameArr[1]) {
+                case 'new':
+                    $('div.pointing.menu a.home').removeClass('active');
+                    $('div.pointing.menu a.item[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+                    break;
+                case 'c':
+                    $('div.pointing.menu a.home').removeClass('active');
+                    break;    
+            }
+        });
+
+        $('.menu .item').tab();    
 });
