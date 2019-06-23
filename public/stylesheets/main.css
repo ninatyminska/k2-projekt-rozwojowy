@@ -1,5 +1,10 @@
 #main-header {
   margin-top: 25px;
+  text-shadow: 1px 0px 6px #000000;
+}
+
+#main-header>div>.ui.teal.button {
+  box-shadow: 1px 1px 5px 1px #828282;
 }
 
 .landing-header {
@@ -7,12 +12,44 @@
   position: relative;
 }
 
+#category-menu-grid {
+  margin-top: 3rem;
+  margin-bottom: 0;
+}
+
+#category-menu-tab {
+  width: auto;
+  border: 0;
+}
+
+#category-menu-tab>.active.item {
+  background-color: #1b1c1d;
+  color: white;
+  border: 1px solid white;
+  border-radius: .28571429rem!important;
+  margin-bottom: 0px;
+}
+
+#category-menu-tab>.item {
+  color: white;
+}
+
+.ui.bottom.attached.tab.segment.category-menu {
+  border: 0;
+  background-color: #1b1c1d;
+}
+
+#hp-cards-grid{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 body.pushable>.pusher {
     background-color: #1b1c1d;
 }
 
 .pushable>.pusher {
-    min-height: 96.4%;
+  min-height: 96.4%;
 }
 
 .ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
@@ -49,7 +86,7 @@ body.pushable>.pusher {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80) 
+  background-image: url(https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80);
 }
 .slideshow li:nth-child(2) { 
   background-image: url(https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80);
@@ -60,8 +97,8 @@ body.pushable>.pusher {
   animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
-  background-image: url(https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80);
-  animation-delay: 30s; 
+  background-image: url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80);
+  animation-delay: 30s;  
 }
 .slideshow li:nth-child(5) { 
   background-image: url(https://images.unsplash.com/photo-1487721984358-8ecc6e8b412a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1955&q=80);
@@ -94,6 +131,7 @@ body.pushable>.pusher {
 
 #hp-card {
     min-height: 275px;
+    margin: 0 auto;
 }
 
 #hp-card>.image>img {
@@ -315,7 +353,7 @@ body.pushable>.pusher {
 
 #course-edit {
     margin-top: 20px;
-    margin-left: 30px;
+    margin-left: 10px;
     padding-left: 30px;
     text-align: left;
     border-left: 5px solid #fbbd08;
@@ -344,6 +382,31 @@ body.pushable>.pusher {
     margin-bottom: 0;
 }
 
+#review-add {
+    padding-left: 30px;
+    margin-left: 10px;
+    text-align: left;
+    border-left: 5px solid #00C851;
+}
+
+#review-add .star.icon {
+    color: yellow;
+}
+
+#review-add>form>.input {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#review-add>form>.field {
+  width: 90%!important;
+  text-align: center;
+}
+
+#review-add>form>div>.user.icon {
+    color: white;
+}
+
 #review-show {
     margin-top: 20px;
     padding-left: 30px;
@@ -352,9 +415,27 @@ body.pushable>.pusher {
 
 #review-edit {
     margin-top: 20px;
-    padding-left: 30px;
+    padding-left: 20px;
     text-align: left;
     border-left: 5px solid #fbbd08;
+}
+
+#review-edit>form>.input {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#review-edit>form>.field {
+  width: 90%!important;
+  text-align: center;
+}
+
+#review-edit>form>div>.user.icon {
+    color: white;
+}
+
+#review-edit>form>.input:last-child {
+    margin-bottom: 0;
 }
 
 #review-edit>.accordion {
@@ -377,19 +458,9 @@ body.pushable>.pusher {
     color: white;
 }
 
-#review-add {
-    padding-left: 30px;
-    margin-left: 30px;
-    text-align: left;
-    border-left: 5px solid #00C851;
-}
-
-#review-add .star.icon {
-    color: yellow;
-}
-
 .delete-form {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .course-description {
@@ -430,11 +501,16 @@ body.pushable>.pusher {
     .masthead h1.ui.header {
         font-size: 2em;
         margin-top: 1.5em;
+        padding-top: 1.5em;
     }
     
     .masthead h2 {
         margin-top: 0.5em;
         font-size: 1.5em;
+    }
+
+    .ui.vertical.stripe.segment {
+      padding: 1em 2em;
     }
 }
 
@@ -455,8 +531,21 @@ body.pushable>.pusher {
         margin-bottom: 1rem!important;
     }
     
+    #category-menu-tab>.item {
+      width: fit-content!important;
+    }
+
+    #hp-card>.image>img {
+    min-height: unset;
+    max-height: unset;
+    }
+
     #footer-grid {
         margin-left: 5rem!important;
         margin-right: 5rem!important;
+    }
+
+    #footer-grid>.ui.stackable.grid>.column {
+      padding-top: 0!important;
     }
 }

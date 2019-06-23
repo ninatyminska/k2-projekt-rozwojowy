@@ -12,7 +12,8 @@
     </head>
     <body class="pushable">
         <div class="ui vertical inverted sidebar menu left" style="">
-            <a class="active item" href="/">Home</a>
+            <a class="active item" href="/">Strona główna</a>
+            <a class="item" href="/new">Nowy wpis</a>
             <% if(!currentUser) { %>
             <a class="item" href="/login">Logowanie</a>
             <a class="item" href="/register">Rejestracja</a>
@@ -37,7 +38,8 @@
                         <a class="toc item">
                             <i class="sidebar icon"></i>
                         </a>
-                        <a class="active item" href="/">Home</a>
+                        <a class="home active item" href="/">Strona główna</a>
+                        <a class="item" href="/new">Nowy wpis</a>
                         <div class="right menu">
                             <% if(!currentUser) { %>
                             <div class="item">
@@ -56,7 +58,7 @@
                                         <div id="not-menu" class="item">
                                             <img class="ui avatar image" src="<%= notification.avatar %>"> 
                                             <span>
-                                                <a href="/users/<%= notification.userId %>"><%= notification.username %></a> - <a href="/notifications/<%= notification.id %>"><%= notification.courseName %></a>
+                                                <a href="/users/<%= notification.userId %>"><%= notification.username %></a> - <a href="/notifications/<%= notification.id %>"><%= notification.courseName.substring(0, 15) %><% if(notification.courseName.length>15) { %>...<% } %></a>
                                             </span> 
                                         </div>
                                         <% }); %>  

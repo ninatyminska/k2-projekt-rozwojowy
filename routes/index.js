@@ -7,7 +7,7 @@ var express        = require("express"),
     Notification   = require("../models/notification");
     
 router.get("/", function(req, res) {
-    Course.find({}, function(err, allCourses) {
+    Course.find({}).sort({date: 1}).exec(function(err, allCourses) {
         if(err) {
             console.log(err);
         } else {
@@ -29,12 +29,9 @@ router.post("/register", function(req, res) {
             avatar: req.body.avatar,
             about: req.body.about
         });
-    if(req.body.adminCode === 'secretcode') {
-        newUser.isAdmin = true;
-    }
     User.register(newUser, req.body.password, function(err, user) {
         if(err) {
-            req.flash("error", err.message);
+            req.flash("error", "Wystąpił błąd.");
             return res.redirect("register");
         }
         passport.authenticate("local")(req, res, function() {
@@ -59,7 +56,7 @@ router.post("/login", passport.authenticate("local",
 
 router.get("/logout", function(req, res) {
     req.logout();
-    req.flash("success", "Wylogowałeś się.");
+    req.flash("success", "Wylogowano.");
     res.redirect("back");
 });
 
@@ -69,7 +66,7 @@ router.get("/users/:id", async function(req, res) {
         let courses = await Course.find().where('author.id').equals(user._id).exec();
         res.render('users/show', { user, courses });
     } catch(err) {
-        req.flash('error', err.message);
+        req.flash("error", "Wystąpił błąd.");
         return res.redirect('back');
     }
 });
@@ -79,10 +76,10 @@ router.get("/follow/:id", isLoggedIn, async function(req, res) {
         let user = await User.findById(req.params.id);
         user.followers.push(req.user._id);
         user.save();
-        req.flash("success", "Obserwujesz teraz użytkownika" + user.username + ".");
+        req.flash("success", "Użytkownik" + " " + user.username + " dodany do obserwowanych.");
         res.redirect("/users/" + req.params.id);
     } catch(err) {
-        req.flash("error", err.message);
+        req.flash("error", "Wystąpił błąd.");
         res.redirect("back");
     }
 });
@@ -96,7 +93,7 @@ router.get('/notifications', isLoggedIn, async function(req, res) {
         let allNotifications = user.notifications;
         res.render('notifications/index', { allNotifications });
     } catch(err) {
-        req.flash('error', err.message);
+        req.flash("error", "Wystąpił błąd.");
         res.redirect('back');
     }
 });
@@ -108,7 +105,7 @@ router.get("/notifications/:id", isLoggedIn, async function(req, res) {
         notification.save();
         res.redirect(`/c/${notification.courseId}`);
     } catch(err) {
-        req.flash("error", err.message);
+        req.flash("error", "Wystąpił błąd.");
         res.redirect("back");
     }
 });

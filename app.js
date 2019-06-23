@@ -92,7 +92,7 @@ app.use(async function(req, res, next){
       let user = await User.findById(req.user._id).populate('notifications', null, { isRead: false }).exec();
       res.locals.notifications = user.notifications.reverse();
     } catch(err) {
-      console.log(err.message);
+      req.flash("error", "Wystąpił błąd.");
     }
   }
   res.locals.error = req.flash("error");
@@ -104,6 +104,10 @@ app.use("/", indexRoutes, courseRoutes);
 app.use("/c/:id/comments", commentRoutes);
 app.use("/c/:id/reviews", reviewRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
+// app.listen(process.env.PORT, process.env.IP, function(){
+//     console.log("Server has started.");
+// });
+
+app.listen(3000, function(){
     console.log("Server has started.");
 });

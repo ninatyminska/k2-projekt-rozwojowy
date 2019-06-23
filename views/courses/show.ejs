@@ -1,8 +1,6 @@
 <% include ../partials/header %>
 
             <div class="ui mobile reversed stackable centered grid">
-                <!--<div class="three wide column">-->
-                <!--</div>-->
                 <div id="more-courses" class="two wide column">
                     <p>Zobacz także:</p>
                     <div class="ui segments">
@@ -28,7 +26,7 @@
                             <% if (course.category == "Warsztat") { %>
                             <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
-                            <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i><%= course.website %></a></h4>
+                            <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i> www</a></h4>
                             <a class="ui teal image label" href="/users/<%= course.author.id %>">
                                 <img src="<%= course.author.avatar %>">
                                 <%= course.author.username %>
@@ -91,7 +89,7 @@
                                             <div class="ui calendar">
                                                 <div class="ui input left icon">
                                                     <i class="calendar icon"></i>
-                                                    <input type="text" name="date" value="<%= moment(course.date).format("YYYY-MM-DD") %> <%= moment(course.date).format("hh:mm") %>" />
+                                                    <input type="text" name="course[date]" value="<%= moment(course.date).format("YYYY-MM-DD") %> <%= moment(course.date).format("hh:mm") %>" />
                                                 </div>
                                             </div>
                                         </div>    
@@ -153,7 +151,8 @@
                                             </div>
                                             <div id="review-edit" class="content">
                                                 <form id="edit-review-form<%= review._id %>" class="ui large form" action="/c/<%=course._id %>/reviews/<%=review._id %>?_method=PUT" method="POST">
-                                                <div class="ten wide field">
+                                                <div class="ui fourteen wide left icon input">
+                                                    <i class="user icon"></i>
                                                     <input type="text" disabled value="<%= currentUser.username %>">
                                                 </div>
                                                 <div class="ten wide field">
@@ -180,10 +179,10 @@
                                                     </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="ten wide field">
-                                                    <textarea name="review[text]" placeholder="Twoja opinia..." form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
+                                                <div class="ui fourteen wide left icon input">
+                                                    <textarea name="review[text]" form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
                                                 </div>
-                                                <div class="ten wide field">
+                                                <div class="ui fourteen wide left icon input">
                                                     <button class="ui inverted tiny yellow button">Edytuj</button>
                                                 </div>
                                                 </form>
@@ -199,7 +198,6 @@
                                 </div>
                             </div>
                             <% } %>
-                                
                             <% if (currentUser && course.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %>
                             <em>Dodałeś już opinię. Możesz ją edytować.</em>
                             <% } else {%>
@@ -213,8 +211,8 @@
                                     <% } %>
                                     <% if(currentUser) { %>
                                     <form id="add-review-form" class="ui large form" action="/c/<%= course._id %>/reviews" method="POST">
-                                        <div class="ten wide field">
-                                            <label>Użytkownik</label>
+                                        <div class="ui fourteen wide left icon input">
+                                            <i class="user icon"></i>
                                             <input type="text" disabled value="<%= currentUser.username %>">
                                         </div>
                                         <div class="ten wide field">
@@ -242,11 +240,10 @@
                                             </div>
                                             </fieldset>
                                         </div>
-                                        <div class="ten wide field">
-                                            <label>Opinia</label>
+                                        <div class="ui fourteen wide left icon input">
                                             <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"></textarea>
                                         </div>
-                                        <div class="ten wide field">
+                                        <div class="ui fourteen wide left icon input">
                                             <button class="tiny ui inverted green button">Dodaj</button>
                                         </div>
                                     </form>
@@ -285,13 +282,14 @@
                                                 </div>
                                                 <div id="review-edit" class="content">
                                                     <form id="edit-comment-form<%= comment._id %>" class="ui large form" action="/c/<%=course._id %>/comments/<%=comment._id %>?_method=PUT" method="POST">
-                                                    <div class="ten wide field">
+                                                    <div class="ui fourteen wide left icon input">
+                                                    <i class="user icon"></i>
                                                         <input type="text" disabled value="<%= currentUser.username %>">
                                                     </div>
                                                     <div class="ten wide field">
-                                                        <textarea name="review[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>"><%= comment.text %></textarea>
+                                                        <textarea name="comment[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>"><%= comment.text %></textarea>
                                                     </div>
-                                                    <div class="ten wide field">
+                                                    <div class="ui fourteen wide left icon input">
                                                         <button class="ui inverted tiny yellow button">Edytuj</button>
                                                     </div>
                                                     </form>
@@ -318,13 +316,14 @@
                                     <% } %>
                                     <% if(currentUser) { %>
                                     <form id="add-comment-form" class="ui large form" action="/c/<%= course._id %>/comments" method="POST">
-                                        <div class="ten wide field">
+                                        <div class="ui fourteen wide left icon input">
+                                            <i class="user icon"></i>
                                             <input type="text" disabled value="<%= currentUser.username %>">
                                         </div>
-                                        <div class="ten wide field">
+                                        <div class="ui fourteen wide left icon input">
                                             <textarea name="comment[text]" placeholder="Wpisz treść komentarza." form="add-comment-form"></textarea>
                                         </div>
-                                        <div class="ten wide field">
+                                        <div class="ui fourteen wide left icon input">
                                             <button class="tiny ui inverted green button">Dodaj komentarz</button>
                                         </div>
                                     </form>
@@ -334,12 +333,8 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="five wide column">-->
-                <!--</div>-->
             </div>
         </div>
     </div>
     
 <% include ../partials/footer %>
-
-  
