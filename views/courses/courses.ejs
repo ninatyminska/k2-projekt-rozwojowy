@@ -103,11 +103,11 @@
                                     <% } %>
                                     <% if (course.rating === 0) { %>
                                     <span>
-                                        <i class="star icon"></i>0 
+                                        <span id="rating"><i class="star icon"></i>0</span> 
                                     </span>
                                     <% } else { %>
                                     <span>
-                                        <i class="star icon checked"></i><%= course.rating.toFixed(2) %> 
+                                        <span id="rating"><i class="star icon checked"></i><%= course.rating.toFixed(2) %></span>
                                     <% } %>
                                         <i class="comments icon"></i><%= course.comments.length %>
                                     </span>    

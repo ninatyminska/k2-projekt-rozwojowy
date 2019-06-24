@@ -1,7 +1,7 @@
 <% include ../partials/header %> 
 
-    <div class="ui three column centered stackable grid">
-        <div class="column">
+    <div id="form-grid" class="ui three column centered stackable grid">
+        <div id="notification-column" class="column">
             <div id="not-list" class="ui very relaxed divided inverted list">
                 <% allNotifications.forEach(function(notification) { %>
                 <div class="item">
@@ -17,20 +17,5 @@
     </div>
 </div>
 </div>
-
-
-
-
-<!--<h1>Powiadomienia</h1>-->
-
-<!--<ul>-->
-<!--	<% allNotifications.forEach(function(notification) { %>-->
-<!--	<li>-->
-<!--		<a href="/<%= notification.courseId %>">-->
-<!--			Nowy wpis od <%= notification.username %>-->
-<!--		</a>-->
-<!--	</li>-->
-<!--	<% }); %>-->
-<!--</ul>-->
 
 <% include ../partials/footer %> 
