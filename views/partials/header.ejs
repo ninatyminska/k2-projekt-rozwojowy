@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     </head>
     <body class="pushable">
-        <div class="ui vertical inverted sidebar menu left" style="">
+        <div id="mobile-main-menu" class="ui vertical inverted sidebar menu left" style="">
             <a class="active item" href="/">Strona główna</a>
             <a class="item" href="/new">Nowy wpis</a>
             <% if(!currentUser) { %>
@@ -51,14 +51,14 @@
                                 <div id="not-menu" class="item">Powiadomienia <a class="ui yellow circular label"><%= notifications.length %></a><i class="dropdown icon"></i></div>
                                     <div class="menu">
                                         <div id="not-menu" class="item">
-                                            <a href="/notifications">Zobacz poprzednie powiadomienia</a>
+                                            <a href="/notifications">Archiwum powiadomień</a>
                                         </div>    
                                         <% notifications.forEach(function(notification) { %>
                                         <div class="divider"></div>
                                         <div id="not-menu" class="item">
                                             <img class="ui avatar image" src="<%= notification.avatar %>"> 
                                             <span>
-                                                <a href="/users/<%= notification.userId %>"><%= notification.username %></a> - <a href="/notifications/<%= notification.id %>"><%= notification.courseName.substring(0, 15) %><% if(notification.courseName.length>15) { %>...<% } %></a>
+                                                <strong><a href="/users/<%= notification.userId %>"><%= notification.username %></a> - <a href="/notifications/<%= notification.id %>"><%= notification.courseName.substring(0, 15) %><% if(notification.courseName.length>15) { %>...<% } %></a></strong>
                                             </span> 
                                         </div>
                                         <% }); %>  
@@ -67,7 +67,7 @@
                             <div class="user-badge">
                                 <a class="ui label" href="/users/<%= currentUser.id %>">
                                     <img class="ui right spaced avatar image" src="<%= currentUser.avatar %>">
-                                    <%= currentUser.username %>
+                                    <span><%= currentUser.username %></span>
                                 </a>    
                             </div>    
                             <div class="item">
