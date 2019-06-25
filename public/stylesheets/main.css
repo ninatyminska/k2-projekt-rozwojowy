@@ -361,7 +361,7 @@ body.pushable>.pusher {
 }
 
 #course-column {
-  width: 650px!important;
+    width: 650px!important;
 }
 
 #course-description {
@@ -638,6 +638,19 @@ body.pushable>.pusher {
 
     .user-badge>a>span {
       display: none;
+    }
+
+    #course-show {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    #more-courses {
+      width: 100%!important;
+    }
+
+    #course-column {
+      width: 100%!important;
     }
 
     #footer-grid {
