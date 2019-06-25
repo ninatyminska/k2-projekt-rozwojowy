@@ -1,4 +1,6 @@
 var express          = require("express"),
+    favicon          = require('serve-favicon'),
+    path             = require('path'),
     app              = express(),
     bodyParser       = require("body-parser"),
     mongoose         = require("mongoose"),
@@ -15,8 +17,9 @@ var indexRoutes    = require("./routes/index"),
     reviewRoutes   = require("./routes/reviews");
     
 var mdb = process.env.MDB_PSSW;
-mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
+app.use(favicon(path.join(__dirname,'public','favicons','favicon-32x32.png')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(expressSanitizer());
@@ -105,10 +108,10 @@ app.use("/", indexRoutes, courseRoutes);
 app.use("/c/:id/comments", commentRoutes);
 app.use("/c/:id/reviews", reviewRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("Server has started.");
-});
-
-// app.listen(3000, function(){
+// app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Server has started.");
 // });
+
+app.listen(3000, function(){
+    console.log("Server has started.");
+});
