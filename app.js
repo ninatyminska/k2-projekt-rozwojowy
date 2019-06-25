@@ -19,6 +19,7 @@ var indexRoutes    = require("./routes/index"),
 var mdb = process.env.MDB_PSSW;
 mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
+
 app.use(favicon(path.join(__dirname,'public','favicons','favicon-32x32.png')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -26,7 +27,6 @@ app.use(expressSanitizer());
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-
 app.use(require("express-session")({
     secret: "Secret",
     resave: true,
@@ -34,54 +34,7 @@ app.use(require("express-session")({
 }));
 
 app.locals.moment = require('moment');
-app.locals.moment.updateLocale('pl', {
-    relativeTime : {
-        future: "za %s",
-        past: "%s",
-        s: "kilka sekund temu",
-        ss: function (number){
-            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
-                return number + ' sekundy temu';
-            } else {
-                return number + ' sekund temu';
-            }
-        },
-        m:  "minutę temu",
-        mm: function (number){
-            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
-                return number + ' minuty temu';
-            } else {
-                return number + ' minut temu';
-            }
-        },
-        h:  "godzinę temu",
-        hh: function (number){
-            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
-                return number + ' godziny temu';
-            } else {
-                return number + ' godzin temu';
-            }
-        },
-        d:  "wczoraj",
-        dd: "%d dni temu",
-        M:  "miesiąc temu",
-        MM: function (number){
-            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
-                return number + ' miesiące temu';
-            } else {
-                return number + ' miesięcy temu';
-            }
-        },
-        y:  "rok temu",
-        yy: function (number){
-            if(number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
-                return number + ' lata temu';
-            } else {
-                return number + ' lat temu';
-            }
-        },
-    }
-});
+app.locals.moment.locale('pl');
 
 app.use(passport.initialize());
 app.use(passport.session());
