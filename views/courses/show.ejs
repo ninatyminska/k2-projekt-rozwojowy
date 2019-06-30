@@ -58,32 +58,19 @@
                                             <textarea name="course[description]"><%- course.description %></textarea>
                                         </div>
                                         <div class="ui fourteen wide left icon input">
-                                            <fieldset id="category">
-                                                <div>
-                                                <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Konferencja" <% if(course.category === "Konferencja") { %> checked <% } %> />
-                                                <i class="users icon"></i> Konferencja
+                                            <div class="ui selection dropdown">
+                                                <input type="hidden" name="course[category]" value="<%= course.category %>">
+                                                <i class="dropdown icon"></i>
+                                                <div class="default text"><i class="filter icon"></i>Wybierz kategorię</div>
+                                                <div class="menu">
+                                                    <div class="item" data-value="Konferencja"><i class="users icon"></i>Konferencja</div>
+                                                    <div class="item" data-value="Meetup"><i class="meetup icon"></i>Meetup</div>
+                                                    <div class="item" data-value="Warsztat"><i class="cogs icon"></i>Warsztat</div>
+                                                    <div class="item" data-value="Książka"><i class="book icon"></i>Książka</div>
+                                                    <div class="item" data-value="Strona internetowa"><i class="globe icon"></i>Strona internetowa</div>
+                                                    <div class="item" data-value="Program"><i class="desktop icon"></i>Program</div>
                                                 </div>
-                                                <div>
-                                                    <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Meetup" <% if(course.category === "Meetup") { %> checked <% } %> />
-                                                    <i class="meetup icon"></i> Meetup
-                                                </div>
-                                                <div>
-                                                    <input id="course-show-cat" class="date" type="radio" name="course[category]" value="Warsztat" <% if(course.category === "Warsztat") { %> checked <% } %> />
-                                                    <i class="cogs icon"></i> Warsztat
-                                                </div>
-                                                <div>
-                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Książka" <% if(course.category === "Książka") { %> checked <% } %> />
-                                                    <i class="book icon"></i> Książka
-                                                </div>
-                                                <div>
-                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Strona internetowa" <% if(course.category === "Strona internetowa") { %> checked <% } %> />
-                                                    <i class="globe icon"></i> Strona internetowa
-                                                </div>
-                                                <div>
-                                                    <input id="course-show-cat" type="radio" name="course[category]" value="Program" <% if(course.category === "Program") { %> checked <% } %> />
-                                                    <i class="desktop icon"></i> Program
-                                                </div>
-                                            </fieldset>
+                                            </div>
                                         </div>
                                         <div id="date" class="ui fourteen wide left icon input">
                                             <div class="ui calendar">
@@ -151,33 +138,15 @@
                                             </div>
                                             <div id="review-edit" class="content">
                                                 <form id="edit-review-form<%= review._id %>" class="ui large form" action="/c/<%=course._id %>/reviews/<%=review._id %>?_method=PUT" method="POST">
-                                                <div class="ui fourteen wide left icon input">
-                                                    <i class="user icon"></i>
-                                                    <input type="text" disabled value="<%= currentUser.username %>">
-                                                </div>
-                                                <div class="ten wide field">
-                                                    <fieldset id="rating">
-                                                    <div>
-                                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %> checked <% } %> />
-                                                            <%- '<i class="star icon"></i>'.repeat(5) %>
+                                                <div class="fields">
+                                                    <div class="ui left icon input">
+                                                        <i class="user icon"></i>
+                                                        <input type="text" disabled value="<%= review.author.username %>">
                                                     </div>
-                                                    <div>
-                                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" <% if (review.rating === 4) { %> checked <% } %> />
-                                                            <%- '<i class="star icon"></i>'.repeat(4) %>
+                                                    <div class="six wide field">
+                                                        <input type="hidden" name="review[rating]" value="<%= review.rating %>"> 
+                                                        <div class="ui massive star rating" data-rating="<%= review.rating %>"></div>
                                                     </div>
-                                                    <div>
-                                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" <% if (review.rating === 3) { %> checked <% } %> />
-                                                           <%- '<i class="star icon"></i>'.repeat(3) %>
-                                                    </div>
-                                                    <div>
-                                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" <% if (review.rating === 2) { %> checked <% } %> />
-                                                             <%- '<i class="star icon"></i>'.repeat(2) %>
-                                                    </div>
-                                                    <div>
-                                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" <% if (review.rating === 1) { %> checked <% } %> />
-                                                            <%- '<i class="star icon"></i>'.repeat(1) %>
-                                                    </div>
-                                                    </fieldset>
                                                 </div>
                                                 <div class="ui fourteen wide left icon input">
                                                     <textarea name="review[text]" form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
@@ -211,37 +180,23 @@
                                     <% } %>
                                     <% if(currentUser) { %>
                                     <form id="add-review-form" class="ui large form" action="/c/<%= course._id %>/reviews" method="POST">
-                                        <div class="ui fourteen wide left icon input">
-                                            <i class="user icon"></i>
-                                            <input type="text" disabled value="<%= currentUser.username %>">
-                                        </div>
-                                        <div class="ten wide field">
-                                            <label>Ocena</label>
-                                            <fieldset id="rating">
-                                            <div>
-                                                <input type="radio" id="first-rate5" name="review[rating]" value="5" checked />
-                                                    <%- '<i class="star icon"></i>'.repeat(5) %>
-                                             </div>
-                                             <div>
-                                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                                    <%- '<i class="star icon"></i>'.repeat(4) %> 
-                                             </div>
-                                             <div>
-                                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                                    <%- '<i class="star icon"></i>'.repeat(3) %> 
-                                             </div>
-                                              <div>
-                                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                                    <%- '<i class="star icon"></i>'.repeat(2) %>  
-                                              </div>
-                                            <div>
-                                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                                    <%- '<i class="star icon"></i>'.repeat(1) %>
+                                        <div class="fields">
+                                            <div class="ui left icon input">
+                                                <i class="user icon"></i>
+                                                <input type="text" disabled value="<%= currentUser.username %>">
                                             </div>
-                                            </fieldset>
+                                            <div class="six wide field">
+                                                <input type="hidden" name="review[rating]"> 
+                                                <div class="ui massive star rating"></div>
+                                            </div>
                                         </div>
+                                        <% if(typeof errorMsg !== 'undefined') { %>
+                                                <div id="error-review-label" class="ui pointing red basic label">
+                                                <%= errorMsg %>
+                                                </div>
+                                                <% } %>
                                         <div class="ui fourteen wide left icon input">
-                                            <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"></textarea>
+                                            <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"><% if(typeof errorMsg !== 'undefined' && typeof desc !== 'undefined') { %><%= desc %><% } %></textarea>
                                         </div>
                                         <div class="ui fourteen wide left icon input">
                                             <button class="tiny ui inverted green button">Dodaj</button>
@@ -284,7 +239,7 @@
                                                     <form id="edit-comment-form<%= comment._id %>" class="ui large form" action="/c/<%=course._id %>/comments/<%=comment._id %>?_method=PUT" method="POST">
                                                     <div class="ui fourteen wide left icon input">
                                                     <i class="user icon"></i>
-                                                        <input type="text" disabled value="<%= currentUser.username %>">
+                                                        <input type="text" disabled value="<%= comment.author.username %>">
                                                     </div>
                                                     <div class="ten wide field">
                                                         <textarea name="comment[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>"><%= comment.text %></textarea>

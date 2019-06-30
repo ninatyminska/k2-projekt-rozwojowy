@@ -157,6 +157,41 @@ body.pushable>.pusher {
   width: 350px!important;
 }
 
+.default.text {
+  padding-left: 1.67142857em!important;
+  padding-right: 1em!important;
+  color: rgba(0,0,0,.87);
+}
+
+.default.text>i {
+  right: auto;
+  left: 1px;
+  border-radius: .28571429rem 0 0 .28571429rem;
+  cursor: default;
+  position: absolute;
+  line-height: 1;
+  text-align: center;
+  margin: 0;
+  height: 100%;
+  width: 2.67142857em;
+}
+
+.ui.form .field.error .input {
+  color: red;
+}
+
+.ui.form .field.error .ui.dropdown .text {
+  opacity: 0.5;
+}
+
+.ui.form .field.error .ui.dropdown .text>i {
+  color: red;
+}
+
+.ui.form .field.error input[type=text] {
+  color: red;
+}
+
 #hp-card {
     min-height: 275px;
     margin: 0 auto;
@@ -396,6 +431,10 @@ body.pushable>.pusher {
     color: yellow;
 }
 
+#error-date {
+  display: none;
+}
+
 #course-edit {
     margin-top: 20px;
     margin-left: 10px;
@@ -427,14 +466,23 @@ body.pushable>.pusher {
     margin-bottom: 0;
 }
 
+#course-edit>form>.input>.dropdown {
+  width: 100%;
+}
+
 #review-add {
     padding-left: 30px;
+    margin-top: 20px;
     margin-left: 10px;
     text-align: left;
     border-left: 5px solid #00C851;
 }
 
 #review-add .star.icon {
+    color: white;
+}
+
+#review-add .star.icon.active {
     color: yellow;
 }
 
@@ -448,8 +496,20 @@ body.pushable>.pusher {
   text-align: center;
 }
 
-#review-add>form>div>.user.icon {
+#review-add>form>div>div>.user.icon {
     color: white;
+}
+
+#review-add>form>div>div.six.wide.field {
+  padding-left: 2rem;
+  margin: auto 0;
+}
+
+#error-review-label {
+  float: right;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  margin-right: 8.6rem;
 }
 
 #review-show {
@@ -479,6 +539,15 @@ body.pushable>.pusher {
     color: white;
 }
 
+#review-edit>form>div>div>.user.icon {
+    color: white;
+}
+
+#review-edit>form>div>div.six.wide.field {
+  padding-left: 2rem;
+  margin: auto 0;
+}
+
 #review-edit>form>.input:last-child {
     margin-bottom: 0;
 }
@@ -487,7 +556,15 @@ body.pushable>.pusher {
     display: inline-block;
 }
 
+.comment>.accordion {
+  margin-top: 2rem!important;
+}
+
 #review-edit .star.icon {
+    color: white;
+}
+
+#review-edit .star.icon.active {
     color: yellow;
 }
 
@@ -501,6 +578,11 @@ body.pushable>.pusher {
 
 .ui.comments .comment .text {
     color: white;
+}
+
+.ui.form .fields {
+  margin-left: 0;
+  margin-bottom: 1rem;
 }
 
 .delete-form {
@@ -651,6 +733,14 @@ body.pushable>.pusher {
 
     #course-column {
       width: 100%!important;
+    }
+
+    #review-add>form>div>div.six.wide.field {
+      margin-top: 1rem;
+    }
+
+    #review-edit>form>div>div.six.wide.field {
+      margin-top: 1rem;
     }
 
     #footer-grid {

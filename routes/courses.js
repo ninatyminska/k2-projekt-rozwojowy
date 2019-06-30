@@ -1,12 +1,12 @@
-var express      = require('express'),
-    router       = express.Router({mergeParams: true}),
+var express                   = require('express'),
+    router                    = express.Router({mergeParams: true}),
     {check, validationResult} = require('express-validator'),
-    Course       = require('../models/course'),
-    Comment      = require('../models/comment'),
-    User         = require('../models/user'),
-    Notification = require('../models/notification'),
-    middleware   = require('../middleware'),
-    Review       = require('../models/review');
+    Course                    = require('../models/course'),
+    Comment                   = require('../models/comment'),
+    User                      = require('../models/user'),
+    Notification              = require('../models/notification'),
+    middleware                = require('../middleware'),
+    Review                    = require('../models/review');
     
 router.get('/', async (req, res) => {
     try {
@@ -18,11 +18,13 @@ router.get('/', async (req, res) => {
     }
 });    
 
-router.post('/', middleware.isLoggedIn, [
+router.post('/new', middleware.isLoggedIn, [
     check('name', 'Tytuł jest za krótki.').isLength({ min: 3 }),
     check('image', 'Podaj URL obrazka.').isURL(),
     check('description', 'Opis jest za krótki.').isLength({ min: 20 }),
-    check('website', 'Podaj prawidłowy adres URL.').isURL()
+    check('website', 'Podaj prawidłowy adres URL.').isURL(),
+    check('category', 'Wybierz kategorię.').isLength({ min: 1 }),
+    check('date', 'Wybierz datę wydarzenia.').isLength({ min: 1 })
 ], async (req, res) => {
         var name   = req.body.name,
             image  = req.body.image,
@@ -38,10 +40,11 @@ router.post('/', middleware.isLoggedIn, [
         var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, date: date};
         var formErrors = validationResult(req);
         if (!formErrors.isEmpty()) {
-                    let arrayFormErrors = await formErrors.mapped();
-                    let errorsMsg = await arrayFormErrors;
-                    console.log(arrayFormErrors);
-                    res.render('courses/new-val.ejs', {errors: errorsMsg, newCourse: newCourse});             
+            let arrayFormErrors = await formErrors.mapped();
+            let errorsMsg = await arrayFormErrors;
+            console.log(errorsMsg);
+            req.flash('error', 'Wystąpiły błędy w formularzu.');
+            res.render('courses/new', {errors: errorsMsg, newCourse: newCourse, error: req.flash('error')});         
         } else {
             try {
                 let course = await Course.create(newCourse);
@@ -67,7 +70,15 @@ router.post('/', middleware.isLoggedIn, [
 });
 
 router.get('/new', middleware.isLoggedIn, (req, res) => {
-    res.render('courses/new');
+    var errors = {
+            name: undefined,
+            description: undefined,
+            website: undefined,
+            image: undefined,
+            category: undefined,
+            date: undefined
+        };
+    res.render('courses/new', {errors: errors});
 });
 
 router.get('/c/:id', (req, res) => {
@@ -84,7 +95,7 @@ router.get('/c/:id', (req, res) => {
                     req.flash('error', 'Wystąpił błąd.');
                     console.log(err);
                 } else {
-                     res.render('courses/show', {course: foundCourse, courses: allCourses});
+                    res.render('courses/show', {course: foundCourse, courses: allCourses});
                 }
             });
         }

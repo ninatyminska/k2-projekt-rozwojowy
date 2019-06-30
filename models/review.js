@@ -2,14 +2,10 @@ var mongoose = require("mongoose");
 
 var reviewSchema = new mongoose.Schema({
     rating: {
-        type: Number,
         required: "Wybierz ocenę od 1 do 5.",
+        type: Number,
         min: 1,
-        max: 5,
-        validate: {
-            validator: Number.isInteger,
-            message: "{VALUE} is not an integer value."
-        }
+        max: 5
     },
     text: {
         type: String
