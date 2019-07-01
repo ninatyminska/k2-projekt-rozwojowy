@@ -31,13 +31,64 @@ $(document).ready(function() {
                 weekNo: 'Tydzień'
               }
         });
-        
-        $('input[type="radio"]').click(function() {
-            if($(this).attr("class") == "date") {
-                $('#date').show();
-            } else {
-                $('#date').hide();
+
+        $('.ui.rating')
+            .rating({
+                maxRating: 5,
+                onRate: function (rating) {
+                $('input[type="hidden"]').attr('value', rating);
             }
+        });
+        
+        $('input[type="hidden"]').change(function () {
+            if($(this).attr("value") == "Konferencja") {
+                $('#date').show();
+            } else if($(this).attr("value") == "Meetup") {
+                $('#date').show();
+            } else if($(this).attr("value") == "Warsztat") {
+                $('#error-date').show();
+            } else {
+                $('#error-date').hide();
+            }
+        });
+
+        $('#error-name').click(function() {
+            $('#error-name-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-desc').click(function() {
+            $('#error-desc-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-web').click(function() {
+            $('#error-web-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-img').click(function() {
+            $('#error-img-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-cat').click(function() {
+            $('#error-cat-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-date').click(function() {
+            $('#error-date-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('.ui.massive.star.rating').click(function() {
+            $('#error-review-label').hide();
+        });
+
+        $('textarea[name="comment[text]"]').click(function() {
+            $('#error-comment-label').hide();
+            $('.ui.fourteen.wide.left.icon.input.error').removeClass('error');
         });
 
         $(function() {

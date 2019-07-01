@@ -1,7 +1,10 @@
 var mongoose = require("mongoose");
 
 var commentSchema = mongoose.Schema({
-    text: String,
+    text: {
+        type: String,
+        required: "Wpisz treść komentarza."
+    },
     createdAt: { type: Date, default: Date.now },
     author: {
         id: {

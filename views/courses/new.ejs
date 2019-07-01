@@ -8,66 +8,83 @@
                         Dodaj nowy wpis
                     </div>
                     </h2>
-                    <form class="ui large form" action="/" method="POST">
+                    <form class="ui large form" action="/new" method="POST">
                         <div id="login-form" class="ui stacked segment">
-                            <div class="field">
+                            <div id="error-name" class="field <% if(typeof errors.name != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="edit icon"></i>
-                                    <input type="text" name="name" placeholder="Tytuł">
+                                    <input type="text" name="name" placeholder="Tytuł" value="<% if(typeof errors.name == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.name %><% } %>">
                                 </div>
+                                <% if(typeof errors.name != "undefined") { %>
+                                <div id="error-name-label" class="ui pointing red basic label">
+                                    <%= errors.name.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-desc" class="field <% if(typeof errors.description != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
-                                    <textarea name="description" placeholder="Opis..."></textarea>
+                                    <textarea name="description" placeholder="Opis..."><% if(typeof errors.description == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.description %> <% } %></textarea>
                                 </div>
+                                <% if(typeof errors.description != "undefined") { %>
+                                <div id="error-desc-label" class="ui pointing red basic label">
+                                    <%= errors.description.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-web" class="field <% if(typeof errors.website != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="globe icon"></i>
-                                    <input type="text" name="website" placeholder="Strona internetowa">
+                                    <input type="text" name="website" placeholder="Strona internetowa" value="<% if(typeof errors.website == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.website %> <% } %>">
                                 </div>
+                                <% if(typeof errors.website != "undefined") { %>
+                                <div id="error-web-label" class="ui pointing red basic label">
+                                    <%= errors.website.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-img" class="field <% if(typeof errors.image != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="image icon"></i>
-                                    <input type="text" name="image" placeholder="Obrazek">
+                                    <input type="text" name="image" placeholder="Obrazek" value="<% if(typeof errors.image == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.image %><% } %>">
                                 </div>
-                            </div>
-                            <div class="field">
-                                <fieldset id="category">
-                                    <div>
-                                        <input class="date" type="radio" name="category" value="Konferencja" checked />
-                                        <i class="users icon"></i> Konferencja
-                                    </div>
-                                    <div>
-                                        <input class="date" type="radio" name="category" value="Meetup" />
-                                        <i class="meetup icon"></i> Meetup
-                                    </div>
-                                    <div>
-                                        <input class="date" type="radio" name="category" value="Warsztat" />
-                                        <i class="cogs icon"></i> Warsztat
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="category" value="Książka" />
-                                        <i class="book icon"></i> Książka
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="category" value="Strona internetowa" />
-                                        <i class="globe icon"></i> Strona internetowa
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="category" value="Program" />
-                                        <i class="desktop icon"></i> Program
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div id="date" class="field">
-                            <div class="ui calendar">
-                                <div class="ui input left icon">
-                                    <i class="calendar icon"></i>
-                                    <input type="text" name="date" placeholder="Data wydarzenia" />
+                                <% if(typeof errors.image != "undefined") { %>
+                                <div id="error-img-label" class="ui pointing red basic label">
+                                    <%= errors.image.msg %>
                                 </div>
+                                <% } %>
                             </div>
+                            <div id="error-cat" class="field <% if(typeof errors.category != 'undefined') { %>error<% } %>">
+                                <div class="ui selection dropdown">
+                                <input type="hidden" name="category" value="<% if(typeof errors.category == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.category %><% } %>">
+                                <i class="dropdown icon"></i>
+                                    <div class="default text"><i class="filter icon"></i>Wybierz kategorię</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="Konferencja"><i class="users icon"></i>Konferencja</div>
+                                        <div class="item" data-value="Meetup"><i class="meetup icon"></i>Meetup</div>
+                                        <div class="item" data-value="Warsztat"><i class="cogs icon"></i>Warsztat</div>
+                                        <div class="item" data-value="Książka"><i class="book icon"></i>Książka</div>
+                                        <div class="item" data-value="Strona internetowa"><i class="globe icon"></i>Strona internetowa</div>
+                                        <div class="item" data-value="Program"><i class="desktop icon"></i>Program</div>
+                                    </div>
+                                </div>
+                                <% if(typeof errors.category != "undefined") { %>
+                                <div id="error-cat-label" class="ui pointing red basic label">
+                                    <%= errors.category.msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-date" class="field <% if(typeof errors.date != 'undefined') { %>error<% } %>">
+                                <div class="ui calendar">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input type="text" name="date" placeholder="Data wydarzenia" value="<% if(typeof errors.date == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.date %> <% } %>"/>
+                                    </div>
+                                </div>
+                                <% if(typeof errors.date != "undefined") { %>
+                                <div id="error-date-label" class="ui pointing red basic label">
+                                    <%= errors.date.msg %>
+                                </div>
+                                <% } %>
                             </div>
                             <div class="field">
                                 <button class="fluid ui large inverted primary button">Dodaj</button>
@@ -78,34 +95,5 @@
             </div>
         </div>
     </div>
-    
-
-
-
-        <!--<div class="ui two column centered grid">-->
-        <!--    <div class="four column centered row">-->
-        <!--        <div class="column">-->
-        <!--            <div class="ui inverted segment">-->
-        <!--                <h1 style="text-align: center">Dodaj nowy kurs</h1>-->
-        <!--                <div class="ui inverted form">-->
-        <!--                    <form action="/c/" method="POST">-->
-        <!--                    <div class="field">-->
-        <!--                        <input class="form-control" type="text" name="name" placeholder="Nazwa kursu">-->
-        <!--                    </div>-->
-        <!--                    <div class="field">-->
-        <!--                        <input class="form-control" type="text" name="image" placeholder="Logo kursu">-->
-        <!--                    </div>-->
-        <!--                    <div class="field">-->
-        <!--                        <input class="form-control" type="text" name="description" placeholder="Opis">-->
-        <!--                    </div>-->
-        <!--                    <button class="ui inverted button">-->
-        <!--                        Dodaj-->
-        <!--                    </button>-->
-        <!--                    </form>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--</div>-->
         
 <% include ../partials/footer %>

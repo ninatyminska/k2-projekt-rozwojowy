@@ -1,18 +1,37 @@
-var express     = require("express"),
+var express     = require('express'),
     router      = express.Router({mergeParams: true}),
-    Course      = require("../models/course"),
-    Comment     = require("../models/comment"),
-    middleware  = require("../middleware");
+    Course      = require('../models/course'),
+    Comment     = require('../models/comment'),
+    middleware  = require('../middleware');
 
-router.post("/", middleware.isLoggedIn, function(req, res) {
-    Course.findById(req.params.id, function(err, course) {
+router.post('/', middleware.isLoggedIn, (req, res) => {
+    Course.findById(req.params.id, (err, course) => {
         if(err) {
-            req.flash("error", "Wystąpił błąd.");
-            res.redirect("/");
+            req.flash('error', 'Wystąpił błąd.');
+            res.redirect('/');
         } else {
-            Comment.create(req.body.comment, function(err, comment) {
+            Comment.create(req.body.comment, (err, comment) => {
                 if(err) {
-                    req.flash("error", "Wystąpił błąd.");
+                    Course.findById(req.params.id).populate('comments').populate({
+                    path: 'reviews',
+                    options: {sort: {createdAt: -1}}
+                }).exec((error, foundCourse) => {
+                    if (error) {
+                        req.flash('error', 'Wystąpił błąd.');
+                        console.log(error);
+                    } else {
+                        Course.find({}, (error, allCourses) => {
+                            if(error) {
+                                req.flash('error', 'Wystąpił błąd.');
+                                console.log(error);
+                            } else {
+                                errorMsgCom = err.errors.text.message;
+                                req.flash('error', 'Uzupełnij formularz komentarza.');
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, error: req.flash('error')});
+                            };       
+                        }); 
+                    }
+                });   
                 } else {
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
@@ -20,7 +39,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                     comment.save();
                     course.comments.push(comment);
                     course.save();
-                    req.flash("success", "Komentarz dodany.");
+                    req.flash('success', 'Komentarz dodany.');
                     res.redirect('/c/' + course._id);
                 }
             });
@@ -28,36 +47,36 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     });
 });
 
-router.put("/:comment_id", middleware.checkCommentOwner, function(req, res) {
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, {new: true}, function(err, updatedComment) {
+router.put('/:comment_id', middleware.checkCommentOwner, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, {new: true}, (err, updatedComment) => {
         if(err) {
-            req.flash("error", "Wystąpił błąd.");
-            res.redirect("back");
+            req.flash('error', 'Wystąpił błąd.');
+            res.redirect('back');
         } 
-        Course.findById(req.params.id).populate("comments").exec(function (err, course) {
+        Course.findById(req.params.id).populate('comments').exec((err, course) => {
             if (err) {
-                req.flash("error", "Wystąpił błąd.");
-                return res.redirect("back");
+                req.flash('error', 'Wystąpił błąd.');
+                return res.redirect('back');
             }
-            req.flash("success", "Komentarz zaktualizowany.");
-            res.redirect("/c/" + req.params.id);
+            req.flash('success', 'Komentarz zaktualizowany.');
+            res.redirect('/c/' + req.params.id);
         });
     });
 });
 
-router.delete("/:comment_id", middleware.checkCommentOwner, function(req, res) {
-    Comment.findByIdAndDelete(req.params.comment_id, function(err) {
+router.delete('/:comment_id', middleware.checkCommentOwner, (req, res) => {
+    Comment.findByIdAndDelete(req.params.comment_id, err => {
         if(err) {
-            req.flash("error", "Wystąpił błąd.");
-            res.redirect("back");
+            req.flash('error', 'Wystąpił błąd.');
+            res.redirect('back');
         } 
-        Course.findByIdAndUpdate(req.params.id, {$pull: {comments: req.params.comment_id}}, {new: true}).exec(function (err) {
+        Course.findByIdAndUpdate(req.params.id, {$pull: {comments: req.params.comment_id}}, {new: true}).exec(err => {
             if (err) {
-                req.flash("error", "Wystąpił błąd.");
-                return res.redirect("back");
+                req.flash('error', 'Wystąpił błąd.');
+                return res.redirect('back');
             }
-            req.flash("success", "Komentarz usunięty.");
-            res.redirect("/c/" + req.params.id);
+            req.flash('success', 'Komentarz usunięty.');
+            res.redirect('/c/' + req.params.id);
         });
     });
 });
