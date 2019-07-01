@@ -86,6 +86,11 @@ $(document).ready(function() {
             $('#error-review-label').hide();
         });
 
+        $('textarea[name="comment[text]"]').click(function() {
+            $('#error-comment-label').hide();
+            $('.ui.fourteen.wide.left.icon.input.error').removeClass('error');
+        });
+
         $(function() {
             var pathnameArr = location.pathname.split('/');
             switch (pathnameArr[1]) {

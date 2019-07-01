@@ -42,7 +42,6 @@ router.post('/new', middleware.isLoggedIn, [
         if (!formErrors.isEmpty()) {
             let arrayFormErrors = await formErrors.mapped();
             let errorsMsg = await arrayFormErrors;
-            console.log(errorsMsg);
             req.flash('error', 'Wystąpiły błędy w formularzu.');
             res.render('courses/new', {errors: errorsMsg, newCourse: newCourse, error: req.flash('error')});         
         } else {
@@ -63,7 +62,7 @@ router.post('/new', middleware.isLoggedIn, [
                 }
                 req.flash('success', 'Kurs dodany.');
                 res.redirect(`/c/${course.id}`);
-            } catch(formErrors) {
+            } catch(err) {
                 req.flash('error', 'Wystąpił błąd.');
                 }
         }  
@@ -95,7 +94,14 @@ router.get('/c/:id', (req, res) => {
                     req.flash('error', 'Wystąpił błąd.');
                     console.log(err);
                 } else {
-                    res.render('courses/show', {course: foundCourse, courses: allCourses});
+                    var errorMsgCom = undefined;
+                    var errorsMsg = {
+                        'course.name': undefined,
+                        'course.description': undefined,
+                        'course.website': undefined,
+                        'course.image': undefined,
+                    };
+                    res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, errorsMsg: errorsMsg});
                 }
             });
         }
@@ -116,15 +122,46 @@ router.get('/c/:id/edit', middleware.checkCourseOwner, async (req, res) => {
     }
 });    
 
-router.put('/c/:id', middleware.checkCourseOwner, async (req, res) => {
+router.put('/c/:id', middleware.checkCourseOwner, [
+    check('course[name]', 'Tytuł jest za krótki.').isLength({ min: 3 }),
+    check('course[image]', 'Podaj URL obrazka.').isURL(),
+    check('course[description]', 'Opis jest za krótki.').isLength({ min: 20 }),
+    check('course[website]', 'Podaj prawidłowy adres URL.').isURL(),
+], async (req, res) => {
+    
+    var formErrors = validationResult(req);
+        if (!formErrors.isEmpty()) {
+            Course.findById(req.params.id).populate('comments').populate({
+                    path: 'reviews',
+                    options: {sort: {createdAt: -1}}
+                }).exec((error, foundCourse) => {
+                    if (error) {
+                        req.flash('error', 'Wystąpił błąd.');
+                        console.log(error);
+                    } else {
+                        Course.find({}, (error, allCourses) => {
+                            if(error) {
+                                req.flash('error', 'Wystąpił błąd.');
+                                console.log(error);
+                            } else {
+                                var arrayFormErrors = formErrors.mapped();
+                                errorsMsg = arrayFormErrors;
+                                req.flash('error', 'Formularz edycji zawiera błędy.');
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorsMsg: errorsMsg, error: req.flash('error')});
+                            };       
+                        }); 
+                    }
+                });            
+        } else {    
+
     try {
         let updatedCourse = Course.findByIdAndUpdate(req.params.id, req.body.course).exec();
         req.flash('success', 'Kurs zaktualizowany.');
         res.redirect('/c/' + req.params.id);
     } catch(err) {
-        req.flash('error', 'Wystąpił błąd.');
-        res.redirect('back');
-    }
+        console.log(err);
+        }
+    }    
 });
 
 router.delete('/c/:id', middleware.checkCourseOwner, (req, res) => {

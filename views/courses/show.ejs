@@ -42,22 +42,42 @@
                                 </div>
                                 <div id="course-edit" class="content">
                                     <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" method="POST">
-                                        <div class="ui fourteen wide left icon input">
+                                        <div id="error-name" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.name'] != 'undefined') { %>error<% } %>">
                                             <i class="edit icon"></i>
-                                            <input type="text" name="course[name]" value="<%= course.name %>">
+                                            <input type="text" name="course[name]" value="<% if(typeof errorsMsg['course.name'] != 'undefined') { %><%= errorsMsg['course.name'].value %> <% } else { %><%= course.name %><% } %>">
                                         </div>
-                                        <div class="ui fourteen wide left icon input">
+                                        <% if(typeof errorsMsg['course.name'] != "undefined") { %>
+                                        <div id="error-name-label" class="ui pointing red basic label">
+                                        <%= errorsMsg['course.name'].msg %>
+                                        </div>
+                                        <% } %>
+                                        <div id="error-desc" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.description'] != 'undefined') { %>error<% } %>">
+                                            <textarea name="course[description]"><% if(typeof errorsMsg['course.description'] != 'undefined') { %><%= errorsMsg['course.description'].value %> <% } else { %><%- course.description %><% } %></textarea>
+                                        </div>
+                                        <% if(typeof errorsMsg['course.description'] != "undefined") { %>
+                                        <div id="error-desc-label" class="ui pointing red basic label">
+                                        <%= errorsMsg['course.description'].msg %>
+                                        </div>
+                                        <% } %>
+                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.image'] != 'undefined') { %>error<% } %>">
                                             <i class="image icon"></i>
-                                            <input type="text" name="course[image]" value="<%= course.image %>">
+                                            <input type="text" name="course[image]" value="<% if(typeof errorsMsg['course.image'] != 'undefined') { %><%= errorsMsg['course.image'].value %> <% } else { %><%= course.image %><% } %>">
                                         </div>
-                                        <div class="ui fourteen wide left icon input">
+                                        <% if(typeof errorsMsg['course.image'] != "undefined") { %>
+                                        <div id="error-img-label" class="ui pointing red basic label">
+                                        <%= errorsMsg['course.image'].msg %>
+                                        </div>
+                                        <% } %>
+                                        <div id="error-web" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.website'] != 'undefined') { %>error<% } %>">
                                             <i class="globe icon"></i>
-                                            <input type="text" name="course[website]" value="<%= course.website %>">
+                                            <input type="text" name="course[website]" value="<% if(typeof errorsMsg['course.website'] != 'undefined') { %><%= errorsMsg['course.website'].value %> <% } else { %><%= course.website %><% } %>">
                                         </div>
-                                        <div class="ui fourteen wide left icon input">
-                                            <textarea name="course[description]"><%- course.description %></textarea>
+                                        <% if(typeof errorsMsg['course.website'] != "undefined") { %>
+                                        <div id="error-web-label" class="ui pointing red basic label">
+                                        <%= errorsMsg['course.website'].msg %>
                                         </div>
-                                        <div class="ui fourteen wide left icon input">
+                                        <% } %>
+                                        <div id="error-cat" class="ui fourteen wide left icon input">
                                             <div class="ui selection dropdown">
                                                 <input type="hidden" name="course[category]" value="<%= course.category %>">
                                                 <i class="dropdown icon"></i>
@@ -72,14 +92,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="date" class="ui fourteen wide left icon input">
+                                        <div id="error-date" class="ui fourteen wide left icon input <% if(course.category == 'Konferencja') { %>show<% } else if(course.category == 'Meetup') { %>show<% } else if(course.category == 'Warsztat') { %>show<% } %>">
                                             <div class="ui calendar">
                                                 <div class="ui input left icon">
                                                     <i class="calendar icon"></i>
-                                                    <input type="text" name="course[date]" value="<%= moment(course.date).format("YYYY-MM-DD") %> <%= moment(course.date).format("hh:mm") %>" />
+                                                    <input type="text" name="course[date]" value="<%= moment(course.date).format('YYYY-MM-DD') %> <%= moment(course.date).format('hh:mm') %>" />
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>   
                                         <div class="ui fourteen wide left icon input">
                                             <button class="ui inverted tiny yellow button">Edytuj</button>
                                         </div>
@@ -119,16 +139,17 @@
                                             <a class="avatar">
                                                 <img src="<%= review.author.avatar %>">
                                             </a>
-                                        <div class="content">
-                                            <a class="author" href="/users/<%= review.author.id %>"><%= review.author.username %></a>
-                                            <div class="metadata">
-                                                <span class="date"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
-                                                <div class="rating">
-                                                    <%- '<i class="star icon checked"></i>'.repeat(review.rating) %><%- '<i class="star icon"></i>'.repeat(5 - review.rating) %>
+                                            <div class="content">
+                                                <a class="author" href="/users/<%= review.author.id %>"><%= review.author.username %></a>
+                                                <div class="metadata">
+                                                    <span class="date"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
+                                                    <div class="rating">
+                                                        <%- '<i class="star icon checked"></i>'.repeat(review.rating) %><%- '<i class="star icon"></i>'.repeat(5 - review.rating) %>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="text">
-                                                <%= review.text %>
+                                                <div class="text">
+                                                    <%= review.text %>
+                                                </div>
                                             </div>
                                         </div>
                                         <% if(currentUser && review.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
@@ -161,7 +182,6 @@
                                             </div>
                                         </div>
                                         <% } %>
-                                        </div>
                                         <% }); %>
                                     </div>
                                 </div>
@@ -190,13 +210,13 @@
                                                 <div class="ui massive star rating"></div>
                                             </div>
                                         </div>
-                                        <% if(typeof errorMsg !== 'undefined') { %>
-                                                <div id="error-review-label" class="ui pointing red basic label">
-                                                <%= errorMsg %>
-                                                </div>
-                                                <% } %>
+                                            <% if(typeof errorMsg !== 'undefined') { %>
+                                            <div id="error-review-label" class="ui pointing red basic label">
+                                            <%= errorMsg %>
+                                            </div>
+                                            <% } %>
                                         <div class="ui fourteen wide left icon input">
-                                            <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"><% if(typeof errorMsg !== 'undefined' && typeof desc !== 'undefined') { %><%= desc %><% } %></textarea>
+                                            <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"><% if(typeof errorMsg !== 'undefined' && typeof reviewText !== 'undefined') { %><%= reviewText %><% } %></textarea>
                                         </div>
                                         <div class="ui fourteen wide left icon input">
                                             <button class="tiny ui inverted green button">Dodaj</button>
@@ -230,7 +250,8 @@
                                                     <%= comment.text %>
                                                 </div>
                                             </div>
-                                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                        </div>
+                                        <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                             <div class="accordion">
                                                 <div class="title">
                                                     <button class="ui inverted tiny yellow button">Edytuj</button>
@@ -254,9 +275,7 @@
                                                 </div>
                                             </div>
                                             <% } %>
-                                        </div>
                                         <% }); %>
-                                    
                                     </div>
                                 </div>
                             </div>
@@ -275,9 +294,14 @@
                                             <i class="user icon"></i>
                                             <input type="text" disabled value="<%= currentUser.username %>">
                                         </div>
-                                        <div class="ui fourteen wide left icon input">
+                                        <div class="ui fourteen wide left icon input <% if(typeof errorMsgCom !== 'undefined') { %>error<% } %>">
                                             <textarea name="comment[text]" placeholder="Wpisz treść komentarza." form="add-comment-form"></textarea>
                                         </div>
+                                        <% if(typeof errorMsgCom !== 'undefined') { %>
+                                        <div id="error-comment-label" class="ui pointing red basic label">
+                                        <%= errorMsgCom %>
+                                        </div>
+                                        <% } %>
                                         <div class="ui fourteen wide left icon input">
                                             <button class="tiny ui inverted green button">Dodaj komentarz</button>
                                         </div>

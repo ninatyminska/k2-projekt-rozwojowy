@@ -1,6 +1,5 @@
 var express    = require('express'),
     router     = express.Router({mergeParams: true}),
-    {check, validationResult} = require('express-validator'),
     Course     = require('../models/course'),
     Review     = require('../models/review'),
     middleware = require('../middleware');
@@ -31,12 +30,12 @@ router.post('/', middleware.isLoggedIn, middleware.checkReviewExistence, (req, r
                 }).exec((error, foundCourse) => {
                     if (error) {
                         req.flash('error', 'Wystąpił błąd.');
-                        console.log(err);
+                        console.log(error);
                     } else {
                         Course.find({}, (error, allCourses) => {
                             if(error) {
                                 req.flash('error', 'Wystąpił błąd.');
-                                console.log(err);
+                                console.log(error);
                             } else {
                                 errorMsg = err.errors.rating.message;
                                 desc = req.body.review.text;
@@ -75,7 +74,7 @@ router.put('/:review_id', middleware.checkReviewOwnership, (req, res) => {
             }
             course.rating = calculateAverage(course.reviews);
             course.save();
-            req.flash('success', 'Opinia zaktualizowana.');
+            req.flash('success', 'Opinia została zaktualizowana.');
             res.redirect('/c/' + course._id);
         });
     });
@@ -94,7 +93,7 @@ router.delete('/:review_id', middleware.checkReviewOwnership, (req, res) => {
             }
             course.rating = calculateAverage(course.reviews);
             course.save();
-            req.flash('success', 'Opinia usunięta.');
+            req.flash('success', 'Opinia została usunięta.');
             res.redirect('/c/' + req.params.id);
         });
     });

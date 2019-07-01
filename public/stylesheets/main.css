@@ -500,6 +500,10 @@ body.pushable>.pusher {
     color: white;
 }
 
+#review-add>form>div>.user.icon {
+    color: white;
+}
+
 #review-add>form>div>div.six.wide.field {
   padding-left: 2rem;
   margin: auto 0;
@@ -513,11 +517,11 @@ body.pushable>.pusher {
 }
 
 #review-show {
-    margin-top: 20px;
+    margin: 20px;
+    margin-bottom: 45px;
     padding-left: 30px;
     text-align: left;
 }
-
 #review-edit {
     margin-top: 20px;
     padding-left: 20px;
@@ -556,8 +560,12 @@ body.pushable>.pusher {
     display: inline-block;
 }
 
-.comment>.accordion {
-  margin-top: 2rem!important;
+#review-show>div>.comment {
+  min-height: 40px;
+}
+
+#review-show>div>.accordion {
+  margin: 0;
 }
 
 #review-edit .star.icon {
@@ -566,6 +574,34 @@ body.pushable>.pusher {
 
 #review-edit .star.icon.active {
     color: yellow;
+}
+
+#error-comment-label {
+  margin: 0 0 1rem 12rem;
+}
+
+#error-name-label {
+  margin: 0 0 1rem 13rem;
+}
+
+#error-img-label {
+  margin: 0 0 1rem 13rem;
+}
+
+#error-web-label {
+  margin: 0 0 1rem 11rem;
+}
+
+#error-desc-label {
+  margin: 0 0 1rem 13rem;
+}
+
+#error-cat-label {
+  margin: 0 0 1rem 13rem;
+}
+
+#error-date-label {
+  margin: 0 0 1rem 13rem;
 }
 
 .ui.comments .comment .author {
@@ -578,6 +614,10 @@ body.pushable>.pusher {
 
 .ui.comments .comment .text {
     color: white;
+}
+
+.ui.fourteen.wide.left.icon.input.show {
+  display: block!important;
 }
 
 .ui.form .fields {

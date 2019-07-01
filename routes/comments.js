@@ -12,7 +12,26 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
         } else {
             Comment.create(req.body.comment, (err, comment) => {
                 if(err) {
-                    req.flash('error', 'Wystąpił błąd.');
+                    Course.findById(req.params.id).populate('comments').populate({
+                    path: 'reviews',
+                    options: {sort: {createdAt: -1}}
+                }).exec((error, foundCourse) => {
+                    if (error) {
+                        req.flash('error', 'Wystąpił błąd.');
+                        console.log(error);
+                    } else {
+                        Course.find({}, (error, allCourses) => {
+                            if(error) {
+                                req.flash('error', 'Wystąpił błąd.');
+                                console.log(error);
+                            } else {
+                                errorMsgCom = err.errors.text.message;
+                                req.flash('error', 'Uzupełnij formularz komentarza.');
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, error: req.flash('error')});
+                            };       
+                        }); 
+                    }
+                });   
                 } else {
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
