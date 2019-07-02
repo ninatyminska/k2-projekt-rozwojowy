@@ -70,13 +70,13 @@ router.post('/new', middleware.isLoggedIn, [
 
 router.get('/new', middleware.isLoggedIn, (req, res) => {
     var errors = {
-            name: undefined,
-            description: undefined,
-            website: undefined,
-            image: undefined,
-            category: undefined,
-            date: undefined
-        };
+        name: undefined,
+        escription: undefined,
+        website: undefined,
+        image: undefined,
+        category: undefined,
+        date: undefined
+    };
     res.render('courses/new', {errors: errors});
 });
 
@@ -128,7 +128,6 @@ router.put('/c/:id', middleware.checkCourseOwner, [
     check('course[description]', 'Opis jest za krótki.').isLength({ min: 20 }),
     check('course[website]', 'Podaj prawidłowy adres URL.').isURL(),
 ], async (req, res) => {
-    
     var formErrors = validationResult(req);
         if (!formErrors.isEmpty()) {
             Course.findById(req.params.id).populate('comments').populate({

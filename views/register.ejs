@@ -9,41 +9,70 @@
                     </h2>
                     <form class="ui large form" action="/register" method="POST">
                         <div id="login-form" class="ui stacked segment">
-                            <div class="field">
+                            <div id="error-username" class="field <% if(typeof errors.username != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="user icon"></i>
-                                    <input type="text" name="username" placeholder="Nazwa użytkownika">
+                                    <input type="text" name="username" placeholder="Nazwa użytkownika" value="<% if(typeof errors.username == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.username %><% } %>">
                                 </div>
+                                <% if(typeof errors.username != "undefined") { %>
+                                <div id="error-username-label" class="ui pointing red basic label">
+                                    <%= errors.username.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-pssw" class="field <% if(typeof errors.password != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="lock icon"></i>
                                     <input type="password" name="password" placeholder="Hasło">
                                 </div>
+                                <% if(typeof errors.password != "undefined") { %>
+                                <div id="error-pssw-label" class="ui pointing red basic label">
+                                    <%= errors.password.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-firstname" class="field <% if(typeof errors.firstName != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="user circle icon"></i>
-                                    <input type="text" name="firstName" placeholder="Imię">
+                                    <input type="text" name="firstName" placeholder="Imię" value="<% if(typeof errors.firstName == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.firstName %><% } %>">
                                 </div>
+                                <% if(typeof errors.firstName != "undefined") { %>
+                                <div id="error-firstname-label" class="ui pointing red basic label">
+                                    <%= errors.firstName.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-lastname" class="field <% if(typeof errors.lastName != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="user circle icon"></i>
-                                    <input type="text" name="lastName" placeholder="Nazwisko">
+                                    <input type="text" name="lastName" placeholder="Nazwisko" value="<% if(typeof errors.lastName == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.lastName %><% } %>">
                                 </div>
+                                <% if(typeof errors.lastName != "undefined") { %>
+                                <div id="error-lastname-label" class="ui pointing red basic label">
+                                    <%= errors.lastName.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-avatar" class="field <% if(typeof errors.avatar != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="image icon"></i>
-                                    <input type="text" name="avatar" placeholder="Avatar">
+                                    <input type="text" name="avatar" placeholder="Avatar" value="<% if(typeof errors.avatar == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.avatar %><% } %>">
                                 </div>
+                                <% if(typeof errors.avatar != "undefined") { %>
+                                <div id="error-avatar-label" class="ui pointing red basic label">
+                                    <%= errors.avatar.msg %>
+                                </div>
+                                <% } %>
                             </div>
-                            <div class="field">
+                            <div id="error-about" class="field <% if(typeof errors.about != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
-                                    <i class="address card icon"></i>
-                                    <input type="text" name="about" placeholder="O mnie">
+                                    <textarea name="about" placeholder="O mnie..."><% if(typeof errors.about == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.about %><% } %></textarea>
                                 </div>
+                                <% if(typeof errors.about != "undefined") { %>
+                                <div id="error-about-label" class="ui pointing red basic label">
+                                    <%= errors.about.msg %>
+                                </div>
+                                <% } %>
                             </div>
                             <div class="field">
                                 <button class="fluid ui large inverted primary button">Zarejestruj</button>

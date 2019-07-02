@@ -38,9 +38,15 @@ router.post('/', middleware.isLoggedIn, middleware.checkReviewExistence, (req, r
                                 console.log(error);
                             } else {
                                 errorMsg = err.errors.rating.message;
+                                var errorsMsg = {
+                                    'course.name': undefined,
+                                    'course.description': undefined,
+                                    'course.website': undefined,
+                                    'course.image': undefined,
+                                };
                                 desc = req.body.review.text;
                                 req.flash('error', 'Uzupełnij formularz oceny.');
-                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsg: errorMsg, desc: desc, error: req.flash('error')});
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsg: errorMsg, errorsMsg: errorsMsg, desc: desc, error: req.flash('error')});
                             };       
                         }); 
                     }
@@ -62,21 +68,48 @@ router.post('/', middleware.isLoggedIn, middleware.checkReviewExistence, (req, r
 });    
 
 router.put('/:review_id', middleware.checkReviewOwnership, (req, res) => {
-    Review.findByIdAndUpdate(req.params.review_id, req.body.review, {new: true}, (err, updatedReview) => {
+    Review.findByIdAndUpdate(req.params.review_id, req.body.review, {runValidators: true, new: true}, (err, updatedReview) => {
         if (err) {
-            req.flash('error', 'Wystąpił błąd.');
-            return res.redirect('back');
+                Course.findById(req.params.id).populate('comments').populate({
+                    path: 'reviews',
+                    options: {sort: {createdAt: -1}}
+                }).exec((error, foundCourse) => {
+                    if (error) {
+                        req.flash('error', 'Wystąpił błąd.');
+                        console.log(error);
+                    } else {
+                        Course.find({}, (error, allCourses) => {
+                            if(error) {
+                                req.flash('error', 'Wystąpił błąd.');
+                                console.log(error);
+                            } else {
+                                errorRevMsg = err.errors.rating.message;
+                                var errorsMsg = {
+                                    'course.name': undefined,
+                                    'course.description': undefined,
+                                    'course.website': undefined,
+                                    'course.image': undefined,
+                                };
+                                desc = req.body.review.text;
+                                req.flash('error', 'Uzupełnij formularz oceny.');
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorRevMsg: errorRevMsg, errorsMsg: errorsMsg, desc: desc, error: req.flash('error')});
+                            };       
+                        }); 
+                    }
+                });              
+        } else {
+            Course.findById(req.params.id).populate('reviews').exec((err, course) => {
+                if (err) {
+                    req.flash('error', 'Wystąpił błąd.');
+                    return res.redirect('back');
+                }
+                course.rating = calculateAverage(course.reviews);
+                course.save();
+                errorMsgRevEdit = undefined;
+                req.flash('success', 'Opinia została zaktualizowana.');
+                res.redirect('/c/' + course._id);
+            });
         }
-        Course.findById(req.params.id).populate('reviews').exec((err, course) => {
-            if (err) {
-                req.flash('error', 'Wystąpił błąd.');
-                return res.redirect('back');
-            }
-            course.rating = calculateAverage(course.reviews);
-            course.save();
-            req.flash('success', 'Opinia została zaktualizowana.');
-            res.redirect('/c/' + course._id);
-        });
     });
 });
 
