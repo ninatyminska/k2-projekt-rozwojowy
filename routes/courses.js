@@ -60,7 +60,7 @@ router.post('/new', middleware.isLoggedIn, [
                     follower.notifications.push(notification);
                     follower.save();
                 }
-                req.flash('success', 'Kurs dodany.');
+                req.flash('success', 'Wpis dodany.');
                 res.redirect(`/c/${course.id}`);
             } catch(err) {
                 req.flash('error', 'Wystąpił błąd.');
