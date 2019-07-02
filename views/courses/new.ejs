@@ -16,7 +16,7 @@
                                     <input type="text" name="name" placeholder="Tytuł" value="<% if(typeof errors.name == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.name %><% } %>">
                                 </div>
                                 <% if(typeof errors.name != "undefined") { %>
-                                <div id="error-name-label" class="ui pointing red basic label">
+                                <div id="new-error-name-label" class="ui pointing red basic label">
                                     <%= errors.name.msg %>
                                 </div>
                                 <% } %>
@@ -26,7 +26,7 @@
                                     <textarea name="description" placeholder="Opis..."><% if(typeof errors.description == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.description %> <% } %></textarea>
                                 </div>
                                 <% if(typeof errors.description != "undefined") { %>
-                                <div id="error-desc-label" class="ui pointing red basic label">
+                                <div id="new-error-desc-label" class="ui pointing red basic label">
                                     <%= errors.description.msg %>
                                 </div>
                                 <% } %>
@@ -37,7 +37,7 @@
                                     <input type="text" name="website" placeholder="Strona internetowa" value="<% if(typeof errors.website == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.website %> <% } %>">
                                 </div>
                                 <% if(typeof errors.website != "undefined") { %>
-                                <div id="error-web-label" class="ui pointing red basic label">
+                                <div id="new-error-web-label" class="ui pointing red basic label">
                                     <%= errors.website.msg %>
                                 </div>
                                 <% } %>
@@ -48,7 +48,7 @@
                                     <input type="text" name="image" placeholder="Obrazek" value="<% if(typeof errors.image == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.image %><% } %>">
                                 </div>
                                 <% if(typeof errors.image != "undefined") { %>
-                                <div id="error-img-label" class="ui pointing red basic label">
+                                <div id="new-error-img-label" class="ui pointing red basic label">
                                     <%= errors.image.msg %>
                                 </div>
                                 <% } %>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <% if(typeof errors.category != "undefined") { %>
-                                <div id="error-cat-label" class="ui pointing red basic label">
+                                <div id="new-error-cat-label" class="ui pointing red basic label">
                                     <%= errors.category.msg %>
                                 </div>
                                 <% } %>
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <% if(typeof errors.date != "undefined") { %>
-                                <div id="error-date-label" class="ui pointing red basic label">
+                                <div id="new-error-date-label" class="ui pointing red basic label">
                                     <%= errors.date.msg %>
                                 </div>
                                 <% } %>

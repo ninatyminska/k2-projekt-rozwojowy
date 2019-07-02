@@ -1,5 +1,6 @@
 var express        = require('express'),
     router         = express.Router(),
+    {check, validationResult} = require('express-validator'),
     passport       = require('passport'),
     User           = require('../models/user'),
     Course         = require('../models/course'),
@@ -17,10 +18,26 @@ router.get('/', async (req, res) => {
 }); 
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    var errors = {
+        username: undefined,
+        password: undefined,
+        firstName: undefined,
+        lastName: undefined,
+        avatar: undefined,
+        about: undefined
+    };
+    res.render('register', {errors: errors});
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', [
+    check('username', 'Nazwa użytkownika musi zawierać min. 3 znaki.').isLength({ min: 3 }),
+    check('password').isLength({ min: 5 }).withMessage('Hasło musi zawierać min. 5 znaków.')
+    .matches(/\d/).withMessage('Hasło musi zawierać cyfrę.'),
+    check('firstName', 'Imię musi zawierać min. 3 znaki.').isLength({ min: 3 }),
+    check('lastName', 'Nazwisko musi zawierać min. 3 znaki.').isLength({ min: 3 }),
+    check('avatar', 'Podaj URL obrazka.').isURL(),
+    check('about', 'Napisz kilka słów o sobie.').isLength({ min: 10 })
+], async (req, res) => {
     var newUser = new User(
         {
             username: req.body.username,
@@ -29,16 +46,25 @@ router.post('/register', (req, res) => {
             avatar: req.body.avatar,
             about: req.body.about
         });
-    User.register(newUser, req.body.password, (err, user) => {
-        if(err) {
+    var formErrors = validationResult(req);
+    if (!formErrors.isEmpty()) {
+        let arrayFormErrors = await formErrors.mapped();
+        let errorsMsg = await arrayFormErrors;
+        req.flash('error', 'Wystąpiły błędy w formularzu.');
+        res.render('register', {errors: errorsMsg, newUser: newUser, error: req.flash('error')});
+    } else {
+        try {    
+            User.register(newUser, req.body.password, (err, user) => {
+                passport.authenticate('local')(req, res, () => {
+                    req.flash('success', 'Cześć ' + user.username + '! Rejestracja przebiegła pomyślnie.');
+                    res.redirect('/');
+                });
+            });
+        } catch(err) {
             req.flash('error', 'Wystąpił błąd.');
             return res.redirect('register');
-        }
-        passport.authenticate('local')(req, res, () => {
-            req.flash('success', 'Cześć ' + user.username + '! Rejestracja przebiegła pomyślnie.');
-            res.redirect('/');
-        });
-    });
+        }       
+    }    
 });
 
 router.get('/login', (req, res) => {

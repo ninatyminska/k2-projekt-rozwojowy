@@ -169,8 +169,13 @@
                                                         <div class="ui massive star rating" data-rating="<%= review.rating %>"></div>
                                                     </div>
                                                 </div>
+                                                <% if(typeof errorRevMsg !== 'undefined') { %>
+                                                <div id="error-review-edit-label" class="ui pointing red basic label">
+                                                <%= errorRevMsg %>
+                                                </div>
+                                                <% } %>
                                                 <div class="ui fourteen wide left icon input">
-                                                    <textarea name="review[text]" form="edit-review-form<%= review._id %>" rows="5" cols="70"><%= review.text %></textarea>
+                                                    <textarea name="review[text]" form="edit-review-form<%= review._id %>" rows="5" cols="70"><% if(typeof errorRevMsg !== 'undefined' && typeof reviewText !== 'undefined') { %><%= reviewText %><% } else { %><%= review.text %> <% } %></textarea>
                                                 </div>
                                                 <div class="ui fourteen wide left icon input">
                                                     <button class="ui inverted tiny yellow button">Edytuj</button>
@@ -210,11 +215,11 @@
                                                 <div class="ui massive star rating"></div>
                                             </div>
                                         </div>
-                                            <% if(typeof errorMsg !== 'undefined') { %>
-                                            <div id="error-review-label" class="ui pointing red basic label">
-                                            <%= errorMsg %>
-                                            </div>
-                                            <% } %>
+                                        <% if(typeof errorMsg !== 'undefined') { %>
+                                        <div id="error-review-label" class="ui pointing red basic label">
+                                        <%= errorMsg %>
+                                        </div>
+                                        <% } %>
                                         <div class="ui fourteen wide left icon input">
                                             <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"><% if(typeof errorMsg !== 'undefined' && typeof reviewText !== 'undefined') { %><%= reviewText %><% } %></textarea>
                                         </div>
@@ -262,9 +267,14 @@
                                                     <i class="user icon"></i>
                                                         <input type="text" disabled value="<%= comment.author.username %>">
                                                     </div>
-                                                    <div class="ten wide field">
-                                                        <textarea name="comment[text]" placeholder="Twój komentarz..." form="edit-comment-form<%= comment._id %>"><%= comment.text %></textarea>
+                                                    <div class="ui fourteen wide left icon input">
+                                                        <textarea name="comment[text]" placeholder="Edytuj komentarz..." form="edit-comment-form<%= comment._id %>"><% if(typeof errorMsgComEdit == 'undefined') { %><%= comment.text %><% } %></textarea>
                                                     </div>
+                                                    <% if(typeof errorMsgComEdit !== 'undefined') { %>
+                                                    <div id="error-comment-edit-label" class="ui pointing red basic label">
+                                                    <%= errorMsgComEdit %>
+                                                    </div>
+                                                    <% } %>
                                                     <div class="ui fourteen wide left icon input">
                                                         <button class="ui inverted tiny yellow button">Edytuj</button>
                                                     </div>

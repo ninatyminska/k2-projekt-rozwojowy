@@ -1,5 +1,6 @@
 var express     = require('express'),
     router      = express.Router({mergeParams: true}),
+    {check, validationResult} = require('express-validator'),
     Course      = require('../models/course'),
     Comment     = require('../models/comment'),
     middleware  = require('../middleware');
@@ -26,8 +27,14 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
                                 console.log(error);
                             } else {
                                 errorMsgCom = err.errors.text.message;
+                                var errorsMsg = {
+                                    'course.name': undefined,
+                                    'course.description': undefined,
+                                    'course.website': undefined,
+                                    'course.image': undefined,
+                                };
                                 req.flash('error', 'Uzupełnij formularz komentarza.');
-                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, error: req.flash('error')});
+                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, errorsMsg: errorsMsg, error: req.flash('error')});
                             };       
                         }); 
                     }
@@ -48,19 +55,45 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 });
 
 router.put('/:comment_id', middleware.checkCommentOwner, (req, res) => {
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, {new: true}, (err, updatedComment) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, {runValidators: true, new: true}, (err, updatedComment) => {
         if(err) {
-            req.flash('error', 'Wystąpił błąd.');
-            res.redirect('back');
-        } 
-        Course.findById(req.params.id).populate('comments').exec((err, course) => {
-            if (err) {
-                req.flash('error', 'Wystąpił błąd.');
-                return res.redirect('back');
-            }
-            req.flash('success', 'Komentarz zaktualizowany.');
-            res.redirect('/c/' + req.params.id);
-        });
+            Course.findById(req.params.id).populate('comments').populate({
+                path: 'reviews',
+                options: {sort: {createdAt: -1}}
+            }).exec((error, foundCourse) => {
+                if (error) {
+                    req.flash('error', 'Wystąpił błąd.');
+                    console.log(error);
+                } else {
+                    Course.find({}, (error, allCourses) => {
+                        if(error) {
+                            req.flash('error', 'Wystąpił błąd.');
+                            console.log(error);
+                        } else {
+                            errorMsgComEdit = err.errors.text.message;
+                            var errorsMsg = {
+                                'course.name': undefined,
+                                'course.description': undefined,
+                                'course.website': undefined,
+                                'course.image': undefined,
+                            };
+                            req.flash('error', 'Uzupełnij formularz komentarza.');
+                            return res.render('courses/show', {course: foundCourse, courses: allCourses, errorMsgComEdit: errorMsgComEdit, errorsMsg: errorsMsg, error: req.flash('error')});
+                        }       
+                    }); 
+                }
+            });   
+        } else {
+            Course.findById(req.params.id).populate('comments').exec((err, course) => {
+                if (err) {
+                    req.flash('error', 'Wystąpił błąd.');
+                    return res.redirect('back');
+                }
+                errorMsgComEdit = undefined;
+                req.flash('success', 'Komentarz zaktualizowany.');
+                res.redirect('/c/' + req.params.id);
+            });
+        }
     });
 });
 
