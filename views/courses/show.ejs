@@ -27,13 +27,18 @@
                             <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
                             <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i> www</a></h4>
-                            <a class="ui teal image label" href="/users/<%= course.author.id %>">
+                            <a class="ui blue image label" href="/users/<%= course.author.id %>">
                                 <img src="<%= course.author.avatar %>">
                                 <%= course.author.username %>
                                 <div class="detail"><%= moment(course.createdAt).fromNow() %></div>
                             </a>
                             <div class="course-description">
                                 <%- course.description %>
+                            </div>
+                            <div class="course-tag">
+                            <% course.tag.forEach(function(tag) { %>
+                            <a class="ui tag teal small label"><%= tag %></a>
+                            <% }); %>
                             </div>
                             <% if(currentUser && course.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                             <div class="ui accordion">

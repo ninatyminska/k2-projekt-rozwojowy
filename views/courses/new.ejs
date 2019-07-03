@@ -86,6 +86,32 @@
                                 </div>
                                 <% } %>
                             </div>
+                            <div id="error-tag" class="field <% if(typeof errors.tag != 'undefined') { %>error<% } %>">
+                                <div class="ui fluid multiple search selection dropdown">
+                                <input type="hidden" name="tag" value="<% if(typeof errors.tag == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.tag %><% } %>">
+                                <i class="dropdown icon"></i>
+                                    <div class="default text"><i class="tags icon"></i>Dodaj tagi</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="front-end">front-end</div>
+                                        <div class="item" data-value="back-end">back-end</div>
+                                        <div class="item" data-value="UX">UX</div>
+                                        <div class="item" data-value="machine learning">machine learning</div>
+                                        <div class="item" data-value="soft skills">soft skills</div>
+                                        <div class="item" data-value="graphic design">graphic design</div>
+                                        <div class="item" data-value="HTML">HTML</div>
+                                        <div class="item" data-value="CSS">CSS</div>
+                                        <div class="item" data-value="JavaScript">JavaScript</div>
+                                        <div class="item" data-value="CMS">CMS</div>
+                                        <div class="item" data-value="chatbots">chatbots</div>
+                                        <div class="item" data-value="mobile">mobile</div>
+                                    </div>
+                                </div>
+                                <% if(typeof errors.tag != "undefined") { %>
+                                <div id="new-error-cat-label" class="ui pointing red basic label">
+                                    <%= errors.tag.msg %>
+                                </div>
+                                <% } %>
+                            </div>
                             <div class="field">
                                 <button class="fluid ui large inverted primary button">Dodaj</button>
                             </div>

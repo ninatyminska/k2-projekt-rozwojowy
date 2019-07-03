@@ -6,6 +6,7 @@ var courseSchema = new mongoose.Schema({
     description: String,
     website: String,
     category: String,
+    tag: [String],
     createdAt: { 
         type: Date, 
         default: Date.now 
@@ -24,8 +25,8 @@ var courseSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
       }
-   ],
-   reviews: [
+    ],
+    reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Review"

@@ -52,33 +52,38 @@ $(document).ready(function() {
             }
         });
 
-        $('#new-error-name').click(function() {
-            $('#error-name-label').hide();
+        $('#error-name').click(function() {
+            $('#new-error-name-label').hide();
             $(this).removeClass('error');
         });
 
-        $('#new-error-desc').click(function() {
-            $('#error-desc-label').hide();
+        $('#error-desc').click(function() {
+            $('#new-error-desc-label').hide();
             $(this).removeClass('error');
         });
 
-        $('#new-error-web').click(function() {
-            $('#error-web-label').hide();
+        $('#error-web').click(function() {
+            $('#new-error-web-label').hide();
             $(this).removeClass('error');
         });
 
-        $('#new-error-img').click(function() {
-            $('#error-img-label').hide();
+        $('#error-img').click(function() {
+            $('#new-error-img-label').hide();
             $(this).removeClass('error');
         });
 
-        $('#new-error-cat').click(function() {
-            $('#error-cat-label').hide();
+        $('#error-cat').click(function() {
+            $('#new-error-cat-label').hide();
             $(this).removeClass('error');
         });
 
-        $('#new-error-date').click(function() {
-            $('#error-date-label').hide();
+        $('#error-tag').click(function() {
+            $('#new-error-tag-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-date').click(function() {
+            $('#new-error-date-label').hide();
             $(this).removeClass('error');
         });
 
