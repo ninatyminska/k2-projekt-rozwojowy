@@ -23,7 +23,7 @@
 <li>search</li>
 <strike><li>filtering by category (tabs)</li></strike>
 <strike><li>sorting by date</li></strike>
-<li>[WIP]tags</li>
+<li>[WIP] tags</li>
 </ul>
 <h2>BUGS TO-FIX</h2>
 <ul>
