@@ -24,6 +24,7 @@ router.post('/new', middleware.isLoggedIn, [
     check('description', 'Opis jest za krótki.').isLength({ min: 20 }),
     check('website', 'Podaj prawidłowy adres URL.').isURL(),
     check('category', 'Wybierz kategorię.').isLength({ min: 1 }),
+    check('tag', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
     check('date', 'Wybierz datę wydarzenia.').isLength({ min: 1 })
 ], async (req, res) => {
         var name   = req.body.name,
@@ -31,13 +32,14 @@ router.post('/new', middleware.isLoggedIn, [
             desc   = req.sanitize(req.body.description),
             web    = req.body.website,
             cat    = req.body.category,
+            tag    = req.body.tag.replace(/\s/g,'').split(","),
             date   = req.body.date,
             author = {
             id: req.user._id,
             username: req.user.username,
             avatar: req.user.avatar
         };
-        var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, date: date};
+        var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, tag: tag, date: date};
         var formErrors = validationResult(req);
         if (!formErrors.isEmpty()) {
             let arrayFormErrors = await formErrors.mapped();
