@@ -742,6 +742,10 @@ body.pushable>.pusher {
       margin-bottom: 0;
     }
 
+    #search-grid {
+        margin-bottom: 0;
+    }
+
     #category-menu-mobile {
       display: block;
       background-color: #1b1c1d;

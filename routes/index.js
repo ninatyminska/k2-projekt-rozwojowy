@@ -6,16 +6,26 @@ var express        = require('express'),
     Course         = require('../models/course'),
     { isLoggedIn } = require('../middleware'),
     Notification   = require('../models/notification');
-    
+
 router.get('/', async (req, res) => {
-    try {
-        let allCourses = await Course.find({}).sort({date: 1}).exec();
-        res.render('courses/courses', {courses : allCourses});
-    } catch(err) {
-        req.flash('error', 'Wystąpił błąd.');
-        return res.redirect('back');
+    var noResults = undefined;
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        let allCourses = await Course.find({name: regex}).sort({date: 1}).exec();
+        if (allCourses.length < 1) {
+            noResults = "Brak wyników wyszukiwania."
+        }
+        res.render('courses/courses', {courses: allCourses, noResults: noResults});
+    } else {
+        try {
+            let allCourses = await Course.find({}).sort({date: 1}).exec();
+            res.render('courses/courses', {courses: allCourses, noResults: noResults});
+        } catch (err) {
+            req.flash('error', 'Wystąpił błąd.');
+            return res.redirect('back');
+        }
     }
-}); 
+});
 
 router.get('/register', (req, res) => {
     var errors = {

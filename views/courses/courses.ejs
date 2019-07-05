@@ -73,7 +73,17 @@
                         <a class="item" data-tab="sixth">Strony internetowe</a>
                         <a class="item" data-tab="seventh">Programy</a>
                     </div>
-                </div>    
+                </div>
+                <div id="search-grid" class="ui four column centered stackable grid">
+                    <form action="/" method="GET">
+                        <div class="ui action inverted input">
+                            <input type="text" name="search" placeholder="Szukaj...">
+                            <button class="ui icon inverted button">
+                                <i class="search icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 <div class="ui bottom attached active tab segment category-menu" data-tab="first">
                     <div id="hp-cards-grid" class="ui middle aligned stackable grid container">
                         <% courses.forEach(function(course){ %>
