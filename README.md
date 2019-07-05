@@ -20,7 +20,7 @@
 <h2>MAJOR TO-DOS</h2>
 <ul>
 <li>[WIP] validation</li>
-<li>[WIP]search</li>
+<li>[WIP] search</li>
 <strike><li>filtering by category (tabs)</li></strike>
 <strike><li>sorting by date</li></strike>
 <li>[WIP] tags</li>
