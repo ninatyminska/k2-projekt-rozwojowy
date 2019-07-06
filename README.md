@@ -26,8 +26,4 @@
 <li>[WIP] tags</li>
 </ul>
 <h2>BUGS TO-FIX</h2>
-<ul>
-<strike><li>[mobile] notifications dropdown size</li></strike>
-<strike><li>[mobile] grids margin-top</li></strike>
-<strike><li>collection.remove is deprecated</li></strike>
-</ul> 
+[https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues](https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues)
