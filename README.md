@@ -17,13 +17,5 @@
 <li>comments</li>
 <li>reviews</li>
 </ul>
-<h2>MAJOR TO-DOS</h2>
-<ul>
-<li>[WIP] validation</li>
-<li>[WIP] search</li>
-<strike><li>filtering by category (tabs)</li></strike>
-<strike><li>sorting by date</li></strike>
-<li>[WIP] tags</li>
-</ul>
-<h2>BUGS TO-FIX</h2>
+<h2>TO-DOS & BUGS</h2>
 [https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues](https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues)
