@@ -73,9 +73,77 @@
                         <a class="item" data-tab="sixth">Strony internetowe</a>
                         <a class="item" data-tab="seventh">Programy</a>
                     </div>
-                </div>    
+                </div>
+                <div class="ui four column centered stackable grid search-grid">
+                    <form action="/" method="GET">
+                        <div class="ui action inverted input">
+                            <input type="text" name="search" placeholder="Szukaj..." <% if (searchText !== undefined) { %> value="<%= searchText %>" <% } %>>
+                            <button class="ui icon inverted button">
+                                <i class="search icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="ui left pointing scrolling dropdown icon inverted button">
+                        <i class="tags icon"></i>
+                        <div class="menu">
+                            <div class="header">
+                                <a href="/">Wyświetl wszystkie</a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="item">
+                                <a href="/?tag=front-end">front-end</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=back-end">back-end</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=UX">UX</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=machine+learning">machine learning</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=soft+skills">soft skills</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=graphic+design">graphic design</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=HTML">HTML</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=CSS">CSS</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=JavaScript">JavaScript</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=CMS">CMS</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=chatbots">chatbots</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=mobile">mobile</a>
+                            </div>
+                            <div class="item">
+                                <a href="/?tag=testy">testy</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (tagSearch !== undefined) { %>
+                    <div class="tag-search-label">
+                        <button class="ui tag teal small label"><%= tagSearch %></button>
+                    </div>
+                    <% } %> 
+                </div>
+                <% if (courses.length < 1) { %>
+                <div class="ui four column centered stackable grid search-result">
+                    <h4><%= noResults %></h4>
+                </div>
+                <% } %>    
                 <div class="ui bottom attached active tab segment category-menu" data-tab="first">
-                    <div id="hp-cards-grid" class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -118,7 +186,7 @@
                     </div>
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="second">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Konferencja") { %>
                         <div class="four wide column">
@@ -157,7 +225,7 @@
                     </div>           
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="third">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Meetup") { %>
                         <div class="four wide column">
@@ -196,7 +264,7 @@
                     </div> 
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fourth">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Warsztat") { %>
                         <div class="four wide column">
@@ -235,7 +303,7 @@
                     </div> 
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fifth">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Książka") { %>
                         <div class="four wide column">
@@ -271,7 +339,7 @@
                     </div> 
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="sixth">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Strona internetowa") { %>
                         <div class="four wide column">
@@ -307,7 +375,7 @@
                     </div> 
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="seventh">
-                    <div class="ui middle aligned stackable grid container">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course){ 
                         if(course.category == "Program") { %>
                         <div class="four wide column">

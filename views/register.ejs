@@ -1,14 +1,14 @@
 <% include ./partials/header %>
 
-            <div id="form-grid-log" class="ui five column centered middle aligned center aligned stackable grid">
-                <div id="form-grid-log-column" class="middle aligned center aligned column">
+            <div class="ui five column centered middle aligned center aligned stackable grid form-grid-log">
+                <div class="middle aligned center aligned column form-grid-log-column">
                     <h2 class="ui teal image header">
                     <div class="content">
                         Zarejestruj się
                     </div>
                     </h2>
                     <form class="ui large form" action="/register" method="POST">
-                        <div id="login-form" class="ui stacked segment">
+                        <div class="ui stacked segment login-form">
                             <div id="error-username" class="field <% if(typeof errors.username != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="user icon"></i>
