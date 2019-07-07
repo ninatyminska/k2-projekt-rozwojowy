@@ -7,26 +7,6 @@ var express                   = require('express'),
     Notification              = require('../models/notification'),
     middleware                = require('../middleware'),
     Review                    = require('../models/review');
-    
-router.get('/', async (req, res) => {
-    var noResults = undefined;
-    if (req.query.search) {
-        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        let allCourses = await Course.find({name: regex}).sort({date: 1}).exec();
-        if (allCourses.length < 1) {
-            noResults = "Brak wyników wyszukiwania."
-        }
-        res.render('courses/courses', {courses: allCourses, noResults: noResults});
-    } else {
-        try {
-            let allCourses = await Course.find({}).sort({date: 1}).exec();
-            res.render('courses/courses', {courses: allCourses, noResults: noResults});
-        } catch (err) {
-            req.flash('error', 'Wystąpił błąd.');
-            return res.redirect('back');
-        }
-    }
-});
 
 router.post('/new', middleware.isLoggedIn, [
     check('name', 'Tytuł jest za krótki.').isLength({ min: 3 }),
@@ -118,26 +98,13 @@ router.get('/c/:id', (req, res) => {
             });
         }
     });
-});
-
-router.get('/c/:id/edit', middleware.checkCourseOwner, async (req, res) => {
-    try {    
-        let foundCourse = await Course.findById(req.params.id).exec();
-        res.render('courses/edit', {course : foundCourse});
-        if (!foundCourse) {
-            throw req.flash('error', 'Kurs nie został znaleziony.');
-            res.redirect('back');
-        }
-    } catch(err){
-            req.flash('error', 'Wystąpił błąd.');
-            res.redirect('back');
-    }
-});    
+});   
 
 router.put('/c/:id', middleware.checkCourseOwner, [
     check('course[name]', 'Tytuł jest za krótki.').isLength({ min: 3 }),
     check('course[image]', 'Podaj URL obrazka.').isURL(),
     check('course[description]', 'Opis jest za krótki.').isLength({ min: 20 }),
+    check('course[tag]', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
     check('course[website]', 'Podaj prawidłowy adres URL.').isURL(),
 ], async (req, res) => {
     var formErrors = validationResult(req);

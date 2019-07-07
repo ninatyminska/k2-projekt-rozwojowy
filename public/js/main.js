@@ -87,6 +87,41 @@ $(document).ready(function() {
             $(this).removeClass('error');
         });
 
+        $('#error-name').click(function() {
+            $('#error-name-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-desc').click(function() {
+            $('#error-desc-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-web').click(function() {
+            $('#error-web-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-img').click(function() {
+            $('#error-img-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-cat').click(function() {
+            $('#error-cat-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-tag').click(function() {
+            $('#error-tag-label').hide();
+            $(this).removeClass('error');
+        });
+
+        $('#error-date').click(function() {
+            $('#error-date-label').hide();
+            $(this).removeClass('error');
+        });
+
         $('#error-username').click(function() {
             $('#error-username-label').hide();
             $(this).removeClass('error');

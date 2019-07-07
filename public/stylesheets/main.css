@@ -1,3 +1,20 @@
+/*LOGIN AND REGISTER FORM */
+
+.ui.form-grid-log {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+.column.form-grid-log-column {
+  width: 350px!important;
+}
+
+.ui.login-form {
+    background-color: #1b1c1d;
+    color: white;
+    border: 1px solid white;
+}
+
 #main-header {
   margin-top: 25px;
   text-shadow: 1px 0px 6px #000000;
@@ -51,11 +68,12 @@
 }
 
 .ui.bottom.attached.tab.segment.category-menu {
+  margin: 0;
   border: 0;
   background-color: #1b1c1d;
 }
 
-#hp-cards-grid{
+.ui.middle.aligned.stackable.grid.container.hp-cards-grid {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -138,23 +156,36 @@ body.pushable>.pusher {
   }
 }
 
-
-#login-form {
-    background-color: #1b1c1d;
-    color: white;
-    border: 1px solid white;
-}
-
 #notification-column {
   width: 550px!important;
 }
 
-#form-grid-column {
-  width: 450px!important;
+.ui.four.column.centered.stackable.grid.search-grid {
+  margin-top: 1.5em;
+  margin-bottom: 0;
 }
 
-#form-grid-log-column {
-  width: 350px!important;
+.ui.four.column.centered.stackable.grid.search-grid>form {
+  padding-left: 0;
+  padding-right: 0.5rem;
+}
+
+.ui.dropdown.icon.inverted.button {
+  margin: 0;
+}
+
+.ui.four.column.centered.stackable.grid.search-result {
+  color: white;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+#course-edit>form>.field {
+    width: 90%;
+}
+
+#form-grid-column {
+  width: 450px!important;
 }
 
 .default.text {
@@ -207,6 +238,10 @@ body.pushable>.pusher {
 }
 
 .ui.form .field.error input[type=text] {
+  color: red;
+}
+
+.ui.fourteen.wide.left.icon.input.error {
   color: red;
 }
 
@@ -350,8 +385,8 @@ body.pushable>.pusher {
     display: none;
 }
 
-.ui .grid {
-    margin: 5rem 0;
+.top-menu {
+  margin-bottom: 3rem;
 }
 
 .user-courses {
@@ -626,6 +661,10 @@ body.pushable>.pusher {
   margin: 0 0 1rem 13rem;
 }
 
+#error-tag-label {
+  margin-left: 13.5rem;
+}
+
 .ui.comments .comment .author {
     color: #4183c4;
 }
@@ -661,6 +700,19 @@ body.pushable>.pusher {
     top: 3em;
     left: -1.1em!important;
     z-index: 1;
+}
+.tag-search-label {
+    padding-left: 0.5em!important;
+    padding-right: 0!important;
+    margin: auto 0;
+}
+
+.ui.left.pointing.scrolling.dropdown.icon.inverted.button>.menu>.header>a {
+  color: black;
+}
+
+.ui.left.pointing.scrolling.dropdown.icon.inverted.button>.menu>.item>a {
+  color: black;
 }
 
 @media only screen and (max-width: 700px) {
@@ -718,12 +770,17 @@ body.pushable>.pusher {
     .pushable>.pusher {
       min-height: 60%;
     }
+
+    .top-menu {
+      margin-bottom: 0;
+    }
+
     #form-grid {
       margin-top: 3rem!important;
       margin-bottom: 1rem!important;
     }
 
-    #form-grid-log {
+    .ui.form-grid-log {
       margin-top: 1rem!important;
       margin-bottom: 1rem!important;
     }
@@ -742,7 +799,7 @@ body.pushable>.pusher {
       margin-bottom: 0;
     }
 
-    #search-grid {
+    .ui.four.column.centered.stackable.grid.search-grid {
         margin-bottom: 0;
     }
 
@@ -807,6 +864,50 @@ body.pushable>.pusher {
 
     #review-edit>form>div>div.six.wide.field {
       margin-top: 1rem;
+    }
+
+    #error-review-label {
+      float: none;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      margin-left: 2.5rem;
+      margin-right: 0;
+    }
+
+    #error-comment-label {
+      margin: 0 0 1rem 2.8rem;
+    }
+
+    #error-comment-edit-label {
+      margin: 0 0 1rem 2.8rem;
+    }
+
+    #error-name-label {
+      margin: 0 0 1rem 4rem;
+    }
+
+    #error-img-label {
+      margin: 0 0 1rem 4rem;
+    }
+
+    #error-web-label {
+      margin: 0 0 1rem 2rem;
+    }
+
+    #error-desc-label {
+      margin: 0 0 1rem 4rem;
+    }
+
+    #error-cat-label {
+      margin: 0 0 1rem 4rem;
+    }
+
+    #error-date-label {
+      margin: 0 0 1rem 4rem;
+    }
+
+    #error-tag-label {
+      margin-left: 4.5rem;
     }
 
     #footer-grid {

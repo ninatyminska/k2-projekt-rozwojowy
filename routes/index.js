@@ -7,19 +7,31 @@ var express        = require('express'),
     { isLoggedIn } = require('../middleware'),
     Notification   = require('../models/notification');
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 router.get('/', async (req, res) => {
-    var noResults = undefined;
+    var noResults  = undefined,
+        tagSearch  = undefined,
+        searchText = undefined;
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         let allCourses = await Course.find({name: regex}).sort({date: 1}).exec();
         if (allCourses.length < 1) {
             noResults = "Brak wyników wyszukiwania."
         }
-        res.render('courses/courses', {courses: allCourses, noResults: noResults});
+        searchText = req.query.search;
+        res.render('courses/courses', {courses: allCourses, searchText: searchText, tagSearch: tagSearch, noResults: noResults});
+    } else if (req.query.tag) {
+        const regex = new RegExp(escapeRegex(req.query.tag), 'gi');
+        let allCourses = await Course.find({tag: regex}).sort({date: 1}).exec();
+        tagSearch = req.query.tag;
+        res.render('courses/courses', {courses: allCourses, searchText: searchText, tagSearch: tagSearch, noResults: noResults});
     } else {
         try {
             let allCourses = await Course.find({}).sort({date: 1}).exec();
-            res.render('courses/courses', {courses: allCourses, noResults: noResults});
+            res.render('courses/courses', {courses: allCourses, tagSearch: tagSearch, searchText: searchText, noResults: noResults});
         } catch (err) {
             req.flash('error', 'Wystąpił błąd.');
             return res.redirect('back');
