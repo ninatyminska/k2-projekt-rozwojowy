@@ -16,6 +16,7 @@
 <li>follow users</li>
 <li>comments</li>
 <li>reviews</li>
+<li>search & tags</li>
 </ul>
 <h2>TO-DOS & BUGS</h2>
 [https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues](https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues)
