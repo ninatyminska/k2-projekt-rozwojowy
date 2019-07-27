@@ -845,6 +845,10 @@ body.pushable>.pusher {
       display: none;
     }
 
+    .tag-search-label {
+        margin-top: 1em;
+    }
+
     #course-show {
       margin-top: 1rem;
       margin-bottom: 1rem;
