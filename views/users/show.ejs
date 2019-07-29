@@ -20,7 +20,11 @@
                                 <%= user.about %>
                             </div>
                         </div>
-                        <% if (currentUser && currentUser.id !== user.id) { %>
+                        <% followersArr = [];
+                        user.followers.forEach(function(follower) {
+                            followersArr.push(follower._id.toString());
+                        });
+                        if ((currentUser && currentUser.id !== user.id) && !followersArr.includes(currentUser.id)) { %>
                         <div class="extra content">
                             <a class="ui inverted olive button" href="/follow/<%= user.id %>">Obserwuj</a>
                         </div>
