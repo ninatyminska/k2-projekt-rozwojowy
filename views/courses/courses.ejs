@@ -49,17 +49,27 @@
                             </a>
                             <a class="item" data-tab="fifth">
                                 <div class="item">
-                                    Książki
+                                    Kursy
                                 </div>
                             </a>
                             <a class="item" data-tab="sixth">
                                 <div class="item">
-                                    Strony internetowe
+                                    Książki
                                 </div>
                             </a>
                             <a class="item" data-tab="seventh">
                                 <div class="item">
+                                    Strony internetowe
+                                </div>
+                            </a>
+                            <a class="item" data-tab="eighth">
+                                <div class="item">
                                     Programy
+                                </div>
+                            </a>
+                            <a class="item" data-tab="ninth">
+                                <div class="item">
+                                Archiwum
                                 </div>
                             </a>         
                         </div>
@@ -69,10 +79,11 @@
                         <a class="item" data-tab="second">Konferencje</a>
                         <a class="item" data-tab="third">Meetupy</a>
                         <a class="item" data-tab="fourth">Warsztaty</a>
-                        <a class="item" data-tab="fifth">Książki</a>
-                        <a class="item" data-tab="sixth">Strony internetowe</a>
-                        <a class="item" data-tab="seventh">Programy</a>
-                        <a class="item" data-tab="eighth">Archiwum</a>
+                        <a class="item" data-tab="fifth">Kursy</a>
+                        <a class="item" data-tab="sixth">Książki</a>
+                        <a class="item" data-tab="seventh">Strony internetowe</a>
+                        <a class="item" data-tab="eighth">Programy</a>
+                        <a class="item" data-tab="ninth">Archiwum</a>
                     </div>
                 </div>
                 <div class="ui four column centered stackable grid search-grid">
@@ -287,6 +298,42 @@
                                     <span class="right floated">
                                         <i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %>
                                     </span>
+                                    <% if (course.rating === 0) { %>
+                                    <span>
+                                        <i class="star icon"></i>0 
+                                    </span>
+                                    <% } else { %>
+                                    <span>
+                                        <i class="star icon checked"></i><%= course.rating.toFixed(2) %> 
+                                    <% } %>
+                                        <i class="comments icon"></i><%= course.comments.length %>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div> 
+                        <% } 
+                        }); %>
+                    </div> 
+                </div>
+                <div class="ui bottom attached tab segment category-menu" data-tab="fourth">
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
+                        <% courses.forEach(function(course){ 
+                        if(course.category == "Kurs") { %>
+                        <div class="four wide column">
+                            <div id="hp-card" class="ui card">
+                                <div class="image">
+                                    <a class="ui red ribbon label"><%= course.category %></a>
+                                    <img src="<%= course.image %>">
+                                </div>
+                                <div class="content">
+                                    <h4>
+                                        <a class="header" href="/c/<%= course._id %>"><%= course.name.substring(0, 30) %><% if(course.name.length>30) { %>...<% } %></a>
+                                    </h4>
+                                    <div class="description">
+                                        <a class="ui orange basic tiny button" href="/c/<%= course._id %>">Dowiedz się więcej <i class="chevron right icon"></i></a>
+                                    </div>
+                                </div>
+                                <div class="extra">
                                     <% if (course.rating === 0) { %>
                                     <span>
                                         <i class="star icon"></i>0 

@@ -15,7 +15,9 @@ router.post('/new', middleware.isLoggedIn, [
     check('website', 'Podaj prawidłowy adres URL.').isURL(),
     check('category', 'Wybierz kategorię.').isLength({ min: 1 }),
     check('tag', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
-    check('date', 'Wybierz datę wydarzenia.').isLength({ min: 1 })
+        if(['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.category)) {
+        check('date', 'Wybierz datę wydarzenia.').isLength({ min: 1 })
+        }
 ], async (req, res) => {
         var name   = req.body.name,
             image  = req.body.image,
@@ -34,6 +36,7 @@ router.post('/new', middleware.isLoggedIn, [
         if (!formErrors.isEmpty()) {
             let arrayFormErrors = await formErrors.mapped();
             let errorsMsg = await arrayFormErrors;
+            console.log(errorsMsg);
             req.flash('error', 'Wystąpiły błędy w formularzu.');
             res.render('courses/new', {errors: errorsMsg, newCourse: newCourse, error: req.flash('error')});         
         } else {

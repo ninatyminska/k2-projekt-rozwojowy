@@ -6,6 +6,14 @@ var notificationSchema = new mongoose.Schema({
     avatar: String,
     courseId: String,
     courseName: String,
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    },
+    expireAt: {
+        type: Date,
+        index: { expires: '30000' },
+    },
     isRead: { type: Boolean, default: false }
 });
 
