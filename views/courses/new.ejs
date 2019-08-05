@@ -74,7 +74,7 @@
                                 </div>
                                 <% } %>
                             </div>
-                            <div id="error-date" class="field <% if(typeof errors.date != 'undefined') { %>error<% } %>">
+                            <div id="error-date" class="field <% if(typeof errors.date != 'undefined') { %>error<% } %>" style="<% if(typeof errors.date != 'undefined' && ['Konferencja', 'Meetup', 'Warsztat'].includes(newCourse.category)) { %>display: block;<% } %>">
                                 <div class="ui calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>

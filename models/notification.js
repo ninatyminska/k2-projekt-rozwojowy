@@ -12,7 +12,8 @@ var notificationSchema = new mongoose.Schema({
     },
     expireAt: {
         type: Date,
-        index: { expires: '30000' },
+        default: Date.now,
+        index: { expires: '2592000000' }
     },
     isRead: { type: Boolean, default: false }
 });

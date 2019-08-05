@@ -17,7 +17,7 @@ var indexRoutes    = require("./routes/index"),
     reviewRoutes   = require("./routes/reviews");
     
 var mdb = process.env.MDB_PSSW;
-mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true });
 mongoose.set('useFindAndModify', false);
 
 app.use(favicon(path.join(__dirname,'public','favicons','favicon-32x32.png')));

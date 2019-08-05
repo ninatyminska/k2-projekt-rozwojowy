@@ -15,9 +15,9 @@ router.post('/new', middleware.isLoggedIn, [
     check('website', 'Podaj prawidłowy adres URL.').isURL(),
     check('category', 'Wybierz kategorię.').isLength({ min: 1 }),
     check('tag', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
-        if(['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.category)) {
-        check('date', 'Wybierz datę wydarzenia.').isLength({ min: 1 })
-        }
+    check('date', 'Wybierz datę wydarzenia')
+        .if((value, { req }) => ['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.category))
+        .isLength({ min: 1 })
 ], async (req, res) => {
         var name   = req.body.name,
             image  = req.body.image,
@@ -26,17 +26,17 @@ router.post('/new', middleware.isLoggedIn, [
             cat    = req.body.category,
             tag    = req.body.tag.replace(/\s/g,'').split(","),
             date   = req.body.date,
+            expireAt = req.body.date,
             author = {
             id: req.user._id,
             username: req.user.username,
             avatar: req.user.avatar
         };
-        var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, tag: tag, date: date};
+        var newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, tag: tag, date: date, expireAt: expireAt};
         var formErrors = validationResult(req);
         if (!formErrors.isEmpty()) {
             let arrayFormErrors = await formErrors.mapped();
             let errorsMsg = await arrayFormErrors;
-            console.log(errorsMsg);
             req.flash('error', 'Wystąpiły błędy w formularzu.');
             res.render('courses/new', {errors: errorsMsg, newCourse: newCourse, error: req.flash('error')});         
         } else {
@@ -109,6 +109,9 @@ router.put('/c/:id', middleware.checkCourseOwner, [
     check('course[description]', 'Opis jest za krótki.').isLength({ min: 20 }),
     check('course[tag]', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
     check('course[website]', 'Podaj prawidłowy adres URL.').isURL(),
+    check('course[date]', 'Wybierz datę wydarzenia')
+        .if((value, { req }) => ['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.course[category]))
+        .isLength({ min: 1 })
 ], async (req, res) => {
     var formErrors = validationResult(req);
         if (!formErrors.isEmpty()) {
