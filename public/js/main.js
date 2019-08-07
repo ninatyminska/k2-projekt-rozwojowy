@@ -47,6 +47,8 @@ $(document).ready(function() {
                 $('#error-date').show();
             } else if($(this).attr("value") == "Warsztat") {
                 $('#error-date').show();
+            } else if($(this).attr("value") == "Webinar") {
+                $('#error-date').show();
             } else {
                 $('#error-date').hide();
             }

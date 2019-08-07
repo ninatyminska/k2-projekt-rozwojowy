@@ -26,6 +26,9 @@
                             <% if (course.category == "Warsztat") { %>
                             <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
                             <% } %>
+                            <% if (course.category == "Webinar") { %>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
+                            <% } %>
                             <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i> www</a></h4>
                             <a class="ui blue image label" href="/users/<%= course.author.id %>">
                                 <img src="<%= course.author.avatar %>">
@@ -91,6 +94,7 @@
                                                     <div class="item" data-value="Konferencja"><i class="users icon"></i>Konferencja</div>
                                                     <div class="item" data-value="Meetup"><i class="meetup icon"></i>Meetup</div>
                                                     <div class="item" data-value="Warsztat"><i class="cogs icon"></i>Warsztat</div>
+                                                    <div class="item" data-value="Webinar"><i class="video icon"></i>Webinar</div>
                                                     <div class="item" data-value="Kurs"><i class="laptop icon"></i>Kurs</div>
                                                     <div class="item" data-value="Książka"><i class="book icon"></i>Książka</div>
                                                     <div class="item" data-value="Strona internetowa"><i class="globe icon"></i>Strona internetowa</div>
@@ -100,7 +104,7 @@
                                         </div>
                                         <div id="error-tag" class="field <% if(typeof errorsMsg['course.tag'] != 'undefined') { %>error<% } %>">
                                 <div class="ui fluid multiple search selection dropdown">
-                                <input type="hidden" name="tag" value="<% if(typeof errorsMsg['course.tag'] != 'undefined') { %><%= errorsMsg['course.tag'].value %> <% } else { %><%= course.tag %><% } %>">
+                                <input type="hidden" name="course[tag]" value="<% if(typeof errorsMsg['course.tag'] != 'undefined') { %><%= errorsMsg['course.tag'].value %> <% } else { %><%= course.tag.join(',') %><% } %>">
                                 <i class="dropdown icon"></i>
                                     <div class="default text"><i class="tags icon"></i>Dodaj tagi</div>
                                     <div class="menu">
@@ -125,11 +129,11 @@
                                 </div>
                                 <% } %>
                             </div>
-                                        <div id="error-date" class="ui fourteen wide left icon input <% if(course.category == 'Konferencja') { %>show<% } else if(course.category == 'Meetup') { %>show<% } else if(course.category == 'Warsztat') { %>show<% } %>">
+                                        <div id="error-date" class="ui fourteen wide left icon input <% if(course.category == 'Konferencja') { %>show<% } else if(course.category == 'Meetup') { %>show<% } else if(course.category == 'Warsztat') { %>show<% } else if(course.category == 'Webinar') { %>show<% } %>">
                                             <div class="ui calendar">
                                                 <div class="ui input left icon">
                                                     <i class="calendar icon"></i>
-                                                    <input type="text" name="course[date]" value="<%= moment(course.date).format('YYYY-MM-DD') %> <%= moment(course.date).format('hh:mm') %>" />
+                                                    <input type="text" name="course[date]" value="<%= moment(course.date).format('YYYY-MM-DD HH:mm') %>" />
                                                 </div>
                                             </div>
                                         </div>   

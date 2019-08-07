@@ -137,9 +137,8 @@ router.put('/c/:id', middleware.checkCourseOwner, [
                     }
                 });            
         } else {    
-
     try {
-        let updatedCourse = Course.findByIdAndUpdate(req.params.id, req.body.course).exec();
+        let updatedCourse = Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'image': req.body.course.image, 'tag': req.body.course.tag.replace(/\s/g,'').split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date } }, {new: true}).exec();
         req.flash('success', 'Kurs zaktualizowany.');
         res.redirect('/c/' + req.params.id);
     } catch(err) {

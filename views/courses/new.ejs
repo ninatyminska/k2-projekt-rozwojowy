@@ -62,6 +62,7 @@
                                         <div class="item" data-value="Konferencja"><i class="users icon"></i>Konferencja</div>
                                         <div class="item" data-value="Meetup"><i class="meetup icon"></i>Meetup</div>
                                         <div class="item" data-value="Warsztat"><i class="cogs icon"></i>Warsztat</div>
+                                        <div class="item" data-value="Webinar"><i class="video icon"></i>Webinar</div>
                                         <div class="item" data-value="Kurs"><i class="laptop icon"></i>Kurs</div>
                                         <div class="item" data-value="Książka"><i class="book icon"></i>Książka</div>
                                         <div class="item" data-value="Strona internetowa"><i class="globe icon"></i>Strona internetowa</div>
@@ -74,7 +75,7 @@
                                 </div>
                                 <% } %>
                             </div>
-                            <div id="error-date" class="field <% if(typeof errors.date != 'undefined') { %>error<% } %>" style="<% if(typeof errors.date != 'undefined' && ['Konferencja', 'Meetup', 'Warsztat'].includes(newCourse.category)) { %>display: block;<% } %>">
+                            <div id="error-date" class="field <% if(typeof errors.date != 'undefined') { %>error<% } %>" style="<% if(typeof errors.date != 'undefined' && ['Konferencja', 'Meetup', 'Warsztat', 'Webinar'].includes(newCourse.category)) { %>display: block;<% } %>">
                                 <div class="ui calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
