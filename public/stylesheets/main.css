@@ -405,10 +405,14 @@ body.pushable>.pusher {
     margin-left: 0px;
 }
 
-#not-list {
+.not-list {
     border: 1px solid white;
     border-radius: .28571429rem;
     padding: 10px;
+}
+
+.not-list>h3 {
+    text-align: center;
 }
 
 #not-menu {
