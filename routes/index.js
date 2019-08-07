@@ -54,7 +54,7 @@ router.get('/register', (req, res) => {
 router.post('/register', [
     check('username', 'Nazwa użytkownika musi zawierać min. 3 znaki.').isLength({ min: 3 }),
     check('password').isLength({ min: 5 }).withMessage('Hasło musi zawierać min. 5 znaków.')
-    .matches(/\d/).withMessage('Hasło musi zawierać cyfrę.'),
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/).withMessage('Hasło musi zawierać min.: 1 cyfrę, 1 literę, 1 znak specjalny.'),
     check('firstName', 'Imię musi zawierać min. 3 znaki.').isLength({ min: 3 }),
     check('lastName', 'Nazwisko musi zawierać min. 3 znaki.').isLength({ min: 3 }),
     check('avatar', 'Podaj URL obrazka.').isURL(),

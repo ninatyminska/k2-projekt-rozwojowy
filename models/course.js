@@ -12,6 +12,10 @@ var courseSchema = new mongoose.Schema({
         default: Date.now 
     },
     date: Date,
+    expireAt: {
+        type: Date,
+        index: { expires: '2592000000' },
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
