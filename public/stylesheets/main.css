@@ -854,6 +854,10 @@ body.pushable>.pusher {
         margin-top: 1em;
     }
 
+    .course-tag>a {
+        margin-bottom: 1em;
+    }
+
     #course-show {
       margin-top: 1rem;
       margin-bottom: 1rem;
