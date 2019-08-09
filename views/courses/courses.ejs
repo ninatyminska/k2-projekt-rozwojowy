@@ -240,7 +240,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="second">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){
+                        <% courses.reverse().forEach(function(course){
                         if(course.category == "Konferencja" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -279,7 +279,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="third">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){
+                        <% courses.reverse().forEach(function(course){
                         if(course.category == "Meetup" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -318,7 +318,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fourth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){
+                        <% courses.reverse().forEach(function(course){
                         if(course.category == "Warsztat" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -357,7 +357,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fifth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){
+                        <% courses.reverse().forEach(function(course){
                         if(course.category == "Webinar" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -540,7 +540,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="tenth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                    <% courses.reverse().forEach(function(course){
+                    <% courses.forEach(function(course){
                     var meetingsCat = ['Konferencja', 'Meetup', 'Warsztat', 'Webinar'];
                     if(meetingsCat.includes(course.category) && moment(course.date).isBefore(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
