@@ -4,7 +4,7 @@
                 <div id="more-courses" class="two wide column">
                     <p>Zobacz także:</p>
                     <div class="ui segments">
-                        <% courses.forEach(function(course){ %>
+                        <% courses.slice(0, 5).forEach(function(course){ %>
                         <div class="ui segment">
                             <a class="header" href="/c/<%= course._id %>"><%= course.name %></a>
                         </div>

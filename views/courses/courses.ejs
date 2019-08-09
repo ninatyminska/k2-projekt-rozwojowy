@@ -163,7 +163,7 @@
                 <div class="ui bottom attached active tab segment category-menu" data-tab="first">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
                         <% courses.forEach(function(course) {
-                        if(course.date == null || moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
+                        if(moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
                                 <div class="image">
@@ -193,23 +193,54 @@
                                     <% } %>
                                     <% if (course.rating === 0) { %>
                                     <span>
-                                        <span id="rating"><i class="star icon"></i>0</span> 
+                                        <span id="rating"><i class="star icon"></i>0</span>
                                     </span>
                                     <% } else { %>
                                     <span>
                                         <span id="rating"><i class="star icon checked"></i><%= course.rating.toFixed(2) %></span>
                                     <% } %>
                                         <i class="comments icon"></i><%= course.comments.length %>
-                                    </span>    
+                                    </span>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
+                        <% }}); %>
+                        <% courses.reverse().forEach(function(course) {
+                        if(course.date === null) { %>
+                        <div class="four wide column">
+                            <div id="hp-card" class="ui card">
+                                <div class="image">
+                                    <a class="ui red ribbon label"><%= course.category %></a>
+                                    <img src="<%= course.image %>">
+                                </div>
+                                <div class="content">
+                                    <h4>
+                                        <a class="header" href="/c/<%= course._id %>"><%= course.name.substring(0, 30) %><% if(course.name.length>30) { %>...<% } %></a>
+                                    </h4>
+                                    <div class="description">
+                                        <a class="ui orange basic tiny button" href="/c/<%= course._id %>">Dowiedz się więcej <i class="chevron right icon"></i></a>
+                                    </div>
+                                </div>
+                                <div class="extra">
+                                    <% if (course.rating === 0) { %>
+                                    <span>
+                                        <span id="rating"><i class="star icon"></i>0</span>
+                                    </span>
+                                    <% } else { %>
+                                    <span>
+                                        <span id="rating"><i class="star icon checked"></i><%= course.rating.toFixed(2) %></span>
+                                    <% } %>
+                                        <i class="comments icon"></i><%= course.comments.length %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <% }}); %>
                     </div>
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="second">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){ 
+                        <% courses.forEach(function(course){
                         if(course.category == "Konferencja" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -248,7 +279,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="third">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){ 
+                        <% courses.forEach(function(course){
                         if(course.category == "Meetup" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -287,7 +318,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fourth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){ 
+                        <% courses.forEach(function(course){
                         if(course.category == "Warsztat" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -326,7 +357,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="fifth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){ 
+                        <% courses.forEach(function(course){
                         if(course.category == "Webinar" && moment(course.date).isAfter(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -365,7 +396,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="sixth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                        <% courses.forEach(function(course){ 
+                        <% courses.forEach(function(course){
                         if(course.category == "Kurs") { %>
                         <div class="four wide column">
                             <div id="hp-card" class="ui card">
@@ -508,45 +539,45 @@
                     </div> 
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="tenth">
-                                    <div class="ui middle aligned stackable grid container hp-cards-grid">
-                                        <% courses.forEach(function(course){
-                                        var meetingsCat = ['Konferencja', 'Meetup', 'Warsztat', 'Webinar'];
-                                        if(meetingsCat.includes(course.category) && moment(course.date).isBefore(moment().subtract(1, 'd'))) { %>
-                                        <div class="four wide column">
-                                            <div id="hp-card" class="ui card">
-                                                <div class="image">
-                                                    <a class="ui red ribbon label"><%= course.category %></a>
-                                                    <img src="<%= course.image %>">
-                                                </div>
-                                                <div class="content">
-                                                    <h4>
-                                                        <a class="header" href="/c/<%= course._id %>"><%= course.name.substring(0, 30) %><% if(course.name.length>30) { %>...<% } %></a>
-                                                    </h4>
-                                                    <div class="description">
-                                                        <a class="ui orange basic tiny button" href="/c/<%= course._id %>">Dowiedz się więcej <i class="chevron right icon"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="extra">
-                                                    <span class="right floated">
-                                                        <i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %>
-                                                    </span>
-                                                    <% if (course.rating === 0) { %>
-                                                    <span>
-                                                        <i class="star icon"></i>0
-                                                    </span>
-                                                    <% } else { %>
-                                                    <span>
-                                                        <i class="star icon checked"></i><%= course.rating.toFixed(2) %>
-                                                    <% } %>
-                                                        <i class="comments icon"></i><%= course.comments.length %>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <% }
-                                        }); %>
+                    <div class="ui middle aligned stackable grid container hp-cards-grid">
+                    <% courses.reverse().forEach(function(course){
+                    var meetingsCat = ['Konferencja', 'Meetup', 'Warsztat', 'Webinar'];
+                    if(meetingsCat.includes(course.category) && moment(course.date).isBefore(moment().subtract(1, 'd'))) { %>
+                        <div class="four wide column">
+                            <div id="hp-card" class="ui card">
+                                <div class="image">
+                                    <a class="ui red ribbon label"><%= course.category %></a>
+                                    <img src="<%= course.image %>">
+                                </div>
+                                <div class="content">
+                                    <h4>
+                                        <a class="header" href="/c/<%= course._id %>"><%= course.name.substring(0, 30) %><% if(course.name.length>30) { %>...<% } %></a>
+                                    </h4>
+                                    <div class="description">
+                                        <a class="ui orange basic tiny button" href="/c/<%= course._id %>">Dowiedz się więcej <i class="chevron right icon"></i></a>
                                     </div>
                                 </div>
+                                <div class="extra">
+                                    <span class="right floated">
+                                        <i class="calendar alternate icon"></i> <%= moment(course.date).calendar(); %>
+                                    </span>
+                                    <% if (course.rating === 0) { %>
+                                    <span>
+                                        <i class="star icon"></i>0
+                                    </span>
+                                    <% } else { %>
+                                    <span>
+                                        <i class="star icon checked"></i><%= course.rating.toFixed(2) %>
+                                    <% } %>
+                                        <i class="comments icon"></i><%= course.comments.length %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <% }
+                        }); %>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
