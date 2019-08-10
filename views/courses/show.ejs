@@ -4,11 +4,13 @@
                 <div id="more-courses" class="two wide column">
                     <p>Zobacz także:</p>
                     <div class="ui segments">
-                        <% courses.slice(0, 5).forEach(function(course){ %>
+                        <% courses.reverse().slice(0, 10).forEach(function(course ){ 
+                            if(moment(course.date).isAfter(moment().subtract(1, 'd')) || course.date === null) {
+                        %>
                         <div class="ui segment">
                             <a class="header" href="/c/<%= course._id %>"><%= course.name %></a>
                         </div>
-                        <% }); %>
+                        <% }}); %>
                     </div>
                 </div>
                 <div id="course-column" class="six wide column">
