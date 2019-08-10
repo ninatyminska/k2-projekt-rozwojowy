@@ -29,6 +29,10 @@
   position: relative;
 }
 
+.pusher {
+  overflow: initial;
+}
+
 #category-menu-grid {
   margin-top: 5rem;
   margin-bottom: 0;
