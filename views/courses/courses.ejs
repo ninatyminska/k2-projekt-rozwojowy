@@ -540,7 +540,7 @@
                 </div>
                 <div class="ui bottom attached tab segment category-menu" data-tab="tenth">
                     <div class="ui middle aligned stackable grid container hp-cards-grid">
-                    <% courses.forEach(function(course){
+                    <% courses.reverse().forEach(function(course){
                     var meetingsCat = ['Konferencja', 'Meetup', 'Warsztat', 'Webinar'];
                     if(meetingsCat.includes(course.category) && moment(course.date).isBefore(moment().subtract(1, 'd'))) { %>
                         <div class="four wide column">
