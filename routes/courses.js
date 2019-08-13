@@ -8,7 +8,7 @@ var express                   = require('express'),
     path                      = require('path'),
     middleware                = require('../middleware'),
     upload                    = require('../middleware/upload'),
-    Resize                    = require('../middleware/Resize'),
+    Resize                    = require('../middleware/resize'),
     Review                    = require('../models/review');
 
 router.post('/new', middleware.isLoggedIn, upload.single('image'), [
