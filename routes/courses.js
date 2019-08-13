@@ -21,21 +21,21 @@ router.post('/new', middleware.isLoggedIn, upload.single('image'), [
         .if((value, { req }) => ['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.category))
         .isLength({ min: 1 })
 ], async (req, res, next) => {
-    var filename = "",
+    let filename = "",
         name   = req.body.name,
         image  = "images/" + filename,
         desc   = req.sanitize(req.body.description),
         web    = req.body.website,
         cat    = req.body.category,
-        tag    = req.body.tag.replace(/\s/g,'').split(","),
+        tag    = req.body.tag.split(","),
         date   = req.body.date,
         expireAt = req.body.date,
         author = {
-        id: req.user._id,
-        username: req.user.username,
-        avatar: req.user.avatar
-    };
-    var formErrors = validationResult(req);
+            id: req.user._id,
+            username: req.user.username,
+            avatar: req.user.avatar
+        };
+    let formErrors = validationResult(req);
     if (!req.file && !formErrors.isEmpty()) {
         let arrayFormErrors = await formErrors.mapped();
         let errorsMsg = await arrayFormErrors;
@@ -65,9 +65,9 @@ router.post('/new', middleware.isLoggedIn, upload.single('image'), [
     } else {
         try {
             let imagePath = path.join(__dirname, '../public/images'),
-            fileUpload = new Resize(imagePath);
-            filename = await fileUpload.save(req.file.buffer);
-            image  = "images/" + filename;
+                fileUpload = new Resize(imagePath);
+                filename = await fileUpload.save(req.file.buffer);
+                image  = "images/" + filename;
             let newCourse = {name: name, image: image, description: desc, website: web, author: author, category: cat, tag: tag, date: date, expireAt: expireAt};
             let course = await Course.create(newCourse);
             let user = await User.findById(req.user._id).populate('followers').exec();
@@ -117,8 +117,8 @@ router.get('/c/:id', (req, res) => {
                     req.flash('error', 'Wystąpił błąd.');
                     console.log(err);
                 } else {
-                    var errorMsgCom = undefined;
-                    var errorsMsg = {
+                    let errorMsgCom = undefined;
+                    let errorsMsg = {
                         'course.name': undefined,
                         'course.description': undefined,
                         'course.website': undefined,
@@ -140,7 +140,7 @@ router.put('/c/:id', middleware.checkCourseOwner, upload.single('image'), [
         .if((value, { req }) => ['Konferencja', 'Meetup', 'Warsztat'].includes(req.body.course[category]))
         .isLength({ min: 1 })
 ], async (req, res) => {
-    var filename = "",
+    let filename = "",
         formErrors = validationResult(req);
         if (!req.file && !formErrors.isEmpty()) {
             Course.findById(req.params.id).populate('comments').populate({
@@ -156,40 +156,12 @@ router.put('/c/:id', middleware.checkCourseOwner, upload.single('image'), [
                                 req.flash('error', 'Wystąpił błąd.');
                                 console.log(error);
                             } else {
-                                var arrayFormErrors = formErrors.mapped();
-                                errorsMsg = arrayFormErrors;
-                                var fileErr = "Dodaj plik.";
+                                let arrayFormErrors = formErrors.mapped(),
+                                    errorsMsg = arrayFormErrors,
+                                    fileErr = "Dodaj plik.";
                                 req.flash('error', 'Formularz edycji zawiera błędy.');
                                 return res.render('courses/show', {course: foundCourse, courses: allCourses, errorsMsg: errorsMsg, error: req.flash('error'), fileErr: fileErr});
-                            };       
-                        }); 
-                    }
-                });            
-        } else if (!req.file) {
-            Course.findById(req.params.id).populate('comments').populate({
-                    path: 'reviews',
-                    options: {sort: {createdAt: -1}}
-                }).exec((error, foundCourse) => {
-                    if (error) {
-                        req.flash('error', 'Wystąpił błąd.');
-                        console.log(error);
-                    } else {
-                        Course.find({}, (error, allCourses) => {
-                            if(error) {
-                                req.flash('error', 'Wystąpił błąd.');
-                                console.log(error);
-                            } else {
-                                let fileErr = "Dodaj plik.";
-                                let errorsMsg = {
-                                    'course.name.msg': undefined,
-                                    'course.description.msg': undefined,
-                                    'course.website.msg': undefined,
-                                    'course.category.msg': undefined,
-                                    'course.date.msg': undefined
-                                };
-                                req.flash('error', 'Formularz edycji zawiera błędy.');
-                                return res.render('courses/show', {course: foundCourse, courses: allCourses, errorsMsg: errorsMsg, error: req.flash('error'), fileErr: fileErr});
-                            };       
+                            }
                         }); 
                     }
                 });            
@@ -207,21 +179,25 @@ router.put('/c/:id', middleware.checkCourseOwner, upload.single('image'), [
                                 req.flash('error', 'Wystąpił błąd.');
                                 console.log(error);
                             } else {
-                                var arrayFormErrors = formErrors.mapped();
-                                errorsMsg = arrayFormErrors;
-                                let fileErr = "";
+                                let arrayFormErrors = formErrors.mapped(),
+                                    errorsMsg = arrayFormErrors,
+                                    fileErr = "";
                                 req.flash('error', 'Formularz edycji zawiera błędy.');
                                 return res.render('courses/show', {course: foundCourse, courses: allCourses, errorsMsg: errorsMsg, error: req.flash('error'), fileErr: fileErr});
-                            };       
+                            }
                         }); 
                     }
                 });            
+        } else if (!req.file && formErrors.isEmpty()) {
+            Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date } }, {new: true}).exec();
+            req.flash('success', 'Kurs zaktualizowany.');
+            res.redirect('/c/' + req.params.id);
         } else {
         try {
             let imagePath = path.join(__dirname, '../public/images'),
-            fileUpload = new Resize(imagePath);
+                fileUpload = new Resize(imagePath);
             filename = await fileUpload.save(req.file.buffer);
-            let updatedCourse = Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'image': "images/" + filename, 'tag': req.body.course.tag.replace(/\s/g,'').split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date } }, {new: true}).exec();
+            Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'image': "http://k2-projekt-rozwojowy.neira.pl/images/" + filename, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date } }, {new: true}).exec();
             req.flash('success', 'Kurs zaktualizowany.');
             res.redirect('/c/' + req.params.id);
         } catch(err) {
