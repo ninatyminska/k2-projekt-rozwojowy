@@ -8,7 +8,7 @@
                         Dodaj nowy wpis
                     </div>
                     </h2>
-                    <form class="ui large form" action="/new" method="POST">
+                    <form class="ui large form" action="/new" enctype="multipart/form-data" method="POST">
                         <div class="ui stacked segment login-form">
                             <div id="error-name" class="field <% if(typeof errors.name != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
@@ -42,14 +42,14 @@
                                 </div>
                                 <% } %>
                             </div>
-                            <div id="error-img" class="field <% if(typeof errors.image != 'undefined') { %>error<% } %>">
+                            <div id="error-img" class="field <% if(typeof fileErr != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="image icon"></i>
-                                    <input type="text" name="image" placeholder="Obrazek" value="<% if(typeof errors.image == 'undefined' && typeof newCourse !== 'undefined') { %><%= newCourse.image %><% } %>">
+                                    <input type="file" name="image">
                                 </div>
-                                <% if(typeof errors.image != "undefined") { %>
+                                <% if(typeof fileErr != "undefined") { %>
                                 <div id="new-error-img-label" class="ui pointing red basic label">
-                                    <%= errors.image.msg %>
+                                    <%= fileErr %>
                                 </div>
                                 <% } %>
                             </div>
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                                 <% if(typeof errors.tag != "undefined") { %>
-                                <div id="new-error-cat-label" class="ui pointing red basic label">
+                                <div id="new-error-tag-label" class="ui pointing red basic label">
                                     <%= errors.tag.msg %>
                                 </div>
                                 <% } %>
