@@ -51,7 +51,7 @@
                                     <button class="ui inverted tiny yellow button">Edytuj</button>
                                 </div>
                                 <div id="course-edit" class="content">
-                                    <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
+                                    <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" method="POST">
                                         <div id="error-name" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.name'] != 'undefined') { %>error<% } %>">
                                             <i class="edit icon"></i>
                                             <input type="text" name="course[name]" value="<% if(typeof errorsMsg['course.name'] != 'undefined') { %><%= errorsMsg['course.name'].value %> <% } else { %><%= course.name %><% } %>">
@@ -69,13 +69,13 @@
                                         <%= errorsMsg['course.description'].msg %>
                                         </div>
                                         <% } %>
-                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof fileErr != 'undefined') { %>error<% } %>">
+                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.image'] != 'undefined') { %>error<% } %>">
                                             <i class="image icon"></i>
-                                            <input type="file" name="image">
+                                            <input type="text" name="course[image]" value="<% if(typeof errorsMsg['course.image'] != 'undefined') { %><%= errorsMsg['course.image'].value %> <% } else { %><%= course.image %><% } %>">
                                         </div>
-                                        <% if(typeof fileErr != "undefined") { %>
+                                        <% if(typeof errorsMsg['course.image'] != "undefined") { %>
                                         <div id="error-img-label" class="ui pointing red basic label">
-                                        <%= fileErr %>
+                                        <%= errorsMsg['course.image'].msg %>
                                         </div>
                                         <% } %>
                                         <div id="error-web" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.website'] != 'undefined') { %>error<% } %>">
