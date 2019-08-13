@@ -51,7 +51,7 @@
                                     <button class="ui inverted tiny yellow button">Edytuj</button>
                                 </div>
                                 <div id="course-edit" class="content">
-                                    <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" method="POST">
+                                    <form id="edit-course-form<%= course._id %>" class="ui large form" action="/c/<%=course._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
                                         <div id="error-name" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.name'] != 'undefined') { %>error<% } %>">
                                             <i class="edit icon"></i>
                                             <input type="text" name="course[name]" value="<% if(typeof errorsMsg['course.name'] != 'undefined') { %><%= errorsMsg['course.name'].value %> <% } else { %><%= course.name %><% } %>">
@@ -69,13 +69,13 @@
                                         <%= errorsMsg['course.description'].msg %>
                                         </div>
                                         <% } %>
-                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.image'] != 'undefined') { %>error<% } %>">
+                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof fileErr != 'undefined') { %>error<% } %>">
                                             <i class="image icon"></i>
-                                            <input type="text" name="course[image]" value="<% if(typeof errorsMsg['course.image'] != 'undefined') { %><%= errorsMsg['course.image'].value %> <% } else { %><%= course.image %><% } %>">
+                                            <input type="file" name="image">
                                         </div>
-                                        <% if(typeof errorsMsg['course.image'] != "undefined") { %>
+                                        <% if(typeof fileErr != "undefined") { %>
                                         <div id="error-img-label" class="ui pointing red basic label">
-                                        <%= errorsMsg['course.image'].msg %>
+                                        <%= fileErr %>
                                         </div>
                                         <% } %>
                                         <div id="error-web" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.website'] != 'undefined') { %>error<% } %>">
@@ -138,7 +138,7 @@
                                                     <input type="text" name="course[date]" value="<%= moment(course.date).format('YYYY-MM-DD HH:mm') %>" />
                                                 </div>
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div class="ui fourteen wide left icon input">
                                             <button class="ui inverted tiny yellow button">Edytuj</button>
                                         </div>
@@ -157,13 +157,13 @@
                             </h4>
                             <% } else { %>
                             <h4>
-                                Ocena:  
+                                Ocena:
                                 <% if (course.rating < 1.5) { %> <i class="star icon checked"></i><%- '<i class="star icon"></i>'.repeat(4) %> <% } %>
                                 <% if (course.rating > 1.5 && course.rating < 2.5) { %> <%- '<i class="star icon checked"></i>'.repeat(2) %><%- '<i class="star icon"></i>'.repeat(3) %> <% } %>
                                 <% if (course.rating > 2.5 && course.rating < 3.5) { %> <%- '<i class="star icon checked"></i>'.repeat(3) %><%- '<i class="star icon"></i>'.repeat(2) %> <% } %>
                                 <% if (course.rating > 3.5 && course.rating < 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(4) %><%- '<i class="star icon"></i>'.repeat(1) %> <% } %>
                                 <% if (course.rating > 4.5) { %> <%- '<i class="star icon checked"></i>'.repeat(5) %> <% } %>
-                            </h4> 
+                            </h4>
                             <p>
                                 Średnia ocena kursu: <strong><%= course.rating.toFixed(2) %></strong>
                             </p>
@@ -204,7 +204,7 @@
                                                         <input type="text" disabled value="<%= review.author.username %>">
                                                     </div>
                                                     <div class="six wide field">
-                                                        <input type="hidden" name="review[rating]" value="<%= review.rating %>"> 
+                                                        <input type="hidden" name="review[rating]" value="<%= review.rating %>">
                                                         <div class="ui massive star rating" data-rating="<%= review.rating %>"></div>
                                                     </div>
                                                 </div>
@@ -250,7 +250,7 @@
                                                 <input type="text" disabled value="<%= currentUser.username %>">
                                             </div>
                                             <div class="six wide field">
-                                                <input type="hidden" name="review[rating]"> 
+                                                <input type="hidden" name="review[rating]">
                                                 <div class="ui massive star rating"></div>
                                             </div>
                                         </div>
@@ -364,5 +364,5 @@
             </div>
         </div>
     </div>
-    
+
 <% include ../partials/footer %>
