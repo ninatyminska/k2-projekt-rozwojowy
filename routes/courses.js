@@ -50,7 +50,7 @@ router.post('/new', middleware.isLoggedIn, upload.single('file-input'), [
         .isLength({ min: 1 })
 ], async (req, res) => {
     let name     = req.body.name,
-        image    = `https://${awsBucket}.s3.amazonaws.com/${newFileName}`,
+        image    = `https://${awsBucket}.s3.amazonaws.com/${fileName}`,
         desc     = req.sanitize(req.body.description),
         web      = req.body.website,
         cat      = req.body.category,
