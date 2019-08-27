@@ -17,7 +17,7 @@ const indexRoutes    = require("./routes/index"),
       reviewRoutes   = require("./routes/reviews");
     
 const mdb = process.env.MDB_PSSW;
-mongoose.connect("mongodb+srv://Nina:k2_projekt666@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true });
 mongoose.set('useFindAndModify', false);
 
 app.use(favicon(path.join(__dirname,'public','favicons','favicon-32x32.png')));
@@ -61,10 +61,10 @@ app.use("/", indexRoutes, courseRoutes);
 app.use("/c/:id/comments", commentRoutes);
 app.use("/c/:id/reviews", reviewRoutes);
 
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("Server has started.");
-// });
-
-app.listen(3000, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started.");
 });
+
+// app.listen(3000, function(){
+//     console.log("Server has started.");
+// });
