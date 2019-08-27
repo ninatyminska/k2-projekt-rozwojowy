@@ -9,7 +9,6 @@ const express                   = require('express'),
       Notification              = require('../models/notification'),
       path                      = require('path'),
       middleware                = require('../middleware'),
-      crypto                    = require('crypto'),
       s3Storage                 = require('multer-sharp-s3'),
       uuidv4                    = require('uuid/v4'),
       multer                    = require('multer');
