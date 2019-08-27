@@ -1,22 +1,22 @@
-const express          = require("express"),
-      favicon          = require('serve-favicon'),
-      path             = require('path'),
-      app              = express(),
-      bodyParser       = require("body-parser"),
-      mongoose         = require("mongoose"),
-      passport         = require("passport"),
-      expressSanitizer = require('express-sanitizer'),
-      LocalStrategy    = require("passport-local"),
-      methodOverride   = require("method-override"),
-      flash            = require("connect-flash"),
-      User             = require("./models/user");
+var express          = require("express"),
+    favicon          = require('serve-favicon'),
+    path             = require('path'),
+    app              = express(),
+    bodyParser       = require("body-parser"),
+    mongoose         = require("mongoose"),
+    passport         = require("passport"),
+    expressSanitizer = require('express-sanitizer'),
+    LocalStrategy    = require("passport-local"),
+    methodOverride   = require("method-override"),
+    flash            = require("connect-flash"),
+    User             = require("./models/user");
     
-const indexRoutes    = require("./routes/index"),
-      courseRoutes   = require("./routes/courses"),
-      commentRoutes  = require("./routes/comments"),
-      reviewRoutes   = require("./routes/reviews");
+var indexRoutes    = require("./routes/index"),
+    courseRoutes   = require("./routes/courses"),
+    commentRoutes  = require("./routes/comments"),
+    reviewRoutes   = require("./routes/reviews");
     
-const mdb = process.env.MDB_PSSW;
+var mdb = process.env.MDB_PSSW;
 mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true });
 mongoose.set('useFindAndModify', false);
 
