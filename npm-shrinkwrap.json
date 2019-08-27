@@ -6,7 +6,7 @@
     "requires": {
       "mime-types": "^2.1.21",
       "rxjs": "^6.3.3",
-      "sharp": "0.20.8",
+      "sharp": "0.22.1",
       "yarn.lock": "^0.0.1-security"
     },
     "dependencies": {
@@ -43,9 +43,9 @@
         }
       },
       "sharp": {
-        "version": "0.20.8",
-        "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.20.8.tgz",
-        "integrity": "sha512-A8NaPGWRDKpmHTi8sl2xzozYXhTQWBb/GaJ8ZPU7L/vKW8wVvd4Yq+isJ0c7p9sX5gnjPQcM3eOfHuvvnZ2fOQ==",
+        "version": "0.22.1",
+        "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.22.1.tgz",
+        "integrity": "sha512-lXzSk/FL5b/MpWrT1pQZneKe25stVjEbl6uhhJcTULm7PhmJgKKRbTDM/vtjyUuC/RLqL2PRyC4rpKwbv3soEw==",
         "requires": {
           "color": "^3.0.0",
           "detect-libc": "^1.0.3",
