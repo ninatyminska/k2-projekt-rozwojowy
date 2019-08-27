@@ -69,14 +69,13 @@
                                         <%= errorsMsg['course.description'].msg %>
                                         </div>
                                         <% } %>
-                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.image'] != 'undefined') { %>error<% } %>">
+                                        <div id="error-img" class="ui fourteen wide left icon input <% if(typeof fileErr != 'undefined') { %>error<% } %>">
                                             <i class="image icon"></i>
-                                            <input type="file" id="file-input" name="file-input">
-                                            <input type="hidden" id="image" name="course[image]" value="<%= course.image %>">
+                                            <input type="file" name="image">
                                         </div>
-                                        <% if(typeof errorsMsg['course.image'] != "undefined") { %>
+                                        <% if(typeof fileErr != "undefined") { %>
                                         <div id="error-img-label" class="ui pointing red basic label">
-                                        <%= errorsMsg['course.image'].msg %>
+                                        <%= fileErr %>
                                         </div>
                                         <% } %>
                                         <div id="error-web" class="ui fourteen wide left icon input <% if(typeof errorsMsg['course.website'] != 'undefined') { %>error<% } %>">
