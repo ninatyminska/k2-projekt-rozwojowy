@@ -14,12 +14,9 @@ const express                   = require('express'),
       uuidv4                    = require('uuid/v4'),
       multer                    = require('multer');
 
-const awsID     = process.env.AWS_ACCESS_KEY_ID,
-      awsAcc    = process.env.AWS_SECRET_ACCESS_KEY;
-
 aws.config.update({
-    secretAccessKey: awsAcc,
-    accessKeyId: awsID,
+    secretAccessKey: 'dqWM+ecXRNUA/Xc+sN+Y+0PvPkMUjbaHOCR+FROX',
+    accessKeyId: 'AKIAID5OCYYFABAFNBNQ',
     region: 'eu-central-1',
 });
 const s3 = new aws.S3();
@@ -28,7 +25,7 @@ const fileName  = `${uuidv4()}`;
 const storage = s3Storage({
     Key: fileName,
     s3,
-    Bucket: heroku-k2-files,
+    Bucket: 'heroku-k2-files',
     ACL: 'public-read',
     resize: {
         width: 622,
@@ -138,7 +135,7 @@ const editFileName  = `${uuidv4()}`;
 const editStorage = s3Storage({
     Key: editFileName,
     s3,
-    Bucket: heroku-k2-files,
+    Bucket: 'heroku-k2-files',
     ACL: 'public-read',
     resize: {
         width: 622,
