@@ -8,6 +8,7 @@
 <li>REST API</li>
 <li>jQuery</li>
 <li>Semantic UI</li>
+<li>AWS S3</li>
 </ul>
 <ul>
 <li>authentication</li>
