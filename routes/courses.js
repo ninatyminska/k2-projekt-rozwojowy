@@ -15,8 +15,7 @@ const express                   = require('express'),
       multer                    = require('multer');
 
 const awsID     = process.env.AWS_ACCESS_KEY_ID,
-      awsAcc    = process.env.AWS_SECRET_ACCESS_KEY,
-      awsBucket = process.env.S3_BUCKET;
+      awsAcc    = process.env.AWS_SECRET_ACCESS_KEY;
 
 aws.config.update({
     secretAccessKey: awsAcc,
@@ -29,7 +28,7 @@ const fileName  = `${uuidv4()}`;
 const storage = s3Storage({
     Key: fileName,
     s3,
-    Bucket: awsBucket,
+    Bucket: heroku-k2-files,
     ACL: 'public-read',
     resize: {
         width: 622,
@@ -51,7 +50,7 @@ router.post('/new', middleware.isLoggedIn, upload.single('file-input'), [
         .isLength({ min: 1 })
 ], async (req, res) => {
     let name     = req.body.name,
-        image    = `https://${awsBucket}.s3.amazonaws.com/${newFileName}`,
+        image    = `https://heroku-k2-files.s3.amazonaws.com/${newFileName}`,
         desc     = req.sanitize(req.body.description),
         web      = req.body.website,
         cat      = req.body.category,
@@ -139,7 +138,7 @@ const editFileName  = `${uuidv4()}`;
 const editStorage = s3Storage({
     Key: editFileName,
     s3,
-    Bucket: awsBucket,
+    Bucket: heroku-k2-files,
     ACL: 'public-read',
     resize: {
         width: 622,
@@ -184,8 +183,8 @@ router.put('/c/:id', middleware.checkCourseOwner, editUpload.single('file-input'
         });
     } else {
         try {
-            if(!req.body.course.image.includes(`https://${awsBucket}.s3.amazonaws.com/`)) {
-                Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date, 'image': `https://${awsBucket}.s3.amazonaws.com/` + editFileName } }, {new: true}).exec();
+            if(!req.body.course.image.includes(`https://heroku-k2-files.s3.amazonaws.com/`)) {
+                Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date, 'image': `https://heroku-k2-files.s3.amazonaws.com/` + editFileName } }, {new: true}).exec();
             req.flash('success', 'Kurs zaktualizowany.');
             res.redirect('/c/' + req.params.id);
             } else {
