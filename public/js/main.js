@@ -40,7 +40,7 @@ $(document).ready(function() {
             }
         });
         
-        $('input[type="hidden"]').change(function () {
+        $('input[name="category"]').change(function () {
             if($(this).attr("value") == "Konferencja") {
                 $('#error-date').show();
             } else if($(this).attr("value") == "Meetup") {
@@ -185,5 +185,11 @@ $(document).ready(function() {
             }
         });
 
-        $('.menu .item').tab();    
+        $('.menu .item').tab();
+
+        $('#file-input').change(function() {
+            let files = document.getElementById('file-input').files,
+                file = files[0];
+            document.getElementById('image').value = file.name;
+        });
 });
