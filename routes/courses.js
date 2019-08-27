@@ -24,8 +24,8 @@ aws.config.update({
 });
 const s3 = new aws.S3();
 
-const fileName  = `${uuidv4()}`;
-const storage = s3Storage({
+let fileName  = `${uuidv4()}`;
+let storage = s3Storage({
     Key: fileName,
     s3,
     Bucket: awsBucket,
@@ -134,8 +134,8 @@ router.get('/c/:id', (req, res) => {
     });
 });
 
-const editFileName  = `${uuidv4()}`;
-const editStorage = s3Storage({
+let editFileName  = `${uuidv4()}`;
+let editStorage = s3Storage({
     Key: editFileName,
     s3,
     Bucket: awsBucket,
