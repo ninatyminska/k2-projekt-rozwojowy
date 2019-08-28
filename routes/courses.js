@@ -1,5 +1,4 @@
 const express                   = require('express'),
-      aws                       = require('aws-sdk'),
       router                    = express.Router({mergeParams: true}),
       {check, validationResult} = require('express-validator'),
       Course                    = require('../models/course'),
@@ -7,36 +6,9 @@ const express                   = require('express'),
       Review                    = require('../models/review'),
       User                      = require('../models/user'),
       Notification              = require('../models/notification'),
-      path                      = require('path'),
       middleware                = require('../middleware'),
-      s3Storage                 = require('multer-sharp-s3'),
-      uuidv4                    = require('uuid/v4'),
-      multer                    = require('multer');
-
-const awsID     = process.env.AWS_ACCESS_KEY_ID,
-      awsAcc    = process.env.AWS_SECRET_ACCESS_KEY,
-      awsBucket = process.env.S3_BUCKET;
-
-aws.config.update({
-    secretAccessKey: awsAcc,
-    accessKeyId: awsID,
-    region: 'eu-central-1',
-});
-const s3 = new aws.S3();
-
-let fileName  = `${uuidv4()}`;
-let storage = s3Storage({
-    Key: fileName,
-    s3,
-    Bucket: awsBucket,
-    ACL: 'public-read',
-    resize: {
-        width: 622,
-        height: 350
-    },
-    max: true,
-});
-const upload = multer({ storage: storage });
+      upload                    = require('../middleware/upload').upload,
+      awsBucket                 = require('../middleware/upload').awsBucket;
 
 router.post('/new', middleware.isLoggedIn, upload.single('file-input'), [
     check('name', 'Tytuł jest za krótki.').isLength({ min: 3 }),
@@ -50,7 +22,7 @@ router.post('/new', middleware.isLoggedIn, upload.single('file-input'), [
         .isLength({ min: 1 })
 ], async (req, res) => {
     let name     = req.body.name,
-        image    = `https://${awsBucket}.s3.amazonaws.com/${fileName}`,
+        image    = `https://${awsBucket}.s3.amazonaws.com/` + req.body.image,
         desc     = req.sanitize(req.body.description),
         web      = req.body.website,
         cat      = req.body.category,
@@ -134,21 +106,7 @@ router.get('/c/:id', (req, res) => {
     });
 });
 
-let editFileName  = `${uuidv4()}`;
-let editStorage = s3Storage({
-    Key: editFileName,
-    s3,
-    Bucket: awsBucket,
-    ACL: 'public-read',
-    resize: {
-        width: 622,
-        height: 350
-    },
-    max: true,
-});
-const editUpload = multer({ storage: editStorage });
-
-router.put('/c/:id', middleware.checkCourseOwner, editUpload.single('file-input'), [
+router.put('/c/:id', middleware.checkCourseOwner, upload.single('file-input'), [
     check('course[name]', 'Tytuł jest za krótki.').isLength({ min: 3 }),
     check('course[description]', 'Opis jest za krótki.').isLength({ min: 20 }),
     check('course[tag]', 'Dodaj min. 1 tag.').isLength({ min: 1 }),
@@ -184,7 +142,7 @@ router.put('/c/:id', middleware.checkCourseOwner, editUpload.single('file-input'
     } else {
         try {
             if(!req.body.course.image.includes(`https://${awsBucket}.s3.amazonaws.com/`)) {
-                Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date, 'image': `https://${awsBucket}.s3.amazonaws.com/` + editFileName } }, {new: true}).exec();
+                Course.findByIdAndUpdate(req.params.id, { $set: { 'name': req.body.course.name, 'description': req.body.course.description, 'tag': req.body.course.tag.split(","), 'website': req.body.course.website, 'category': req.body.course.category, 'date': req.body.course.date, 'expireAt': req.body.course.date, 'image': `https://${awsBucket}.s3.amazonaws.com/` + req.body.course.image } }, {new: true}).exec();
             req.flash('success', 'Kurs zaktualizowany.');
             res.redirect('/c/' + req.params.id);
             } else {

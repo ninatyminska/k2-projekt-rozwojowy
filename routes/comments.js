@@ -1,9 +1,9 @@
-var express     = require('express'),
-    router      = express.Router({mergeParams: true}),
-    {check, validationResult} = require('express-validator'),
-    Course      = require('../models/course'),
-    Comment     = require('../models/comment'),
-    middleware  = require('../middleware');
+const express     = require('express'),
+      router      = express.Router({mergeParams: true}),
+      {check, validationResult} = require('express-validator'),
+      Course      = require('../models/course'),
+      Comment     = require('../models/comment'),
+      middleware  = require('../middleware');
 
 router.post('/', middleware.isLoggedIn, (req, res) => {
     Course.findById(req.params.id, (err, course) => {
@@ -27,7 +27,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
                                 console.log(error);
                             } else {
                                 errorMsgCom = err.errors.text.message;
-                                var errorsMsg = {
+                                let errorsMsg = {
                                     'course.name': undefined,
                                     'course.description': undefined,
                                     'course.website': undefined,
@@ -71,7 +71,7 @@ router.put('/:comment_id', middleware.checkCommentOwner, (req, res) => {
                             console.log(error);
                         } else {
                             errorMsgComEdit = err.errors.text.message;
-                            var errorsMsg = {
+                            let errorsMsg = {
                                 'course.name': undefined,
                                 'course.description': undefined,
                                 'course.website': undefined,

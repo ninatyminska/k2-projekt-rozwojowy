@@ -1,8 +1,8 @@
-var Course  = require('../models/course'),
-    Comment = require('../models/comment'),
-    Review  = require('../models/review');
+const Course  = require('../models/course'),
+      Comment = require('../models/comment'),
+      Review  = require('../models/review');
 
-var middlewareObj = {};
+let middlewareObj = {};
 
 middlewareObj.isLoggedIn = function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
@@ -82,7 +82,7 @@ middlewareObj.checkReviewExistence = (req, res, next) => {
                 req.flash('error', 'Kurs nie został znaleziony.');
                 res.redirect('back');
             } else {
-                var foundUserReview = foundCourse.reviews.some(review => {
+                let foundUserReview = foundCourse.reviews.some(review => {
                     return review.author.id.equals(req.user._id);
                 });
                 if (foundUserReview) {

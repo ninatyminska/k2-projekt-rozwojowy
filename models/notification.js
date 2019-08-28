@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var notificationSchema = new mongoose.Schema({
+let notificationSchema = new mongoose.Schema({
     username: String,
     userId: String,
     avatar: String,
