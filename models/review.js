@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var reviewSchema = new mongoose.Schema({
+let reviewSchema = new mongoose.Schema({
     rating: {
         required: "Wybierz ocenę od 1 do 5.",
         type: Number,

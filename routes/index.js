@@ -1,22 +1,22 @@
-var express        = require('express'),
-    router         = express.Router(),
-    {check, validationResult} = require('express-validator'),
-    passport       = require('passport'),
-    User           = require('../models/user'),
-    Course         = require('../models/course'),
-    { isLoggedIn } = require('../middleware'),
-    Notification   = require('../models/notification');
+const express                   = require('express'),
+      router                    = express.Router(),
+      {check, validationResult} = require('express-validator'),
+      passport                  = require('passport'),
+      User                      = require('../models/user'),
+      Course                    = require('../models/course'),
+      { isLoggedIn }            = require('../middleware'),
+      Notification              = require('../models/notification');
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
 router.get('/', async (req, res) => {
-    var noResults  = undefined,
+    let noResults  = undefined,
         tagSearch  = undefined,
         searchText = undefined;
     if (req.query.search) {
-        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        let regex = new RegExp(escapeRegex(req.query.search), 'gi');
         let allCourses = await Course.find({name: regex}).sort({date: 1}).exec();
         if (allCourses.length < 1) {
             noResults = "Brak wyników wyszukiwania."
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
         searchText = req.query.search;
         res.render('courses/courses', {courses: allCourses, searchText: searchText, tagSearch: tagSearch, noResults: noResults});
     } else if (req.query.tag) {
-        const regex = new RegExp(escapeRegex(req.query.tag), 'gi');
+        let regex = new RegExp(escapeRegex(req.query.tag), 'gi');
         let allCourses = await Course.find({tag: regex}).sort({date: 1}).exec();
         tagSearch = req.query.tag;
         res.render('courses/courses', {courses: allCourses, searchText: searchText, tagSearch: tagSearch, noResults: noResults});
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    var errors = {
+    let errors = {
         username: undefined,
         password: undefined,
         firstName: undefined,
@@ -60,7 +60,7 @@ router.post('/register', [
     check('avatar', 'Podaj URL obrazka.').isURL(),
     check('about', 'Napisz kilka słów o sobie.').isLength({ min: 10 })
 ], async (req, res) => {
-    var newUser = new User(
+    let newUser = new User(
         {
             username: req.body.username,
             firstName: req.body.firstName,
@@ -68,7 +68,7 @@ router.post('/register', [
             avatar: req.body.avatar,
             about: req.body.about
         });
-    var formErrors = validationResult(req);
+    let formErrors = validationResult(req);
     if (!formErrors.isEmpty()) {
         let arrayFormErrors = await formErrors.mapped();
         let errorsMsg = await arrayFormErrors;

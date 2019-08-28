@@ -1,14 +1,14 @@
-var express    = require('express'),
-    router     = express.Router({mergeParams: true}),
-    Course     = require('../models/course'),
-    Review     = require('../models/review'),
-    middleware = require('../middleware');
+const express    = require('express'),
+      router     = express.Router({mergeParams: true}),
+      Course     = require('../models/course'),
+      Review     = require('../models/review'),
+      middleware = require('../middleware');
     
 function calculateAverage(reviews) {
     if (reviews.length === 0) {
         return 0;
     }
-    var sum = 0;
+    let sum = 0;
     reviews.forEach(element => {
         sum += element.rating;
     });
@@ -38,7 +38,7 @@ router.post('/', middleware.isLoggedIn, middleware.checkReviewExistence, (req, r
                                 console.log(error);
                             } else {
                                 errorMsg = err.errors.rating.message;
-                                var errorsMsg = {
+                                let errorsMsg = {
                                     'course.name': undefined,
                                     'course.description': undefined,
                                     'course.website': undefined,
@@ -84,7 +84,7 @@ router.put('/:review_id', middleware.checkReviewOwnership, (req, res) => {
                                 console.log(error);
                             } else {
                                 errorRevMsg = err.errors.rating.message;
-                                var errorsMsg = {
+                                let errorsMsg = {
                                     'course.name': undefined,
                                     'course.description': undefined,
                                     'course.website': undefined,

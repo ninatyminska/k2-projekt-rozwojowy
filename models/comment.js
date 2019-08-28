@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var commentSchema = mongoose.Schema({
+let commentSchema = mongoose.Schema({
     text: {
         type: String,
         required: "Wpisz treść komentarza."
