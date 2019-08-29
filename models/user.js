@@ -12,8 +12,7 @@ let UserSchema = new mongoose.Schema({
     notifications: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Notification',
-            createdAt: { type: Date, expires: 30, default: Date.now }
+            ref: 'Notification'
         }
     ],
     followers: [
