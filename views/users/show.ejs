@@ -32,11 +32,11 @@
                     </div>
                 </div>   
                 <div class="column">
-                    <p class="user-courses">Zobacz wpisy użytkownika:</p>
+                    <p class="user-courses">Najnowsze wpisy użytkownika:</p>
                     <div class="ui segments">
-                        <% courses.forEach(function(course) { %>
+                        <% courses.reverse().slice(0, 6).forEach(function(course) { %>
                         <div class="ui segment">
-                            <a class="header" href="/c/<%= course.id %>"><%= course.name %></a>
+                            <div class="ui red horizontal label"><%= course.category %></div> <a class="header" href="/c/<%= course.id %>"><%= course.name %></a>
                         </div>
                         <% }); %>
                     </div>

@@ -3,7 +3,7 @@
 body.pushable>.pusher {
     background-color: #1b1c1d;
     min-height: 81.5%;
-    overflow: initial;
+    overflow: initial!important;
 }
 
 .ui.visible.left.sidebar ~ .fixed, .ui.visible.left.sidebar ~ .pusher {
@@ -207,6 +207,10 @@ body.pushable>.pusher {
     text-align: center;
 }
 
+.not-list>.item {
+    padding: .85714286em!important;
+}
+
 /* CATEGORIES */
 
 #category-menu-grid {
@@ -356,7 +360,7 @@ body.pushable>.pusher {
 }
 
 #more-courses {
-    width: 250px!important;
+    width: 300px!important;
 }
 
 #course-column {
@@ -773,6 +777,23 @@ body.pushable>.pusher {
         padding: 1rem 1rem !important;
     }
 
+    .ui.stackable[class*="mobile reversed"] {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+    }
+
+    #more-courses {
+        width: 80%!important;
+        margin: 0 auto!important;
+    }
+
+    #course-column {
+        width: 80%!important;
+        margin: 0 auto!important;
+    }
+
     #category-menu-tab {
         display: none;
     }
@@ -803,6 +824,14 @@ body.pushable>.pusher {
 }
 
 @media only screen and (max-width: 767px) {
+    .ui.grid > .stackable.stackable.row > .column, .ui.stackable.grid > .column.grid > .column, .ui.stackable.grid > .column.row > .column, .ui.stackable.grid > .column:not(.row), .ui.stackable.grid > .row > .column, .ui.stackable.grid > .row > .wide.column, .ui.stackable.grid > .wide.column {
+        width: 50% !important;
+        margin: 0 0.5rem !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        padding: 1rem 1rem !important;
+    }
+
     .ui.fixed.menu {
         display: none !important;
     }
@@ -928,16 +957,16 @@ body.pushable>.pusher {
     }
 
     #course-show {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem!important;
     }
 
     #more-courses {
-      width: 100%!important;
+      width: 90%!important;
     }
 
     #course-column {
-      width: 100%!important;
+      width: 90%!important;
     }
 
     #review-add>form>div>div.six.wide.field {
