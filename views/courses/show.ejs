@@ -8,7 +8,7 @@
                             if(moment(course.date).isAfter(moment()) || course.date === null) {
                         %>
                         <div class="ui segment">
-                            <div class="ui red horizontal label"><%= course.category %></div> <a class="header" href="/c/<%= course._id %>"><%= course.name %></a>
+                            <div class="ui red horizontal tiny basic label"><%= course.category %></div> <a class="header" href="/c/<%= course._id %>"><%= course.name %></a>
                         </div>
                         <% }}); %>
                     </div>
