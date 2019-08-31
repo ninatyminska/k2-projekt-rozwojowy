@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
             <div id="course-show" class="ui mobile reversed stackable centered grid">
-                <div id="more-courses" class="two wide column">
+                <div id="more-courses" class="column">
                     <p>Zobacz także:</p>
                     <div class="ui segments">
                         <% courses.reverse().slice(0, 10).forEach(function(course ){
@@ -13,7 +13,7 @@
                         <% }}); %>
                     </div>
                 </div>
-                <div id="course-column" class="six wide column">
+                <div id="course-column" class="column">
                     <a class="ui red ribbon label course-description-label"><%= course.category %></a>
                     <img class="ui fluid rounded image" src="<%= course.image %>">
                     <div class="six wide column">
