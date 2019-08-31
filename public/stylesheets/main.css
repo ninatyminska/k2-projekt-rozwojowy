@@ -785,12 +785,12 @@ body.pushable>.pusher {
     }
 
     #more-courses {
-        width: 80%!important;
+        width: 300px!important;
         margin: 0 auto!important;
     }
 
     #course-column {
-        width: 80%!important;
+        width: 650px!important;
         margin: 0 auto!important;
     }
 
@@ -962,11 +962,11 @@ body.pushable>.pusher {
     }
 
     #more-courses {
-      width: 90%!important;
+      width: 100%!important;
     }
 
     #course-column {
-      width: 90%!important;
+      width: 100%!important;
     }
 
     #review-add>form>div>div.six.wide.field {
