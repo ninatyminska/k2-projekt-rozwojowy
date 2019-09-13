@@ -173,7 +173,7 @@ body.pushable>.pusher {
     color: red;
 }
 
-/* LOGIN AND REGISTER FORM */
+/* USER FORMS */
 
 .ui.form-grid-log {
   margin-top: 5rem;
@@ -188,6 +188,11 @@ body.pushable>.pusher {
     background-color: #1b1c1d;
     color: white;
     border: 1px solid white;
+}
+
+.delete-user {
+    width: 100%;
+    margin-top: 10px!important;
 }
 
 /* NOTIFICATIONS PAGE */

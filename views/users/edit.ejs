@@ -1,0 +1,91 @@
+<% include ../partials/header %>
+
+            <div class="ui five column centered middle aligned center aligned stackable grid form-grid-log">
+                <div class="middle aligned center aligned column form-grid-log-column">
+                    <h2 class="ui teal image header">
+                    <div class="content">
+                        Edytuj profil
+                    </div>
+                    </h2>
+                    <form class="ui large form" action="/users/<%=user._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
+                        <div class="ui stacked segment login-form">
+                            <div id="error-username" class="field <% if(typeof userErrorsMsg['user.username'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input type="text" name="user[username]" placeholder="Nazwa użytkownika" value="<% if(typeof userErrorsMsg['user.username'] != 'undefined')  { %><%= userErrorsMsg['user.username'].value %> <% } else { %><%= user.username %><% } %>">
+                                </div>
+                                <% if(typeof userErrorsMsg['user.username'] != "undefined") { %>
+                                <div id="error-username-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.username'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-pssw" class="field <% if(typeof userErrorsMsg['user.password'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="user[password]" placeholder="Hasło">
+                                </div>
+                                <% if(typeof userErrorsMsg['user.password'] != "undefined") { %>
+                                <div id="error-pssw-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.password'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-firstname" class="field <% if(typeof userErrorsMsg['user.firstName'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <i class="user circle icon"></i>
+                                    <input type="text" name="user[firstName]" placeholder="Imię" value="<% if(typeof userErrorsMsg['user.firstName'] != 'undefined')  { %><%= userErrorsMsg['user.firstName'].value %> <% } else { %><%= user.firstName %><% } %>">
+                                </div>
+                                <% if(typeof userErrorsMsg['user.firstName'] != "undefined") { %>
+                                <div id="error-firstname-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.firstName'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-lastname" class="field <% if(typeof userErrorsMsg['user.lastName'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <i class="user circle icon"></i>
+                                    <input type="text" name="user[lastName]" placeholder="Nazwisko" value="<% if(typeof userErrorsMsg['user.lastName'] != 'undefined')  { %><%= userErrorsMsg['user.lastName'].value %> <% } else { %><%= user.lastName %><% } %>">
+                                </div>
+                                <% if(typeof userErrorsMsg['user.lastName'] != "undefined") { %>
+                                <div id="error-lastname-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.lastName'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-avatar" class="field <% if(typeof userErrorsMsg['user.avatar'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <i class="image icon"></i>
+                                    <input type="file" id="file-input" name="file-input">
+                                    <input type="hidden" id="image" name="user[avatar]" value="<%= user.avatar %>">
+                                </div>
+                                <% if(typeof userErrorsMsg['user.avatar'] != "undefined") { %>
+                                <div id="error-avatar-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.avatar'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div id="error-about" class="field <% if(typeof userErrorsMsg['user.about'] != 'undefined') { %>error<% } %>">
+                                <div class="ui left icon input">
+                                    <textarea name="user[about]" placeholder="O mnie..."><% if(typeof userErrorsMsg['user.about'] != 'undefined')  { %><%= userErrorsMsg['user.about'].value %> <% } else { %><%= user.about %><% } %></textarea>
+                                </div>
+                                <% if(typeof userErrorsMsg['user.about'] != "undefined") { %>
+                                <div id="error-about-label" class="ui pointing red basic label">
+                                    <%= userErrorsMsg['user.about'].msg %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="field">
+                                <button class="fluid ui large inverted primary button">Edytuj</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="/users/<%=user._id %>?_method=DELETE" method="POST">
+                        <button class="delete-user ui inverted red large button">Skasuj konto</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<% include ../partials/footer %>
