@@ -353,6 +353,10 @@ body.pushable>.pusher {
     text-align: center;
 }
 
+.ui.inverted.button.show-more {
+    margin: 30px auto 0;
+}
+
 /* COURSE PAGE */
 
 #more-courses>p {

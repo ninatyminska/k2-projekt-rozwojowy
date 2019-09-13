@@ -192,4 +192,17 @@ $(document).ready(function() {
                 file = files[0];
             document.getElementById('image').value = file.name;
         });
+
+        $courses = $('.hp-cards-grid');
+        $courses.each(function() {
+            var $hpCards = $(this).children();
+            if ($hpCards.length > 8) {
+                $courses.children(':nth-of-type(n+9)').hide();
+                $(this).append('<button class="ui inverted button show-more">Zobacz kolejne</button>');
+            }
+        });
+        $courses.on('click', '.show-more', function() {
+            $(this).prevAll().show().end().remove();
+        });
+
 });
