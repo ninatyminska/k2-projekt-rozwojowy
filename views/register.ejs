@@ -7,7 +7,7 @@
                         Zarejestruj się
                     </div>
                     </h2>
-                    <form class="ui large form" action="/register" method="POST">
+                    <form class="ui large form" action="/register" method="POST" enctype="multipart/form-data">
                         <div class="ui stacked segment login-form">
                             <div id="error-username" class="field <% if(typeof errors.username != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
@@ -56,7 +56,8 @@
                             <div id="error-avatar" class="field <% if(typeof errors.avatar != 'undefined') { %>error<% } %>">
                                 <div class="ui left icon input">
                                     <i class="image icon"></i>
-                                    <input type="text" name="avatar" placeholder="Avatar" value="<% if(typeof errors.avatar == 'undefined' && typeof newUser !== 'undefined') { %><%= newUser.avatar %><% } %>">
+                                    <input type="file" id="file-input" name="file-input">
+                                    <input type="hidden" id="image" name="avatar" value="">
                                 </div>
                                 <% if(typeof errors.avatar != "undefined") { %>
                                 <div id="error-avatar-label" class="ui pointing red basic label">

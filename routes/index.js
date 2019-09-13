@@ -5,7 +5,9 @@ const express                   = require('express'),
       User                      = require('../models/user'),
       Course                    = require('../models/course'),
       { isLoggedIn }            = require('../middleware'),
-      Notification              = require('../models/notification');
+      Notification              = require('../models/notification'),
+      upload                    = require('../middleware/upload').upload,
+      awsBucket                 = require('../middleware/upload').awsBucket;
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -51,7 +53,7 @@ router.get('/register', (req, res) => {
     res.render('register', {errors: errors});
 });
 
-router.post('/register', [
+router.post('/register', upload.single('file-input'), [
     check('username', 'Nazwa użytkownika musi zawierać min. 3 znaki.').isLength({ min: 3 }),
     check('password').isLength({ min: 5 }).withMessage('Hasło musi zawierać min. 5 znaków.')
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/).withMessage('Hasło musi zawierać min.: 1 cyfrę, 1 literę, 1 znak specjalny.'),
@@ -65,7 +67,7 @@ router.post('/register', [
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            avatar: req.body.avatar,
+            avatar: `https://${awsBucket}.s3.amazonaws.com/` + req.body.avatar,
             about: req.body.about
         });
     let formErrors = validationResult(req);
