@@ -29,6 +29,11 @@
                             <a class="ui inverted olive button" href="/follow/<%= user.id %>">Obserwuj</a>
                         </div>
                         <% } %>
+                        <% if ((currentUser && currentUser.id === user.id) || (currentUser && currentUser.isAdmin)) { %>
+                         <div class="extra content">
+                            <a class="ui inverted small yellow button" href="/users/<%= currentUser.id %>/edit">Edytuj</a>
+                         </div>
+                         <% } %>
                     </div>
                 </div>   
                 <div class="column">
