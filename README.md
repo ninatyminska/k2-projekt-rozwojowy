@@ -7,7 +7,7 @@
 <li>MongoDB</li>
 <li>REST API</li>
 <li>jQuery</li>
-<li>Semantic UI</li>
+<li>Semantic UI 2.4</li>
 <li>AWS S3</li>
 </ul>
 <ul>
