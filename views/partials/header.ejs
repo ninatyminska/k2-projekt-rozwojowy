@@ -11,6 +11,7 @@
         <div id="mobile-main-menu" class="ui vertical inverted sidebar menu left" style="">
             <a class="active item" href="/">Strona główna</a>
             <a class="item" href="/new">Nowy wpis</a>
+            <a class="item" href="/feed/rss">Śledź wpisy <i class="rss square icon"></i></a>
             <% if(!currentUser) { %>
             <a class="item" href="/login">Logowanie</a>
             <a class="item" href="/register">Rejestracja</a>
@@ -37,6 +38,7 @@
                         </a>
                         <a class="home active item" href="/">Strona główna</a>
                         <a class="item" href="/new">Nowy wpis</a>
+                        <a class="item" href="/feed/rss">Śledź wpisy <i class="rss square icon"></i></a>
                         <div class="right menu">
                             <% if(!currentUser) { %>
                             <div class="item">
