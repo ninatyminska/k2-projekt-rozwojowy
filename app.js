@@ -52,7 +52,7 @@ app.get('/feed/rss', async (req, res) => {
                     title: course.name,
                     description: course.description,
                     url: 'http://' + req.headers.host + '/c/' + course.id,
-                    author: course.author.name,
+                    author: course.author.username,
                     date: course.createdAt
                 });      
               });
