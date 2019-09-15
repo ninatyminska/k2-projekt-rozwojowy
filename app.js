@@ -39,7 +39,11 @@ app.get('/feed/rss', async (req, res) => {
   let feed = new rss({
             title: 'K2 projekt rozwojowy - baza wiedzy',
             description: 'Konferencje, meetupy, warsztaty i przydatne linki.',
-            author: 'Nina Tymińska'
+            feed_url: 'http://' + req.headers.host + '/feed/rss',
+            site_url: 'http://' + req.headers.host,
+            image_url: 'http' + req.headers.host + '/favicons/favicon-32x32.png',
+            managingEditor: 'Nina Tymińska',
+            language: 'pl',
         });
   try {
     await Course.find({}).sort({createdAt: -1}).limit(5).exec(function(err, allCourses) {
@@ -48,6 +52,7 @@ app.get('/feed/rss', async (req, res) => {
                     title: course.name,
                     description: course.description,
                     url: 'http://' + req.headers.host + '/c/' + course.id,
+                    author: course.author.name,
                     date: course.createdAt
                 });      
               });
@@ -88,6 +93,10 @@ app.use("/", indexRoutes, courseRoutes);
 app.use("/c/:id/comments", commentRoutes);
 app.use("/c/:id/reviews", reviewRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
+// app.listen(process.env.PORT, process.env.IP, function(){
+//     console.log("Server has started.");
+// });
+
+app.listen(3000, function(){
     console.log("Server has started.");
 });
