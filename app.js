@@ -43,6 +43,7 @@ app.get('/feed/rss', async (req, res) => {
             site_url: 'http://' + req.headers.host,
             image_url: 'http' + req.headers.host + '/favicons/favicon-32x32.png',
             managingEditor: 'Nina Tymińska',
+            ttl: '60',
             language: 'pl',
         });
   try {
