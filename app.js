@@ -9,13 +9,15 @@ const express          = require("express"),
       LocalStrategy    = require("passport-local"),
       methodOverride   = require("method-override"),
       flash            = require("connect-flash"),
-      User             = require("./models/user");
+      User             = require("./models/user"),
+      Course           = require('./models/course'),
+      rss              = require('rss');
     
 const indexRoutes    = require("./routes/index"),
       courseRoutes   = require("./routes/courses"),
       commentRoutes  = require("./routes/comments"),
       reviewRoutes   = require("./routes/reviews");
-    
+
 const mdb = process.env.MDB_PSSW;
 mongoose.connect("mongodb+srv://Nina:" + mdb + "@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true });
 mongoose.set('useFindAndModify', false);
@@ -32,6 +34,31 @@ app.use(require("express-session")({
     resave: true,
     saveUninitialized: true
 }));
+
+app.get('/feed/rss', async (req, res) => {
+  let feed = new rss({
+            title: 'K2 projekt rozwojowy - baza wiedzy',
+            description: 'Konferencje, meetupy, warsztaty i przydatne linki.',
+            author: 'Nina Tymińska'
+        });
+  try {
+    await Course.find({}).sort({createdAt: -1}).limit(5).exec(function(err, allCourses) {
+              allCourses.forEach(function(course, item) {
+                feed.item({
+                    title: course.name,
+                    description: course.description,
+                    url: 'http://' + req.headers.host + '/c/' + course.id,
+                    date: course.createdAt
+                });      
+              });
+              res.type('rss');
+              res.send(feed.xml());
+          });
+    } catch (err) {
+      req.flash('error', 'Wystąpił błąd.');
+       return res.redirect('back');
+    }
+});
 
 app.locals.moment = require('moment');
 app.locals.moment.locale('pl');

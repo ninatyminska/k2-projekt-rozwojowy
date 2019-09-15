@@ -173,6 +173,10 @@ body.pushable>.pusher {
     color: red;
 }
 
+.rss.square.icon {
+    margin-left: 5px!important;
+}
+
 /* USER FORMS */
 
 .ui.form-grid-log {
