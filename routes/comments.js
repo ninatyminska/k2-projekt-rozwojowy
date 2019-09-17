@@ -45,6 +45,9 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
                     comment.author.avatar = req.user.avatar;
                     comment.save();
                     course.comments.push(comment);
+                    if(req.body.participants !== undefined) {
+                        course.participants.push(req.body.participants);
+                    };
                     course.save();
                     req.flash('success', 'Komentarz dodany.');
                     res.redirect('/c/' + course._id);

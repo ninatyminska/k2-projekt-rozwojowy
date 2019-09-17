@@ -597,6 +597,14 @@ body.pushable>.pusher {
     margin: auto 0;
 }
 
+#review-add>form>div.ui.checkbox {
+    margin: 10px 10px 20px 10px;
+}
+
+#review-add>form>div.ui.checkbox>label {
+    color: #fff;
+}
+
 #error-review-label {
     float: right;
     margin-top: 0;

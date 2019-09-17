@@ -7,6 +7,7 @@ var courseSchema = new mongoose.Schema({
     website: String,
     category: String,
     tag: [String],
+    participants: [String],
     createdAt: { 
         type: Date, 
         default: Date.now 
