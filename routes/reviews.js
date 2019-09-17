@@ -59,6 +59,9 @@ router.post('/', middleware.isLoggedIn, middleware.checkReviewExistence, (req, r
                 review.save();
                 course.reviews.push(review);
                 course.rating = calculateAverage(course.reviews);
+                if(req.body.participants !== undefined) {
+                    course.participants.push(req.body.participants);
+                };
                 course.save();
                 req.flash('success', 'Opinia została dodana.');
                 res.redirect('/c/' + course._id);

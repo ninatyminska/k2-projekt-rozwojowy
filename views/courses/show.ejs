@@ -182,6 +182,9 @@
                                             <div class="content">
                                                 <a class="author" href="/users/<%= review.author.id %>"><%= review.author.username %></a>
                                                 <div class="metadata">
+                                                    <% if(course.participants.includes(review.author.username)) { %>
+                                                    <a class="ui purple mini label">Uczestnik</a>
+                                                    <% } %>
                                                     <span class="date"><%= moment(review.updatedAt).format("DD.MM.YYYY") %></span>
                                                     <div class="rating">
                                                         <%- '<i class="star icon checked"></i>'.repeat(review.rating) %><%- '<i class="star icon"></i>'.repeat(5 - review.rating) %>
@@ -260,6 +263,12 @@
                                         <%= errorMsg %>
                                         </div>
                                         <% } %>
+                                        <% if(!course.participants.includes(currentUser.username)) { %>
+                                        <div class="ui checkbox">
+                                        <input type="checkbox" name="participants" value="<%= currentUser.username %>">
+                                        <label>Biorę udział w wydarzeniu!</label>
+                                        </div>
+                                        <% } %>
                                         <div class="ui fourteen wide left icon input">
                                             <textarea class="form-control" name="review[text]" placeholder="Wpisz treść opinii." form="add-review-form"><% if(typeof errorMsg !== 'undefined' && typeof reviewText !== 'undefined') { %><%= reviewText %><% } %></textarea>
                                         </div>
@@ -289,6 +298,9 @@
                                             <div class="content">
                                                 <a class="author" href="/users/<%= comment.author.id %>"><%= comment.author.username %></a>
                                                 <div class="metadata">
+                                                    <% if(course.participants.includes(comment.author.username)) { %>
+                                                    <a class="ui purple mini label">Uczestnik</a>
+                                                    <% } %>
                                                     <span class="date"><%= moment(comment.createdAt).fromNow() %></span>
                                                 </div>
                                                 <div class="text">
@@ -344,6 +356,12 @@
                                             <i class="user icon"></i>
                                             <input type="text" disabled value="<%= currentUser.username %>">
                                         </div>
+                                        <% if(!course.participants.includes(currentUser.username)) { %>
+                                        <div class="ui checkbox">
+                                          <input type="checkbox" name="participants" value="<%= currentUser.username %>">
+                                          <label>Biorę udział w wydarzeniu!</label>
+                                        </div>
+                                        <% } %>
                                         <div class="ui fourteen wide left icon input <% if(typeof errorMsgCom !== 'undefined') { %>error<% } %>">
                                             <textarea name="comment[text]" placeholder="Wpisz treść komentarza." form="add-comment-form"></textarea>
                                         </div>
