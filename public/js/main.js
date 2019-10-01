@@ -1,6 +1,10 @@
 $(document).ready(function() {
         $('.ui.dropdown')
-            .dropdown();
+            .dropdown(
+                {
+                    allowAdditions: true
+                }
+            );
         $('.ui.sidebar').sidebar('attach events', '.toc.item');
         $('.ui.accordion').accordion();
         $('.ui.calendar').calendar({
