@@ -20,16 +20,16 @@
                         <div id="course-description" class="ui segment">
                             <h1><%= course.name %></h1>
                             <% if (course.category == "Konferencja") { %>
-                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("HH:mm") %></h4>
                             <% } %>
                             <% if (course.category == "Meetup") { %>
-                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("HH:mm") %></h4>
                             <% } %>
                             <% if (course.category == "Warsztat") { %>
-                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("HH:mm") %></h4>
                             <% } %>
                             <% if (course.category == "Webinar") { %>
-                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("hh:mm") %></h4>
+                            <h4><i class="calendar alternate icon"></i> <%= moment(course.date).format("DD.MM.YYYY") %> <i class="clock icon"></i> <%= moment(course.date).format("HH:mm") %></h4>
                             <% } %>
                             <h4><a class="course-website" href="<%= course.website %>"><i class="globe icon"></i> www</a></h4>
                             <a class="ui blue image label" href="/users/<%= course.author.id %>">
