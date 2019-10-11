@@ -51,7 +51,7 @@ app.get('/feed/rss', async (req, res) => {
               allCourses.forEach(function(course, item) {
                 feed.item({
                     title: course.name,
-                    description: course.description.substring(0, 200),
+                    description: course.description.substring(0, 200) + ' [...]',
                     url: 'http://' + req.headers.host + '/c/' + course.id,
                     author: course.author.username,
                     date: course.createdAt
