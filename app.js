@@ -50,7 +50,7 @@ app.get('/feed/rss', async (req, res) => {
     await Course.find({}).sort({createdAt: -1}).limit(5).exec(function(err, allCourses) {
               allCourses.forEach(function(course, item) {
                 feed.item({
-                    title: [course.category] course.name,
+                    title: '[' + course.category + ']' + course.name,
                     description: course.description.substring(0, 200) + ' [...]',
                     url: 'http://' + req.headers.host + '/c/' + course.id,
                     author: course.author.username,
