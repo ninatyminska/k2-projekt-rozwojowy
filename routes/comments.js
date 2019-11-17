@@ -36,7 +36,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 									};
 									req.flash('error', 'Uzupełnij formularz komentarza.');
 									return res.render('courses/show', { course: foundCourse, courses: allCourses, errorMsgCom: errorMsgCom, errorsMsg: errorsMsg, error: req.flash('error') });
-								};       
+								}       
 							}); 
 						}
 					});   
@@ -48,7 +48,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 					course.comments.push(comment);
 					if(req.body.participants !== undefined) {
 						course.participants.push(req.body.participants);
-					};
+					}
 					course.save();
 					req.flash('success', 'Komentarz dodany.');
 					res.redirect('/c/' + course._id);
