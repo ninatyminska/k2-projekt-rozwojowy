@@ -1,5 +1,5 @@
 <h2>APP LINK</h2>
-[k2-projekt-rozwojowy.neira.pl](http://k2-projekt-rozwojowy.neira.pl/)
+http://k2-projekt-rozwojowy.neira.pl/
 <h2>TECHNOLOGIES & FEATURES</h2>
 <ul>
 <li>Node.js 10.16.3</li>
@@ -21,4 +21,4 @@
 <li>RSS feed</li>
 </ul>
 <h2>TO-DOS & BUGS</h2>
-[https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues](https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues)
+https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues
