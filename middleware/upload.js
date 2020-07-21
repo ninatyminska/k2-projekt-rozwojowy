@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 /* eslint-disable */
 const aws       = require('aws-sdk'), 
       s3Storage = require('multer-sharp-s3'),
