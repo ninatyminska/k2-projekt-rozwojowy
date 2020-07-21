@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 /* eslint-disable */
 const express          = require("express"),
 	  favicon          = require('serve-favicon'),
@@ -21,7 +23,7 @@ const indexRoutes    = require("./routes/index"),
 /* eslint-enable */
 
 const mdb = process.env.MDB_PSSW;
-mongoose.connect('mongodb+srv://Nina:' + mdb + '@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect('mongodb+srv://Nina:' + mdb + '@cluster0-yab5c.mongodb.net/k2-projekt-rozwojowy?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
 app.use(favicon(path.join(__dirname,'public','favicons','favicon-32x32.png')));
