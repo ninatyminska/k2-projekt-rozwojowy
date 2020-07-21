@@ -21,4 +21,4 @@ http://k2-projekt-rozwojowy.neira.pl
 <li>RSS feed</li>
 </ul>
 <h2>TO-DOS & BUGS</h2>
-https://gitlab.com/NinaNeira/k2-projekt-rozwojowy/issues
+https://gitlab.com/ninatyminska/k2-projekt-rozwojowy/issues
